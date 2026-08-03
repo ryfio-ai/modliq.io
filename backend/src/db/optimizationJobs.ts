@@ -3,8 +3,35 @@ import prisma from '@/lib/prisma';
 export async function initDb() {
   try {
     await prisma.$connect();
+    await recoverOrphanedJobs();
   } catch (err) {
-    console.error('[db] Failed to connect to Postgres:', err);
+    console.error('[db] Failed to connect to database:', err);
+  }
+}
+
+export async function recoverOrphanedJobs() {
+  try {
+    const orphanedJobs = await prisma.optimizationJob.findMany({
+      where: {
+        status: { in: ['queued', 'running', 'parsing_goal', 'training_model', 'searching_configurations'] },
+      },
+    });
+
+    if (orphanedJobs.length > 0) {
+      console.log(`[db] Found ${orphanedJobs.length} orphaned jobs on startup. Marking as failed...`);
+      for (const job of orphanedJobs) {
+        await prisma.optimizationJob.update({
+          where: { id: job.id },
+          data: {
+            status: 'failed',
+            error: 'Optimization process was interrupted by a server restart. Please re-run optimization.',
+            updatedAt: new Date(),
+          },
+        });
+      }
+    }
+  } catch (err) {
+    console.error('[db] Failed to recover orphaned jobs:', err);
   }
 }
 

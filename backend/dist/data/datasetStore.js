@@ -1,51 +1,79 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllDatasets = exports.getDataset = exports.saveDataset = void 0;
-const mongodb_1 = require("mongodb");
-const DATABASE_URL = process.env.DATABASE_URL || process.env.MONGODB_URI || '';
-const client = DATABASE_URL ? new mongodb_1.MongoClient(DATABASE_URL) : null;
-let db = null;
-async function connect() {
-    if (!client || !DATABASE_URL)
-        return null;
-    if (db)
-        return db;
+exports.getDatasetVersion = exports.getDatasetVersions = exports.getAllDatasets = exports.getDataset = exports.saveDataset = void 0;
+const prisma_1 = __importDefault(require("@/lib/prisma"));
+async function saveDataset(datasetId, data) {
     try {
-        await client.connect();
-        db = client.db('modliq');
-        return db;
+        const userId = data.userId || 'demo-user-static-backend';
+        const payload = {
+            ...data,
+            userId,
+            analytics: typeof data.analytics === 'object' ? JSON.stringify(data.analytics) : data.analytics,
+            preview: typeof data.preview === 'object' ? JSON.stringify(data.preview) : data.preview,
+        };
+        const version = {
+            datasetId,
+            versionId: `${datasetId}@v${Date.now()}`,
+            data: JSON.stringify(payload),
+            createdAt: new Date(),
+        };
+        const existing = await prisma_1.default.dataset.findFirst({
+            where: { userId, filename: payload.filename },
+        });
+        let record;
+        if (existing) {
+            record = await prisma_1.default.dataset.update({
+                where: { id: existing.id },
+                data: { ...payload, updatedAt: new Date() },
+            });
+        }
+        else {
+            record = await prisma_1.default.dataset.create({
+                data: { user: { connect: { id: userId } }, ...payload },
+            });
+        }
+        await prisma_1.default.datasetVersion.create({
+            data: { ...version, datasetId: record.id },
+        });
+        return { ...payload, id: record.id };
     }
     catch (err) {
-        console.warn('[db] MongoDB connection failed, using in-memory fallback:', err?.message || err);
-        return null;
-    }
-}
-const memoryDatasets = new Map();
-async function saveDataset(datasetId, data) {
-    const database = await connect();
-    if (database) {
-        await database.collection('datasets').updateOne({ _id: datasetId }, { $set: { ...data, updatedAt: new Date() } }, { upsert: true });
+        console.error(`[datasetStore] Error saving dataset ${datasetId}:`, err);
         return data;
     }
-    memoryDatasets.set(datasetId, { _id: datasetId, ...data, updatedAt: new Date() });
-    return data;
 }
 exports.saveDataset = saveDataset;
 async function getDataset(datasetId) {
-    const database = await connect();
-    if (database) {
-        const record = await database.collection('datasets').findOne({ _id: datasetId });
-        return record || null;
-    }
-    return memoryDatasets.get(datasetId) || null;
+    const byId = await prisma_1.default.dataset.findUnique({
+        where: { id: datasetId },
+    });
+    if (byId)
+        return byId;
+    return await prisma_1.default.dataset.findFirst({
+        where: { filename: datasetId },
+    });
 }
 exports.getDataset = getDataset;
 async function getAllDatasets() {
-    const database = await connect();
-    if (database) {
-        return database.collection('datasets').find().toArray();
-    }
-    return Array.from(memoryDatasets.values());
+    return await prisma_1.default.dataset.findMany({
+        orderBy: { createdAt: 'desc' },
+    });
 }
 exports.getAllDatasets = getAllDatasets;
+async function getDatasetVersions(datasetId) {
+    return await prisma_1.default.datasetVersion.findMany({
+        where: { datasetId },
+        orderBy: { createdAt: 'desc' },
+    });
+}
+exports.getDatasetVersions = getDatasetVersions;
+async function getDatasetVersion(datasetId, versionId) {
+    return await prisma_1.default.datasetVersion.findFirst({
+        where: { datasetId, versionId },
+    });
+}
+exports.getDatasetVersion = getDatasetVersion;
 //# sourceMappingURL=datasetStore.js.map

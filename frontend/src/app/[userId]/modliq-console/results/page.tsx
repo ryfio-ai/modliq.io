@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { BarChart2, ArrowRight, TrendingUp, DollarSign, Gauge, Download, ShieldCheck, ShieldAlert, Loader2, Zap } from 'lucide-react';
+import { BarChart2, ArrowRight, TrendingUp, DollarSign, Gauge, Download, ShieldCheck, ShieldAlert, Loader2, Zap, Award } from 'lucide-react';
 import { usePipelineStore } from '@/store/pipelineStore';
 import OptimizationCurve from '@/components/charts/OptimizationCurve';
 import PredictionChart from '@/components/charts/PredictionChart';
@@ -128,16 +128,13 @@ export default function ResultsPage() {
           <h1 className="text-2xl font-bold text-[#1B2A4A]">Optimization Results</h1>
           <p className="text-slate-500 text-sm mt-1">{result.display_name || 'Yield Optimizer'} — {result.model_type || 'Random Forest'}</p>
         </div>
+
         <div className="flex gap-2">
-          <Button onClick={fetchAiSop} disabled={sopLoading} className="flex items-center gap-2">
-            {sopLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <Download className="w-4 h-4" />
-            )}
-            Generate AI Trial SOP
+          <Button variant="outline" onClick={fetchAiSop} className="flex items-center gap-2">
+            <Zap className="w-4 h-4 text-purple-600" />
+            AI Trial SOP
           </Button>
-          <Button onClick={generateSOP} variant="outline" className="flex items-center gap-2">
+          <Button onClick={generateSOP} className="flex items-center gap-2 bg-[#2B70AB] hover:bg-[#205887] text-white">
             <Download className="w-4 h-4" />
             Export Markdown
           </Button>

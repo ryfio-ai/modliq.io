@@ -4,8 +4,26 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
 import pinoHttp from 'pino-http';
-import { randomUUID } from 'crypto';
+import { randomUUID, randomBytes } from 'crypto';
 import authRoutes from './routes/auth.routes';
+import projectsRoutes from './routes/projects.routes';
+import { datasetRouter } from './routes/dataset.routes';
+import { jobsRouter } from './routes/jobs.routes';
+import { modelsRouter } from './routes/models.routes';
+import { predictRouter } from './routes/predict.routes';
+import { enterpriseRouter } from './routes/enterprise.routes';
+import organizationRoutes from './routes/organization.routes';
+import entitlementsRoutes from './routes/entitlements.routes';
+import onboardingRoutes from './routes/onboarding.routes';
+import notificationRoutes from './routes/notification.routes';
+import supportRoutes from './routes/support.routes';
+import shareLinkRoutes from './routes/shareLink.routes';
+import templateRoutes from './routes/template.routes';
+import accountRoutes from './routes/account.routes';
+import adminRoutes from './routes/admin.routes';
+import { authMiddleware } from './middleware/auth.middleware';
+import { updateProject } from './db/projects';
+
 import { saveDataset, getDataset, getAllDatasets } from './data/datasetStore';
 import { saveOptimization, getOptimization, listOptimizations } from './data/optimizationStore';
 import { getWorkspace, setActiveDataset, setActiveWorkflow as setActiveWorkflowInStore, getActiveWorkflowId } from './data/workspaceStore';
@@ -70,10 +88,22 @@ function rateLimit(req: express.Request, res: express.Response, next: express.Ne
   next();
 }
 
+import goalCrosscheckRoutes from './routes/goalCrosscheck.routes';
+
 // ==================================================
-// AUTH ROUTES
+// AUTH, AUTOML & ENTERPRISE ROUTES
 // ==================================================
 app.use('/api/auth', authRoutes);
+app.use('/api/datasets', authMiddleware, datasetRouter);
+app.use('/api/jobs', authMiddleware, jobsRouter);
+app.use('/api/models', authMiddleware, modelsRouter);
+app.use('/api/predict', authMiddleware, predictRouter);
+app.use('/api/v1/enterprise', enterpriseRouter);
+app.use('/api/v1/projects/:projectId/goal', goalCrosscheckRoutes);
+app.use('/api/v1/projects/:projectId/templates', goalCrosscheckRoutes);
+
+
+
 
 // ==================================================
 // STORAGE + HELPERS
@@ -197,6 +227,18 @@ const upload = multer({
 // API V1 ROUTES
 // ==================================================
 const apiV1 = express.Router();
+
+apiV1.use('/projects', projectsRoutes);
+apiV1.use('/user', projectsRoutes);
+apiV1.use('/organizations', organizationRoutes);
+apiV1.use('/entitlements', entitlementsRoutes);
+apiV1.use('/onboarding', onboardingRoutes);
+apiV1.use('/notifications', notificationRoutes);
+apiV1.use('/support', supportRoutes);
+apiV1.use('/templates', templateRoutes);
+apiV1.use('/account', accountRoutes);
+apiV1.use('/admin', adminRoutes);
+apiV1.use('/', shareLinkRoutes);
 
 // --------------------------------------------------
 // Workspace
@@ -462,7 +504,7 @@ interface OptJob {
   id: string;
   userId: string;
   datasetId?: string;
-  status: 'running' | 'completed' | 'failed';
+  status: 'queued' | 'running' | 'completed' | 'failed';
   stage?: string;
   progress?: number;
   requestJson?: string;
@@ -510,7 +552,7 @@ initDb().catch((err) => {
 
 apiV1.post('/optimization/jobs', requireAuth, rateLimit, async (req, res) => {
   try {
-    const { filename, template_id, intent, monthly_volume, unit_value } = req.body;
+    const { filename, template_id, intent, monthly_volume, unit_value, projectId } = req.body;
     if (!filename) {
       return res.status(400).json({ success: false, error: 'filename is required' });
     }
@@ -525,7 +567,11 @@ apiV1.post('/optimization/jobs', requireAuth, rateLimit, async (req, res) => {
 
     const fileContent = fs.readFileSync(resolved.localPath).toString('base64');
 
+    const jobId = randomBytes(12).toString('hex');
+    const userId = (req as any).user?.userId || (req as any).user?.id || 'anonymous';
+
     const payload = {
+      job_id: jobId,
       filename: resolved.dataset ? resolved.dataset.filename : filename,
       file_content: fileContent,
       template_id: template_id || 'yield_optimizer',
@@ -538,19 +584,26 @@ apiV1.post('/optimization/jobs', requireAuth, rateLimit, async (req, res) => {
       unit_value: unit_value || undefined,
     };
 
-    const jobId = `job_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
-    const userId = (req as any).user?.userId || (req as any).user?.id || 'anonymous';
     const jobRecord: OptJob = {
       id: jobId,
       userId,
       datasetId: resolved.dataset?.id,
-      status: 'running',
+      status: 'queued',
+      stage: 'Queued',
+      progress: 0,
       createdAt: Date.now(),
       updatedAt: Date.now(),
       requestJson: JSON.stringify(payload),
     };
 
     await createOptimizationJobRecord(jobRecord);
+
+    if (projectId && typeof projectId === 'string' && /^[0-9a-fA-F]{24}$/.test(projectId)) {
+      await updateProject(projectId, {
+        optimizationJobId: jobId,
+        status: 'optimizing',
+      });
+    }
 
     const jobTimeout = parseInt(process.env.JOB_TIMEOUT_MS || '180000', 10);
 
@@ -572,24 +625,37 @@ apiV1.post('/optimization/jobs', requireAuth, rateLimit, async (req, res) => {
           });
           await updateOptimizationJobRecord(jobId, {
             status: 'completed',
+            stage: 'Completed',
             resultJson: JSON.stringify(result),
             progress: 100,
           });
+          if (projectId) {
+            await updateProject(projectId, { status: 'completed' });
+          }
         } else {
           await updateOptimizationJobRecord(jobId, {
             status: 'failed',
+            stage: 'Error',
             error: result?.error || 'Optimization failed',
           });
+          if (projectId) {
+            await updateProject(projectId, { status: 'error' });
+          }
         }
       } catch (error: any) {
+        const errMsg = error.response?.data?.error || error.message || 'Optimization failed';
         await updateOptimizationJobRecord(jobId, {
           status: 'failed',
-          error: error.response?.data?.error || error.message || 'Optimization failed',
+          stage: 'Error',
+          error: errMsg,
         });
+        if (projectId) {
+          await updateProject(projectId, { status: 'error' });
+        }
       }
     })();
 
-    res.json({ success: true, jobId, status: 'running' });
+    res.json({ success: true, jobId, status: 'queued' });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message || 'Failed to start optimization' });
   }
@@ -601,15 +667,40 @@ apiV1.get('/optimization/jobs/:id', requireAuth, async (req, res) => {
     if (!record) {
       return res.status(404).json({ success: false, error: 'Optimization job not found' });
     }
-    const result = record.resultJson ? JSON.parse(record.resultJson) : undefined;
+
+    let currentStatus = record.status;
+    let currentStage = record.stage;
+    let currentProgress = record.progress;
+    let result = record.resultJson ? JSON.parse(record.resultJson) : undefined;
+    let error = record.error;
+
+    // Check real-time queue status from ML Engine if job is not completed or failed
+    if (record.status !== 'completed' && record.status !== 'failed') {
+      try {
+        const mlStatusRes = await axios.get(`${ML_ENGINE_URL}/optimize-yield/jobs/${record.id}`, {
+          timeout: 3000,
+          headers: mlEngineHeaders(),
+        });
+        if (mlStatusRes.data && mlStatusRes.data.success) {
+          currentStatus = mlStatusRes.data.status || currentStatus;
+          currentStage = mlStatusRes.data.stage || currentStage;
+          currentProgress = mlStatusRes.data.progress ?? currentProgress;
+          if (mlStatusRes.data.result) result = mlStatusRes.data.result;
+          if (mlStatusRes.data.error) error = mlStatusRes.data.error;
+        }
+      } catch (e) {
+        // Silently fall back to stored DB status if ML Engine status endpoint is unreachable
+      }
+    }
+
     res.json({
       success: true,
       id: record.id,
-      status: record.status,
+      status: currentStatus,
       result,
-      error: record.error,
-      progress: record.progress,
-      stage: record.stage,
+      error,
+      progress: currentProgress,
+      stage: currentStage,
     });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message || 'Failed to load job' });

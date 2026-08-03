@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  ml-engine:
+    build:
+      context: ./ml-engine
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - LOG_LEVEL=WARNING
+      - MAX_CONCURRENT_JOBS=4
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - NODE_ENV=production
+      - ML_ENGINE_URL=http://ml-engine:8000
+    depends_on:
+      - ml-engine
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=https://modliq-api.onrender.com
+    depends_on:
+      - backend
+    restart: always

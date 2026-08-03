@@ -1,0 +1,8 @@
+# prod.yaml - Production Settings for Modliq ML Engine
+service_name: "modliq-ml-engine"
+environment: "production"
+port: 8000
+log_level: "WARNING"
+max_concurrent_jobs: 4
+max_training_seconds: 180
+max_csv_bytes: 50000000

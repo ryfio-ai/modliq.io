@@ -82,7 +82,7 @@ router.post('/signup', async (req, res) => {
     let user: any;
     try {
       user = await prisma.user.create({
-        data: { email, name, password: passwordHash, isDemo: false },
+        data: { id: `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`, email, name, password: passwordHash, isDemo: false },
       });
     } catch {
       // Fallback: memory only (not persisted across restarts)

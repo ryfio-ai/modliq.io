@@ -1,51 +1,78 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listOptimizations = exports.getOptimization = exports.saveOptimization = void 0;
-const mongodb_1 = require("mongodb");
-const DATABASE_URL = process.env.DATABASE_URL || process.env.MONGODB_URI || '';
-const client = DATABASE_URL ? new mongodb_1.MongoClient(DATABASE_URL) : null;
-let db = null;
-async function connect() {
-    if (!client || !DATABASE_URL)
-        return null;
-    if (db)
-        return db;
+const prisma_1 = __importDefault(require("../lib/prisma"));
+const memoryStore = new Map();
+async function saveOptimization(id, data) {
+    const { userId, ...rest } = data || {};
+    const toStore = { ...rest };
+    if (toStore.result && typeof toStore.result === 'object') {
+        toStore.result = JSON.stringify(toStore.result);
+    }
+    memoryStore.set(id, { id, userId, ...toStore, updatedAt: new Date() });
     try {
-        await client.connect();
-        db = client.db('modliq');
-        return db;
+        let connectUser = false;
+        if (userId && typeof userId === 'string' && /^[0-9a-fA-F]{24}$/.test(userId)) {
+            const userExists = await prisma_1.default.user?.findUnique({ where: { id: userId } });
+            if (userExists)
+                connectUser = true;
+        }
+        const existing = await prisma_1.default.optimizationRun?.findUnique({
+            where: { id },
+        });
+        if (existing) {
+            await prisma_1.default.optimizationRun?.update({
+                where: { id },
+                data: { ...toStore, updatedAt: new Date() },
+            });
+        }
+        else {
+            await prisma_1.default.optimizationRun?.create({
+                data: {
+                    id,
+                    ...(connectUser ? { user: { connect: { id: userId } } } : {}),
+                    ...toStore,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                },
+            });
+        }
     }
     catch (err) {
-        console.warn('[db] MongoDB connection failed, using in-memory fallback:', err?.message || err);
-        return null;
+        console.warn(`[optimizationStore] Prisma save skipped for run ${id}:`, err.message);
     }
-}
-const memoryOptimizations = new Map();
-async function saveOptimization(id, data) {
-    const database = await connect();
-    if (database) {
-        await database.collection('optimizations').updateOne({ _id: id }, { $set: { ...data, status: 'completed', progress: 100, updatedAt: new Date() } }, { upsert: true });
-        return data;
-    }
-    memoryOptimizations.set(id, { _id: id, ...data, status: 'completed', progress: 100, updatedAt: new Date() });
     return data;
 }
 exports.saveOptimization = saveOptimization;
 async function getOptimization(id) {
-    const database = await connect();
-    if (database) {
-        const record = await database.collection('optimizations').findOne({ _id: id });
-        return record || null;
+    try {
+        const res = await prisma_1.default.optimizationRun?.findUnique({
+            where: { id },
+        });
+        if (res)
+            return res;
     }
-    return memoryOptimizations.get(id) || null;
+    catch (err) {
+        console.warn(`[optimizationStore] Prisma get skipped for run ${id}:`, err.message);
+    }
+    return memoryStore.get(id) || null;
 }
 exports.getOptimization = getOptimization;
 async function listOptimizations() {
-    const database = await connect();
-    if (database) {
-        return database.collection('optimizations').find({ status: 'completed' }).toArray();
+    try {
+        const list = await prisma_1.default.optimizationRun?.findMany({
+            orderBy: { createdAt: 'desc' },
+        });
+        if (list && list.length > 0)
+            return list;
     }
-    return Array.from(memoryOptimizations.values()).filter((item) => item.status === 'completed');
+    catch (err) {
+        console.warn('[optimizationStore] Prisma list skipped:', err.message);
+    }
+    return Array.from(memoryStore.values());
 }
 exports.listOptimizations = listOptimizations;
 //# sourceMappingURL=optimizationStore.js.map

@@ -98,12 +98,15 @@ export interface OptimizationResult {
 }
 
 interface PipelineStore {
+  projectId: string | null;
+  projectName: string | null;
   filename: string | null;
   analytics: any;
   healthReport: DatasetHealthReport | null;
   intent: IntentState | null;
   optimizationId: string | null;
   result: OptimizationResult | null;
+  setProject: (id: string | null, name?: string | null) => void;
   setDataset: (filename: string, analytics: any, skipSync?: boolean) => void;
   setHealthReport: (report: DatasetHealthReport, skipSync?: boolean) => void;
   setIntent: (intent: IntentState, skipSync?: boolean) => void;
@@ -115,12 +118,16 @@ interface PipelineStore {
 import { create } from "zustand";
 
 export const usePipelineStore = create<PipelineStore>((set) => ({
+  projectId: null,
+  projectName: null,
   filename: null,
   analytics: null,
   healthReport: null,
   intent: null,
   optimizationId: null,
   result: null,
+
+  setProject: (projectId, projectName = null) => set({ projectId, projectName }),
 
   setDataset: (filename, analytics, skipSync = false) => {
     set({ filename, analytics });

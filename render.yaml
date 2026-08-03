@@ -1,0 +1,70 @@
+services:
+  # ── Python ML Engine Web Service ────────────────────────────────────
+  - type: web
+    name: modliq-ml-engine
+    env: python
+    region: oregon
+    plan: starter
+    rootDir: ml-engine
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+
+  # ── Node.js Express Backend API Web Service ─────────────────────────
+  - type: web
+    name: modliq-backend
+    env: node
+    region: oregon
+    plan: starter
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: ML_ENGINE_URL
+        fromService:
+          type: web
+          name: modliq-ml-engine
+          property: url
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: modliq-redis
+          property: connectionString
+
+  # ── Node.js BullMQ Background Worker Service ────────────────────────
+  - type: worker
+    name: modliq-worker
+    env: node
+    region: oregon
+    plan: starter
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npx ts-node src/workers/jobs.worker.ts
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: modliq-redis
+          property: connectionString
+      - key: ML_ENGINE_URL
+        fromService:
+          type: web
+          name: modliq-ml-engine
+          property: url
+
+  # ── Redis Key-Value Store ───────────────────────────────────────────
+  - type: redis
+    name: modliq-redis
+    region: oregon
+    plan: starter
+    maxmemoryPolicy: allkeys-lru

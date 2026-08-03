@@ -1,0 +1,8 @@
+# local.yaml - Development Settings for Modliq ML Engine
+service_name: "modliq-ml-engine"
+environment: "development"
+port: 8000
+log_level: "INFO"
+max_concurrent_jobs: 2
+max_training_seconds: 120
+max_csv_bytes: 50000000

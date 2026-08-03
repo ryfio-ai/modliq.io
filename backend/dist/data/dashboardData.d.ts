@@ -1,5 +1,6 @@
-export declare const dashboardData: {
+export declare function getDashboardMetrics(userId: string): Promise<{
     totalDatasets: number;
+    totalRuns: number;
     activeModels: number;
     predictionsToday: number;
     averageAccuracy: number;
@@ -8,11 +9,8 @@ export declare const dashboardData: {
         title: string;
         time: string;
     }[];
-    modelAccuracy: {
-        model: string;
-        accuracy: number;
-    }[];
-    modelResults: any[];
-    latestTrainingResult: any;
-};
+    modelAccuracy: never[];
+    modelResults: never[];
+    latestTrainingResult: null;
+}>;
 //# sourceMappingURL=dashboardData.d.ts.map

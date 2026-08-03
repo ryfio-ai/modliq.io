@@ -96,7 +96,7 @@ export async function callLLM({
   }
 
   // Setup client options based on provider
-  let apiKey = activeKey;
+  const apiKey = activeKey;
   let baseURL = '';
   let defaultModel = '';
 

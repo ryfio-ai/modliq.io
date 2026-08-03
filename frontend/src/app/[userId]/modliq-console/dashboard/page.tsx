@@ -3,7 +3,7 @@
 import {
   LayoutDashboard, FileSpreadsheet, Target, Activity,
   CheckCircle2, ChevronRight, Upload, ShieldCheck,
-  ShieldAlert, ShieldX, Truck, Factory, Zap, Sparkles
+  ShieldAlert, ShieldX, Truck, Factory, Zap, Sparkles, Award
 } from 'lucide-react';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { usePipelineStore, DatasetHealthReport } from '@/store/pipelineStore';
@@ -13,6 +13,11 @@ import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AiInsightCard from '@/components/ai/AiInsightCard';
+import SPCControlChart from '@/components/charts/SPCControlChart';
+import FishboneDiagram from '@/components/charts/FishboneDiagram';
+import OEEGaugeWidget from '@/components/charts/OEEGaugeWidget';
+import ParetoDefectChart from '@/components/charts/ParetoDefectChart';
+import FMEARiskCalculator from '@/components/ui/FMEARiskCalculator';
 import { isExtendedModulesEnabled } from '@/lib/feature-flags';
 
 // ---------------------------------------------------------------------------
@@ -204,6 +209,28 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      {/* Quality Passport Banner */}
+      <div className="bg-gradient-to-r from-[#1B2A4A] to-[#2B70AB] text-white p-6 rounded-2xl shadow-md flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-white/10 text-amber-300">
+            <Award size={28} />
+          </div>
+          <div>
+            <h3 className="text-base font-bold text-white">Buyer-Ready Quality Passport</h3>
+            <p className="text-xs text-slate-200 mt-0.5">
+              Certify dataset health, process capability (Cp / Cpk), OEE, and trial SOP validation.
+            </p>
+          </div>
+        </div>
+
+        <Link
+          href={`/${userId}/modliq-console/quality-passport`}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-[#1B2A4A] font-bold text-xs hover:bg-slate-100 transition-colors shadow-sm shrink-0"
+        >
+          View Quality Passport <ChevronRight size={16} />
+        </Link>
+      </div>
+
       {/* ---- Operations, Supply Chain, and Lean Summary Cards ---- */}
       {extendedEnabled && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -256,6 +283,34 @@ export default function DashboardPage() {
 
       {/* AI Executive Summary Card */}
       <AiInsightCard module="dashboard" />
+
+      {/* Industrial Manufacturing AI Intelligence Suite Grid */}
+      <div className="space-y-6 pt-4 border-t border-slate-200">
+        <h2 className="text-lg font-bold text-[#1B2A4A] tracking-tight">Real-Time Industrial Process Telemetry & Control</h2>
+        
+        {/* Row 1: SPC Control Chart & OEE Breakdown */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-8">
+            <SPCControlChart />
+          </div>
+          <div className="lg:col-span-4">
+            <OEEGaugeWidget />
+          </div>
+        </div>
+
+        {/* Row 2: Ishikawa Fishbone Diagram & Pareto Analysis */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-7">
+            <FishboneDiagram />
+          </div>
+          <div className="lg:col-span-5">
+            <ParetoDefectChart />
+          </div>
+        </div>
+
+        {/* Row 3: FMEA Risk Priority Matrix */}
+        <FMEARiskCalculator />
+      </div>
 
       {/* Quick links row */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 flex flex-wrap gap-2">

@@ -1,6 +1,5 @@
-// Build-time guard: fail the production build if NEXT_PUBLIC_API_URL is unset.
-// Run via `prebuild`. Exits non-zero to abort the build loudly (no silent
-// fallback to localhost in production).
+import 'dotenv/config';
+
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 if (!url || url.trim().length === 0) {

@@ -1,26 +1,111 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --modliq-navy: #1B2A4A;
+    --modliq-blue: #2B70AB;
+    --modliq-soft: #F0F6FA;
+    --modliq-border: #D0E2F0;
+    --modliq-muted: #64748B;
+    --modliq-success: #16A34A;
+    --modliq-warning: #F59E0B;
+    --modliq-danger: #DC2626;
+
+    --bg-app: 255 255 255;
+    --bg-surface-1: 255 255 255;
+    --bg-surface-2: 240 246 250;
+    --bg-surface-3: 208 226 240;
+
+    --background: 0 0% 100%;
+    --foreground: 220 46% 20%;
+    --border: 207 43% 88%;
+    --muted: 215 16% 47%;
+
+    --primary: 208 60% 42%;
+    --primary-foreground: 0 0% 100%;
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --danger: 0 84% 60%;
+
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-2xl: 20px;
   }
 }
 
+@theme {
+  --font-sans: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif;
+  --color-modliq-navy: #1B2A4A;
+  --color-modliq-blue: #2B70AB;
+  --color-modliq-soft: #F0F6FA;
+  --color-modliq-border: #D0E2F0;
+  --color-modliq-muted: #64748B;
+  --color-modliq-success: #16A34A;
+  --color-modliq-warning: #F59E0B;
+  --color-modliq-danger: #DC2626;
+
+  --shadow-card: 0 8px 24px rgba(27, 42, 74, 0.08);
+  --shadow-soft: 0 4px 16px rgba(27, 42, 74, 0.06);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FFFFFF;
+  color: #1B2A4A;
+  font-family: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Light elevation cards */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid #D0E2F0;
+  box-shadow: 0 8px 24px rgba(27, 42, 74, 0.08);
+}
+
+.glass-card {
+  background: #FFFFFF;
+  border: 1px solid #D0E2F0;
+  box-shadow: 0 4px 16px rgba(27, 42, 74, 0.06);
+  transition: all 0.2s ease-in-out;
+}
+
+.glass-card:hover {
+  border-color: #2B70AB;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(27, 42, 74, 0.12);
+}
+
+/* Custom Light Grid Pattern */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(43, 112, 171, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(43, 112, 171, 0.06) 1px, transparent 1px);
+}
+
+/* Custom Sleek Light Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F0F6FA;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2B70AB;
 }

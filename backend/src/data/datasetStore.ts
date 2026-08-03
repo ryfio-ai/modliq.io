@@ -17,25 +17,27 @@ export async function saveDataset(datasetId: string, data: any) {
       createdAt: new Date(),
     };
 
-    await prisma.dataset.upsert({
-      where: { id: datasetId },
-      update: {
-        ...payload,
-        updatedAt: new Date(),
-      },
-      create: {
-        id: datasetId,
-        ...payload,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+    const existing = await prisma.dataset.findFirst({
+      where: { userId, filename: payload.filename },
     });
+
+    let record;
+    if (existing) {
+      record = await prisma.dataset.update({
+        where: { id: existing.id },
+        data: { ...payload, updatedAt: new Date() },
+      });
+    } else {
+      record = await prisma.dataset.create({
+        data: { user: { connect: { id: userId } }, ...payload },
+      });
+    }
 
     await prisma.datasetVersion.create({
-      data: version,
+      data: { ...version, datasetId: record.id },
     });
 
-    return payload;
+    return { ...payload, id: record.id };
   } catch (err) {
     console.error(`[datasetStore] Error saving dataset ${datasetId}:`, err);
     return data;
@@ -43,10 +45,14 @@ export async function saveDataset(datasetId: string, data: any) {
 }
 
 export async function getDataset(datasetId: string) {
-  const record = await prisma.dataset.findUnique({
+  const byId = await prisma.dataset.findUnique({
     where: { id: datasetId },
   });
-  return record || null;
+  if (byId) return byId;
+
+  return await prisma.dataset.findFirst({
+    where: { filename: datasetId },
+  });
 }
 
 export async function getAllDatasets() {

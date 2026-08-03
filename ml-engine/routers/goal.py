@@ -10,7 +10,7 @@ router = APIRouter()
 class GoalRequest(BaseModel):
     goal_text: str
     template_id: str = "yield_optimizer"
-    columns: list[str] = []
+    columns: list[str] | None = None
 
 
 @router.post("/parse-goal", dependencies=[Depends(verify_service_key)])

@@ -1,45 +1,60 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setActiveDataset = exports.getWorkspace = void 0;
-const mongodb_1 = require("mongodb");
-const DATABASE_URL = process.env.DATABASE_URL || process.env.MONGODB_URI || '';
-const client = DATABASE_URL ? new mongodb_1.MongoClient(DATABASE_URL) : null;
-let db = null;
-async function connect() {
-    if (!client || !DATABASE_URL)
-        return null;
-    if (db)
-        return db;
-    try {
-        await client.connect();
-        db = client.db('modliq');
-        return db;
-    }
-    catch (err) {
-        console.warn('[db] MongoDB connection failed, using in-memory fallback:', err?.message || err);
-        return null;
-    }
-}
-const memoryWorkspaces = new Map();
+exports.getActiveWorkflowId = exports.setActiveWorkflow = exports.setActiveDataset = exports.getWorkspace = void 0;
+const prisma_1 = __importDefault(require("@/lib/prisma"));
 async function getWorkspace(userId) {
-    const database = await connect();
-    if (database) {
-        const record = await database.collection('workspaces').findOne({ _id: userId });
-        if (!record)
-            return { activeDatasetId: null };
-        return { activeDatasetId: record.activeDatasetId };
+    const workspace = await prisma_1.default.workspaceState.findUnique({
+        where: { userId },
+    });
+    if (!workspace) {
+        return { activeDatasetId: null, activeWorkflowId: null };
     }
-    return memoryWorkspaces.get(userId) || { activeDatasetId: null };
+    return {
+        activeDatasetId: workspace.activeDatasetId,
+        activeWorkflowId: workspace.activeWorkflowId,
+    };
 }
 exports.getWorkspace = getWorkspace;
 async function setActiveDataset(userId, datasetId) {
-    const database = await connect();
-    if (database) {
-        await database.collection('workspaces').updateOne({ _id: userId }, { $set: { activeDatasetId: datasetId, updatedAt: new Date() } }, { upsert: true });
-        return { activeDatasetId: datasetId };
-    }
-    memoryWorkspaces.set(userId, { activeDatasetId: datasetId });
+    await prisma_1.default.workspaceState.upsert({
+        where: { userId },
+        update: {
+            activeDatasetId: datasetId,
+            updatedAt: new Date(),
+        },
+        create: {
+            userId,
+            activeDatasetId: datasetId,
+            updatedAt: new Date(),
+        },
+    });
     return { activeDatasetId: datasetId };
 }
 exports.setActiveDataset = setActiveDataset;
+async function setActiveWorkflow(userId, workflowId) {
+    await prisma_1.default.workspaceState.upsert({
+        where: { userId },
+        update: {
+            activeWorkflowId: workflowId,
+            updatedAt: new Date(),
+        },
+        create: {
+            userId,
+            activeWorkflowId: workflowId,
+            updatedAt: new Date(),
+        },
+    });
+    return { activeWorkflowId: workflowId };
+}
+exports.setActiveWorkflow = setActiveWorkflow;
+async function getActiveWorkflowId(userId) {
+    const workspace = await prisma_1.default.workspaceState.findUnique({
+        where: { userId },
+    });
+    return workspace?.activeWorkflowId || null;
+}
+exports.getActiveWorkflowId = getActiveWorkflowId;
 //# sourceMappingURL=workspaceStore.js.map
