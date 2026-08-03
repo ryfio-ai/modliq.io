@@ -1,0 +1,16 @@
+{
+  "name": "modliq-monorepo",
+  "version": "2.4.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "vercel-build": "cd frontend && npm install && npm run build",
+    "start": "cd frontend && npm start"
+  },
+  "dependencies": {
+    "next": "^16.2.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

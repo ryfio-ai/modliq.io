@@ -24,6 +24,10 @@ uploads/
 *.xlsx
 *.xls
 *.json
+!package.json
+!vercel.json
+!frontend/package.json
+!backend/package.json
 !backend/tsconfig.json
 
 # Keep the tracked demo dataset (served by the frontend)
