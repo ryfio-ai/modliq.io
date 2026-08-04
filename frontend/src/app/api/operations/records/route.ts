@@ -33,10 +33,10 @@ export async function GET(request: Request) {
           
           // Detect if operations columns exist in the rows
           const firstRow = rows[0] || {};
-          const keys = Object.keys(firstRow).map(k => k.toLowerCase().replace(/[\s_-]+/g, '_'));
+          const keys = Object.keys(firstRow).map((k: string) => k.toLowerCase().replace(/[\s_-]+/g, '_'));
           
-          const hasLine = keys.some(k => k.includes('line'));
-          const hasDowntime = keys.some(k => k.includes('downtime'));
+          const hasLine = keys.some((k: string) => k.includes('line'));
+          const hasDowntime = keys.some((k: string) => k.includes('downtime'));
           
           if (hasLine || hasDowntime) {
             // Bulk insert up to 100 rows to avoid SQLite blockages
@@ -45,17 +45,17 @@ export async function GET(request: Request) {
               const rKeys = Object.keys(row);
               
               const getStr = (patterns: string[]): string | null => {
-                const foundKey = rKeys.find(k => {
+                const foundKey = rKeys.find((k: string) => {
                   const nk = k.toLowerCase().replace(/[\s_-]+/g, '_');
-                  return patterns.some(p => nk.includes(p));
+                  return patterns.some((p: string) => nk.includes(p));
                 });
                 return foundKey ? String(row[foundKey]) : null;
               };
 
               const getNum = (patterns: string[], fallback = 0): number => {
-                const foundKey = rKeys.find(k => {
+                const foundKey = rKeys.find((k: string) => {
                   const nk = k.toLowerCase().replace(/[\s_-]+/g, '_');
-                  return patterns.some(p => nk.includes(p));
+                  return patterns.some((p: string) => nk.includes(p));
                 });
                 if (!foundKey) return fallback;
                 const parsed = Number(row[foundKey]);

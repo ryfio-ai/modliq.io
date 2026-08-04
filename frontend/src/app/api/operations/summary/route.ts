@@ -48,7 +48,7 @@ export async function GET(request: Request) {
     const shiftOee: Record<string, { count: number; oee: number; yield: number; downtime: number }> = {};
     const machineDowntime: Record<string, number> = {};
 
-    records.forEach(r => {
+    records.forEach((r: any) => {
       const planned = r.plannedTimeMinutes || 480;
       const downtime = r.downtimeMinutes || 0;
       const runtime = Math.max(0, planned - downtime);
@@ -133,7 +133,7 @@ export async function GET(request: Request) {
     // Cumulative Pareto Calculation
     const totalMinutes = paretoData.reduce((s, item) => s + item.value, 0);
     let accum = 0;
-    const paretoWithPercent = paretoData.map(item => {
+    const paretoWithPercent = paretoData.map((item: any) => {
       accum += item.value;
       return {
         ...item,

@@ -32,10 +32,10 @@ export async function GET(request: Request) {
           const rows = Array.isArray(preview) ? preview : (preview.rows || []);
           
           const firstRow = rows[0] || {};
-          const keys = Object.keys(firstRow).map(k => k.toLowerCase().replace(/[\s_-]+/g, '_'));
+          const keys = Object.keys(firstRow).map((k: string) => k.toLowerCase().replace(/[\s_-]+/g, '_'));
           
-          const hasSupplier = keys.some(k => k.includes('supplier'));
-          const hasLot = keys.some(k => k.includes('lot'));
+          const hasSupplier = keys.some((k: string) => k.includes('supplier'));
+          const hasLot = keys.some((k: string) => k.includes('lot'));
 
           if (hasSupplier || hasLot) {
             // Deduplicate by lot code
@@ -45,17 +45,17 @@ export async function GET(request: Request) {
               const rKeys = Object.keys(row);
               
               const getStr = (patterns: string[]): string | null => {
-                const foundKey = rKeys.find(k => {
+                const foundKey = rKeys.find((k: string) => {
                   const nk = k.toLowerCase().replace(/[\s_-]+/g, '_');
-                  return patterns.some(p => nk.includes(p));
+                  return patterns.some((p: string) => nk.includes(p));
                 });
                 return foundKey ? String(row[foundKey]) : null;
               };
 
               const getNum = (patterns: string[], fallback = 0): number => {
-                const foundKey = rKeys.find(k => {
+                const foundKey = rKeys.find((k: string) => {
                   const nk = k.toLowerCase().replace(/[\s_-]+/g, '_');
-                  return patterns.some(p => nk.includes(p));
+                  return patterns.some((p: string) => nk.includes(p));
                 });
                 if (!foundKey) return fallback;
                 const parsed = Number(row[foundKey]);

@@ -40,7 +40,7 @@ export async function GET(request: Request) {
       yieldCount: number;
     }> = {};
 
-    lots.forEach(lot => {
+    lots.forEach((lot: any) => {
       const sName = lot.supplierName || 'Unknown Supplier';
       if (!supplierStats[sName]) {
         supplierStats[sName] = {
@@ -71,7 +71,7 @@ export async function GET(request: Request) {
       }
     });
 
-    const scorecard = Object.values(supplierStats).map(s => {
+    const scorecard = Object.values(supplierStats).map((s: any) => {
       const acceptanceRate = s.totalLots > 0 ? (s.acceptedLots / s.totalLots) * 100 : 100;
       const avgDefectRate = s.totalLots > 0 ? (s.defectRateSum / s.totalLots) * 100 : 0.0;
       const avgYield = s.yieldCount > 0 ? (s.yieldSum / s.yieldCount) : 95.0; // Fallback to 95.0%
@@ -104,11 +104,11 @@ export async function GET(request: Request) {
         score: totalScore,
         status: riskStatus
       };
-    }).sort((a, b) => a.score - b.score); // Worst first to highlight risk
+    }).sort((a: any, b: any) => a.score - b.score); // Worst first to highlight risk
 
     // Supplier alerts
     const alerts: string[] = [];
-    scorecard.forEach(s => {
+    scorecard.forEach((s: any) => {
       if (s.status === 'High Risk') {
         alerts.push(`Supplier ${s.supplierName} is classified as High Risk (Score: ${s.score})`);
       }
@@ -117,7 +117,7 @@ export async function GET(request: Request) {
       }
     });
 
-    lots.forEach(l => {
+    lots.forEach((l: any) => {
       if (l.defectRate && l.defectRate > 0.08) {
         alerts.push(`Material lot ${l.lotCode} (${l.supplierName}) failed incoming inspection with ${Math.round(l.defectRate * 100)}% defects`);
       }
@@ -127,7 +127,7 @@ export async function GET(request: Request) {
     });
 
     // Supplier Yield Correlation Recharts data
-    const supplierYieldChart = scorecard.map(s => ({
+    const supplierYieldChart = scorecard.map((s: any) => ({
       name: s.supplierName,
       yield: s.avgYield,
       defects: s.avgDefectRate
@@ -140,7 +140,7 @@ export async function GET(request: Request) {
         alerts: alerts.slice(0, 5), // return top 5 alerts
         supplierYieldChart,
         totalLotsAnalyzed: lots.length,
-        averageScrapRate: lots.length > 0 ? (lots.filter(l => l.incomingStatus === 'REJECTED').length / lots.length) * 100 : 0
+        averageScrapRate: lots.length > 0 ? (lots.filter((l: any) => l.incomingStatus === 'REJECTED').length / lots.length) * 100 : 0
       }
     });
   } catch (error) {
