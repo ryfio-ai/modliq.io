@@ -1,5 +1,5 @@
 services:
-  # ── Python ML Engine Web Service (100% Free Plan) ───────────────────
+  # ── Python ML Engine Web Service ────────────────────────────────────
   - type: web
     name: modliq-ml-engine
     env: python
@@ -14,7 +14,7 @@ services:
       - key: LOG_LEVEL
         value: INFO
 
-  # ── Node.js Express Backend API Web Service (100% Free Plan) ────────
+  # ── Node.js Express Backend API Web Service ─────────────────────────
   - type: web
     name: modliq-backend
     env: node
@@ -34,7 +34,7 @@ services:
           name: modliq-ml-engine
           property: host
 
-  # ── Next.js Frontend Web Service (100% Free Plan) ───────────────────
+  # ── Next.js Frontend Web Service ────────────────────────────────────
   - type: web
     name: modliq-frontend
     env: node
@@ -47,7 +47,4 @@ services:
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_API_URL
-        fromService:
-          type: web
-          name: modliq-backend
-          property: host
+        value: https://modliq-backend.onrender.com
