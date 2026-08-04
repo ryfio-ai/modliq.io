@@ -1,0 +1,717 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                       String   @id @map("_id")
+  name                     String?
+  email                    String?   @unique
+  emailVerified            DateTime?
+  password                 String?
+  image                    String?
+  isDemo                   Boolean   @default(false)
+  role                     String    @default("USER") // ADMIN | USER
+  defaultOrgId             String?
+  activeDatasetId          String?
+  activeDatasetFilename    String?
+  datasetAnalytics         String?
+  datasetPreview           String?
+  parsedIntent             String?
+  activeOptimizationJobId  String?
+  latestOptimizationResult String?
+  healthReport             String?
+  enabledModules           String[]  @default(["optimization"])
+  updatedAt                DateTime  @default(now()) @updatedAt
+
+  accounts         Account[]
+  sessions         Session[]
+  operations       OperationsRecord[]
+  suppliers        Supplier[]
+  materialLots     MaterialLot[]
+  leanWaste        LeanWasteEvent[]
+  kaizenActions    KaizenAction[]
+  fiveSAudits      FiveSAudit[]
+  aiInsights       AiInsight[]
+  datasets         Dataset[]
+  experiments      Experiment[]
+  models           Model[]
+  chatSessions     ChatSession[]
+  optimizationJobs OptimizationJob[]
+  optimizationRuns OptimizationRun[]
+  integrations     Integration[]
+  aiConversations  AiConversation[]
+  aiMessages       AiMessage[]
+  workspaceState   WorkspaceState?
+  projects         Project[]
+  connectors       DataConnector[]
+  documents        IngestedDocument[]
+  importJobs       ImportJob[]
+}
+
+model Account {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Dataset {
+  id                   String   @id @map("_id")
+  userId               String
+  projectId            String?
+  name                 String?
+  filename             String
+  originalName         String
+  filePath             String?
+  contentType          String?  @default("text/csv")
+  sourceType           String   @default("file") // file | connector | document | demo
+  fileType             String?  // csv | xlsx | xls | pdf | docx
+  connectorId          String?
+  status               String   @default("READY") // READY | PROCESSING | FAILED | REFERENCE_ONLY
+  sizeBytes            Int?
+  totalRows            Int?
+  totalColumns         Int?
+  numericColumns       Int?
+  categoricalColumns   Int?
+  missingValues        Int?
+  duplicateRows        Int?
+  constantColumns      String?
+  suspiciousIdColumns  String?
+  highCorrelationPairs String?
+  outlierColumns       String?
+  healthScore          Int?
+  healthStatus         String?
+  healthWarnings       String?
+  healthSuggestions    String?
+  analytics            String?
+  preview              String?
+  columnsJson          String?
+  analyticsJson        String?
+  previewJson          String?
+  healthJson           String?
+  detectedJson         String?
+  storageKey           String?
+  isDemo               Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  versions     DatasetVersion[]
+  experiments  Experiment[]
+  chatSessions ChatSession[]
+  projects     Project[]
+}
+
+model DataConnector {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String    @db.ObjectId
+  projectId       String?   @db.ObjectId
+  name            String
+  type            String    // postgres | supabase | mongodb | mysql | sqlserver
+  encryptedConfig String
+  status          String    @default("CREATED") // CREATED | CONNECTED | FAILED
+  lastTestedAt    DateTime?
+  lastSyncAt      DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model IngestedDocument {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  projectId    String?  @db.ObjectId
+  name         String
+  fileType     String   // pdf | docx | doc
+  status       String   @default("PROCESSING") // PROCESSING | REFERENCE_ONLY | TABLE_DETECTED | FAILED
+  textPreview  String?
+  tablesJson   String?
+  metadataJson String?
+  storageKey   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ImportJob {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  projectId   String?  @db.ObjectId
+  connectorId String?  @db.ObjectId
+  status      String   @default("QUEUED") // QUEUED | RUNNING | COMPLETED | FAILED
+  progress    Int      @default(0)
+  error       String?
+  resultJson  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DatasetVersion {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  datasetId String
+  versionId String
+  data      String?
+  createdAt DateTime @default(now())
+
+  dataset Dataset @relation(fields: [datasetId], references: [id], onDelete: Cascade)
+
+  @@unique([datasetId, versionId])
+  @@index([datasetId])
+}
+
+model OptimizationJob {
+  id                  String   @id @map("_id")
+  userId      String
+  datasetId   String?
+  status      String   @default("running")
+  stage       String?
+  progress    Int      @default(0)
+  requestJson String?
+  resultJson  String?
+  error       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projects Project[]
+}
+
+model OptimizationRun {
+  id            String   @id @map("_id")
+  userId        String
+  datasetId     String?
+  filename      String
+  template_id   String?
+  intent        String?
+  monthlyVolume Float?
+  unitValue     Float?
+  status        String   @default("completed")
+  result        String?
+  error         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Experiment {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String
+  datasetId       String
+  name            String
+  algorithm       String
+  hyperparameters String?
+  metrics         String?
+  artifacts       String?
+  modelPath       String?
+  status          String   @default("completed")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dataset Dataset @relation(fields: [datasetId], references: [id], onDelete: Cascade)
+}
+
+model Model {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  experimentId    String
+  userId          String
+  name            String
+  description     String?
+  stage           String   @default("development")
+  version         Int      @default(1)
+  deployEndpoint  String?
+  dockerImage     String?
+  apiKeyEncrypted String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  versions ModelVersion[]
+}
+
+model ModelVersion {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  modelId      String
+  version      Int
+  stage        String
+  artifactPath String?
+  metrics      String?
+  changedBy    String
+  changedAt    DateTime @default(now())
+
+  model Model @relation(fields: [modelId], references: [id], onDelete: Cascade)
+
+  @@unique([modelId, version])
+  @@index([modelId])
+}
+
+model ChatSession {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  datasetId String
+  title     String   @default("New Chat")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dataset  Dataset       @relation(fields: [datasetId], references: [id], onDelete: Cascade)
+  messages ChatMessage[]
+}
+
+model ChatMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionId String
+  role      String
+  content   String
+  metadata  String?
+  createdAt DateTime @default(now())
+
+  session ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+}
+
+model Integration {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String
+  type       String
+  config     String?
+  lastSyncAt DateTime?
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OperationsRecord {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                String
+  datasetId             String?
+  batchId               String?
+  line                  String?
+  machine               String?
+  shift                 String?
+  product               String?
+  plannedTimeMinutes    Float?
+  runtimeMinutes        Float?
+  downtimeMinutes       Float?
+  downtimeReason        String?
+  idealCycleTimeSeconds Float?
+  totalCount            Int?
+  goodCount             Int?
+  rejectCount           Int?
+  yieldValue            Float?
+  scrapRate             Float?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Supplier {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  name      String
+  category  String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model MaterialLot {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String
+  supplierName   String?
+  lotCode        String
+  materialType   String?
+  receivedDate   DateTime?
+  incomingStatus String?
+  defectRate     Float?
+  linkedBatchId  String?
+  linkedYield    Float?
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LeanWasteEvent {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  wasteType     String
+  location      String?
+  description   String
+  estimatedLoss Float?
+  owner         String?
+  status        String   @default("Open")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model KaizenAction {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String
+  title           String
+  problem         String?
+  rootCause       String?
+  countermeasure  String?
+  owner           String?
+  priority        String   @default("Medium")
+  status          String   @default("Backlog")
+  dueDate         DateTime?
+  impactArea      String?
+  linkedDatasetId String?
+  linkedBatchId   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model FiveSAudit {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  area        String?
+  sort        Int
+  setInOrder  Int
+  shine       Int
+  standardize Int
+  sustain     Int
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AiInsight {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  module    String
+  title     String
+  summary   String
+  payload   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AiConversation {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AiMessage {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String
+  conversationId String
+  role           String
+  content        String
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WorkspaceState {
+  userId                   String   @id @map("_id") @db.ObjectId
+  activeDatasetId          String?
+  activeWorkflowId         String?
+  activeDatasetFilename    String?
+  datasetAnalytics         String?
+  datasetPreview           String?
+  parsedIntent             String?
+  activeOptimizationJobId  String?
+  latestOptimizationResult String?
+  healthReport             String?
+  updatedAt                DateTime @default(now()) @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Project {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId              String   @db.ObjectId
+  organizationId      String?  @db.ObjectId
+  name                String   @default("Project 1")
+  datasetId           String?
+  parsedGoal          String?
+  optimizationJobId   String?
+  status              String   @default("draft") // draft | queued | optimizing | completed | error
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  user            User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dataset         Dataset?           @relation(fields: [datasetId], references: [id], onDelete: SetNull)
+  optimizationJob OptimizationJob?   @relation(fields: [optimizationJobId], references: [id], onDelete: SetNull)
+  connectors      DataConnector[]
+  documents       IngestedDocument[]
+}
+
+model QualityPassport {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String
+  projectId        String
+  title            String
+  auditScore       Int
+  readinessStatus  String   // AUDIT_READY | CONDITIONALLY_COMPLIANT | REVIEW_REQUIRED | INSUFFICIENT_DATA
+  summaryJson      String
+  executiveSummary String?
+  exportedMarkdown String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model TrainedModel {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  jobId               String
+  modelId             String   @unique
+  name                String
+  version             String   @default("1.0.0")
+  taskType            String
+  algorithm           String
+  metricsJson         String
+  featureImportance   String?
+  hyperparameters     String?
+  featureColumns      String[]
+  targetColumn        String
+  modelSizeMb         Float    @default(0.0)
+  isDeployed          Boolean  @default(false)
+  deploymentStage     String   @default("development")
+  createdAt           DateTime @default(now())
+
+  predictions PredictionLog[]
+}
+
+model PredictionLog {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  modelId         String   @db.ObjectId
+  inputData       String
+  prediction      String
+  inferenceTimeMs Float
+  createdAt       DateTime @default(now())
+
+  model TrainedModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
+}
+
+model ApiKey {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  keyHash     String    @unique
+  name        String
+  permissions String[]  @default(["predict"])
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SAAS PUBLIC LAUNCH PLATFORM MODELS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Organization {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String   @unique
+  ownerUserId String
+  industry    String?
+  companySize String?
+  country     String?
+  state       String?
+  city        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model OrganizationMember {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  userId         String
+  role           String   // OWNER | ADMIN | MANAGER | ENGINEER | VIEWER
+  status         String   // ACTIVE | INVITED | DISABLED
+  invitedEmail   String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Entitlement {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String    @unique @db.ObjectId
+  plan           String    @default("DEMO") // DEMO | PILOT | PRO | ENTERPRISE
+  modulesJson    String    // enabled modules JSON
+  limitsJson     String    // quotas JSON
+  expiresAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model UsageEvent {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String?
+  organizationId String?
+  projectId      String?
+  eventType      String
+  quantity       Int      @default(1)
+  metadataJson   String?
+  createdAt      DateTime @default(now())
+}
+
+model OnboardingState {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String   @unique
+  organizationId String?
+  completedJson  String   @default("[]")
+  dismissed      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Notification {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String
+  organizationId String?
+  projectId      String?
+  type           String
+  title          String
+  message        String
+  severity       String   @default("INFO") // INFO | SUCCESS | WARNING | ERROR
+  read           Boolean  @default(false)
+  actionUrl      String?
+  createdAt      DateTime @default(now())
+}
+
+model SupportTicket {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String
+  organizationId String?
+  subject        String
+  message        String
+  category       String   @default("OTHER") // BUG | FEATURE | BILLING | DATA | OTHER
+  status         String   @default("OPEN")  // OPEN | IN_PROGRESS | RESOLVED | CLOSED
+  priority       String   @default("MEDIUM") // LOW | MEDIUM | HIGH
+  adminResponse  String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model ShareLink {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String
+  organizationId String?
+  projectId      String
+  entityType     String    @default("QUALITY_PASSPORT")
+  entityId       String
+  tokenHash      String    @unique
+  expiresAt      DateTime?
+  revoked        Boolean   @default(false)
+  viewCount      Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Template {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  type         String   // goal | qc_spec | sop | control_plan | capa | audit_checklist
+  industry     String?  // Specialty Chemicals | Food Processing | Pharma / Nutraceuticals | Automotive Components | Packaging / Plastics | Textiles
+  title        String
+  description  String?
+  payloadJson  String
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AuditLog {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String?
+  actorId        String?
+  organizationId String?
+  projectId      String?
+  action         String
+  entityType     String
+  entityId       String?
+  metadataJson   String?
+  createdAt      DateTime @default(now())
+}
+
+model GoalReview {
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String
+  projectId            String
+  datasetId            String?
+  parsedGoalJson       String
+  reviewJson           String
+  confirmedJson        String?
+  status               String   // DRAFT | CONFIRMED | REJECTED
+  safetyAcknowledgedAt DateTime?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model ContactLead {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  company    String?
+  email      String
+  phone      String?
+  city       String?
+  industry   String?
+  role       String?
+  interest   String?
+  message    String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+
+
