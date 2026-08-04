@@ -32,7 +32,7 @@ services:
         fromService:
           type: web
           name: modliq-ml-engine
-          property: url
+          property: host
       - key: REDIS_URL
         fromService:
           type: redis
@@ -55,7 +55,7 @@ services:
         fromService:
           type: web
           name: modliq-backend
-          property: url
+          property: host
 
   # ── Node.js BullMQ Background Worker Service ────────────────────────
   - type: worker
@@ -78,7 +78,7 @@ services:
         fromService:
           type: web
           name: modliq-ml-engine
-          property: url
+          property: host
 
   # ── Redis Key-Value Store ───────────────────────────────────────────
   - type: redis
@@ -86,3 +86,6 @@ services:
     region: oregon
     plan: starter
     maxmemoryPolicy: allkeys-lru
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: internal-access
