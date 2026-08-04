@@ -10,8 +10,8 @@ export default function PublicFooter() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/features" className="hover:text-white transition">Features</Link></li>
               <li><Link href="/pricing" className="hover:text-white transition">Pricing</Link></li>
-              <li><Link href="/docs" className="hover:text-white transition">Docs</Link></li>
               <li><Link href="/comparison" className="hover:text-white transition">Comparison</Link></li>
+              <li><Link href="/workflow" className="hover:text-white transition">Workflow</Link></li>
             </ul>
           </div>
           <div>
@@ -20,13 +20,11 @@ export default function PublicFooter() {
               <li><Link href="/about" className="hover:text-white transition">About</Link></li>
               <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
               <li><Link href="/roi" className="hover:text-white transition">ROI Calculator</Link></li>
-              <li><Link href="/workflow" className="hover:text-white transition">Workflow</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="text-white font-bold text-sm mb-4">Resources</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/docs" className="hover:text-white transition">Documentation</Link></li>
               <li><Link href="/system-architecture" className="hover:text-white transition">Architecture</Link></li>
               <li><Link href="/privacy" className="hover:text-white transition">Privacy</Link></li>
               <li><Link href="/terms" className="hover:text-white transition">Terms</Link></li>

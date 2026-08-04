@@ -10,6 +10,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DocsPage() {
+export default function DocPage() {
   return <DocPortal initialSlug="readme" />;
 }

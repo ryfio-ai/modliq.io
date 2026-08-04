@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Factory, ChevronDown } from "lucide-react";
+import { Menu, X, Factory } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -11,7 +11,6 @@ const navLinks = [
   { href: "/workflow", label: "Workflow" },
   { href: "/comparison", label: "Comparison" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/docs", label: "Docs" },
   { href: "/contact", label: "Contact" },
 ];
 
