@@ -39,6 +39,24 @@ services:
           name: modliq-redis
           property: connectionString
 
+  # ── Next.js Frontend Web Service ────────────────────────────────────
+  - type: web
+    name: modliq-frontend
+    env: node
+    region: oregon
+    plan: starter
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: modliq-backend
+          property: url
+
   # ── Node.js BullMQ Background Worker Service ────────────────────────
   - type: worker
     name: modliq-worker
