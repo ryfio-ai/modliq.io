@@ -322,44 +322,54 @@ export default function HomeClient() {
       <section id="pricing" className="w-full py-16 sm:py-20 bg-[#F0F6FA] border-b border-[#D0E2F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-2">
-            <span className="text-xs font-bold text-[#2B70AB] uppercase tracking-wider">Pricing Plans</span>
-            <h2 className="text-xl sm:text-3xl font-bold text-[#1B2A4A]">Modliq Pricing in INR</h2>
+            <span className="text-xs font-bold text-[#2B70AB] uppercase tracking-wider font-mono">PILOT & ENTERPRISE PLANS</span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#1B2A4A]">Start with a pilot. Scale plant by plant.</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div className="p-6 bg-white border-2 border-[#2B70AB] rounded-2xl space-y-4 shadow-sm relative">
-              <span className="px-2.5 py-1 bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold rounded-full uppercase tracking-wide">
-                10 Slots Open
-              </span>
-              <h3 className="text-xl font-extrabold text-[#1B2A4A]">Launch Pilot</h3>
-              <p className="text-3xl font-black text-[#2B70AB]">₹0</p>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Free for the first 10 selected manufacturing companies. Includes dataset health scoring, process optimization, Quality Studio, and buyer-ready Quality Passports.
-              </p>
+            {/* Launch Pilot Card */}
+            <div className="p-6 sm:p-8 bg-white border-2 border-[#2B70AB] rounded-3xl space-y-5 shadow-sm flex flex-col justify-between">
+              <div className="space-y-3">
+                <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold rounded-full uppercase tracking-wider">
+                  10 Slots Open
+                </span>
+                <h3 className="text-xl font-bold text-[#1B2A4A]">Launch Pilot</h3>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-black text-[#2B70AB]">₹0</span>
+                </div>
+                <p className="text-xs text-slate-500 font-medium">Free for first 10 selected companies.</p>
+                <p className="text-xs text-slate-600 leading-relaxed pt-2 border-t border-slate-100">
+                  Full platform access including dataset health scoring, process optimization, Quality Studio (SPC, Cp/Cpk), and buyer-ready Quality Passports.
+                </p>
+              </div>
               <a
                 href="/contact?interest=free-pilot"
-                className="inline-block w-full text-center py-2.5 px-4 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white text-xs font-bold rounded-xl transition"
+                className="inline-block w-full text-center py-3 px-6 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white text-sm font-bold rounded-xl transition shadow-sm"
               >
-                Apply for Free Launch Pilot
+                Apply for Free Pilot
               </a>
             </div>
 
-            <div className="p-6 bg-[#1B2A4A] text-white rounded-2xl space-y-4 shadow-md flex flex-col justify-between">
+            {/* Enterprise Card */}
+            <div className="p-6 sm:p-8 bg-[#1B2A4A] text-white rounded-3xl space-y-5 shadow-md flex flex-col justify-between">
               <div className="space-y-3">
-                <span className="px-2.5 py-1 bg-blue-900/60 text-blue-200 border border-blue-700/50 text-[10px] font-bold rounded-full uppercase tracking-wide">
-                  Enterprise Grade
+                <span className="inline-block px-3 py-1 bg-blue-900/80 text-blue-200 border border-blue-700/60 text-[10px] font-bold rounded-full uppercase tracking-wider">
+                  Multi-Plant
                 </span>
-                <h3 className="text-xl font-extrabold text-white">Custom Enterprise</h3>
-                <p className="text-3xl font-black text-[#2B70AB]">Custom</p>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Multi-plant deployment, custom database connectors, dedicated SLA support, air-gapped installation, and custom Quality Passport templates.
+                <h3 className="text-xl font-bold text-white">Enterprise</h3>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-black text-[#2B70AB]">Custom</span>
+                </div>
+                <p className="text-xs text-slate-300 font-medium">Multi-plant & dedicated support.</p>
+                <p className="text-xs text-slate-300 leading-relaxed pt-2 border-t border-slate-700/50">
+                  Custom database connectors, admin observability console, buyer share link management, air-gapped offline suite, and dedicated SLAs.
                 </p>
               </div>
               <a
                 href="/contact"
-                className="inline-block w-full text-center py-2.5 px-4 bg-white text-[#1B2A4A] hover:bg-slate-100 text-xs font-bold rounded-xl transition"
+                className="inline-block w-full text-center py-3 px-6 bg-[#2B70AB] hover:bg-blue-600 text-white text-sm font-bold rounded-xl transition shadow-sm"
               >
-                Contact Enterprise Team
+                Request Quote
               </a>
             </div>
           </div>
