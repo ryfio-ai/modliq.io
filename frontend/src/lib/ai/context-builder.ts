@@ -127,7 +127,7 @@ export async function buildWorkspaceAIContext(userId: string): Promise<Workspace
         const downtimeMinutes: Record<string, number> = {};
         const machineDowntime: Record<string, number> = {};
 
-        opRecords.forEach(r => {
+        opRecords.forEach((r: any) => {
           const planned = r.plannedTimeMinutes || 480;
           const downtime = r.downtimeMinutes || 0;
           const runtime = Math.max(0, planned - downtime);
@@ -180,13 +180,13 @@ export async function buildWorkspaceAIContext(userId: string): Promise<Workspace
       const lots = await prisma.materialLot.findMany({ where: { userId } });
       const suppliers = await prisma.supplier.findMany({ where: { userId } });
       const underperformingLots = lots
-        .filter(l => (l.defectRate && l.defectRate > 0.05) || (l.linkedYield && l.linkedYield < 85))
-        .map(l => `${l.lotCode} (${l.supplierName || 'Unknown'})`)
+        .filter((l: any) => (l.defectRate && l.defectRate > 0.05) || (l.linkedYield && l.linkedYield < 85))
+        .map((l: any) => `${l.lotCode} (${l.supplierName || 'Unknown'})`)
         .slice(0, 10);
 
       const supplierLots: Record<string, number> = {};
       const supplierDefectSum: Record<string, number> = {};
-      lots.forEach(l => {
+      lots.forEach((l: any) => {
         if (l.supplierName) {
           supplierLots[l.supplierName] = (supplierLots[l.supplierName] || 0) + 1;
           if (l.defectRate) {
