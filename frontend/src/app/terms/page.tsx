@@ -3,13 +3,25 @@ import PublicNavbar from "@/components/marketing/PublicNavbar";
 import PublicFooter from "@/components/marketing/PublicFooter";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Modliq",
-  description: "Modliq terms of service. Use of the platform is subject to these terms. All AI recommendations should be validated through controlled trials and responsible engineering review.",
+  title: 'Modliq Terms of Service',
+  description:
+    'Modliq Terms of Service for manufacturing intelligence SaaS.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/terms',
+  },
   openGraph: {
-    title: "Modliq Terms of Service",
-    description: "Terms of service for using the Modliq manufacturing intelligence platform.",
-    type: "website",
-    url: "https://modliq.io/terms",
+    title: 'Modliq Terms of Service',
+    description:
+      'Modliq Terms of Service for manufacturing intelligence SaaS.',
+    url: 'https://modliq-io.vercel.app/terms',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modliq Terms of Service',
+    description:
+      'Modliq Terms of Service for manufacturing intelligence SaaS.',
+    images: ['/og/modliq-og.png'],
   },
 };
 

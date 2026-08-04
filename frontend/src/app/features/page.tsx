@@ -6,13 +6,25 @@ import IndiaBadge from "@/components/marketing/IndiaBadge";
 import { Database, Shield, Target, BarChart3, Package, Beaker, Zap, FileText, Upload, CheckCircle, Settings, TrendingUp, Layers, GitBranch, Wrench, BookOpen, Brain, Scale, FileSpreadsheet } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Features — Modliq AI Manufacturing Intelligence Platform",
-  description: "Explore Modliq features: Data Ingestion, Dataset Health, Optimization, Quality Studio, Operations, Supply Chain, Lean, AI Copilot, and Quality Passport. Built for Indian manufacturers.",
+  title: 'Modliq Features — Data Ingestion, Optimization, Quality Studio, OEE, Supplier Risk',
+  description:
+    'Explore Modliq features including universal data ingestion, dataset health scoring, goal parsing, ML optimization, Quality Studio, operations, supply chain, lean tools, AI Copilot, and Quality Passport.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/features',
+  },
   openGraph: {
-    title: "Modliq Features — AI Manufacturing Intelligence Platform",
-    description: "Data ingestion, dataset health, optimization, quality studio, operations, supply chain, lean, AI copilot, and Quality Passport.",
-    type: "website",
-    url: "https://modliq.io/features",
+    title: 'Modliq Features — Data Ingestion, Optimization, Quality Studio, OEE, Supplier Risk',
+    description:
+      'Explore Modliq features including universal data ingestion, dataset health scoring, goal parsing, ML optimization, Quality Studio, operations, supply chain, lean tools, AI Copilot, and Quality Passport.',
+    url: 'https://modliq-io.vercel.app/features',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modliq Features — Data Ingestion, Optimization, Quality Studio, OEE, Supplier Risk',
+    description:
+      'Explore Modliq features including universal data ingestion, dataset health scoring, goal parsing, ML optimization, Quality Studio, operations, supply chain, lean tools, AI Copilot, and Quality Passport.',
+    images: ['/og/modliq-og.png'],
   },
 };
 

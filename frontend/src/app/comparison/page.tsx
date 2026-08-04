@@ -5,13 +5,25 @@ import IndiaBadge from "@/components/marketing/IndiaBadge";
 import { Table, X, Check } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Comparison — Modliq vs Alternatives",
-  description: "Compare Modliq against Excel/manual QC, BI dashboards, ERP/MES, consultants, generic AI chatbots, and traditional AutoML for manufacturing intelligence.",
+  title: 'Modliq Comparison — Excel vs BI vs ERP vs Manufacturing Intelligence',
+  description:
+    'Compare Modliq with Excel, BI dashboards, ERP/MES, consultants, and generic AI tools for manufacturing data analysis and quality reporting.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/comparison',
+  },
   openGraph: {
-    title: "Modliq Comparison — Manufacturing Intelligence Platform",
-    description: "See how Modliq compares to Excel, BI dashboards, ERP/MES, consultants, and generic AI tools for manufacturing.",
-    type: "website",
-    url: "https://modliq.io/comparison",
+    title: 'Modliq Comparison — Excel vs BI vs ERP vs Manufacturing Intelligence',
+    description:
+      'Compare Modliq with Excel, BI dashboards, ERP/MES, consultants, and generic AI tools for manufacturing data analysis and quality reporting.',
+    url: 'https://modliq-io.vercel.app/comparison',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modliq Comparison — Excel vs BI vs ERP vs Manufacturing Intelligence',
+    description:
+      'Compare Modliq with Excel, BI dashboards, ERP/MES, consultants, and generic AI tools for manufacturing data analysis and quality reporting.',
+    images: ['/og/modliq-og.png'],
   },
 };
 

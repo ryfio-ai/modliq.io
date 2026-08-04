@@ -7,13 +7,25 @@ import DisclaimerBox from "@/components/marketing/DisclaimerBox";
 import { Rocket, Shield, Crown, Zap } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Pricing — Modliq Manufacturing Intelligence Platform",
-  description: "Modliq pricing for Indian manufacturers: Demo (free), Pilot (₹99,000/30 days), Pro (₹49,000/month/plant), and Enterprise (custom). Early access pricing.",
+  title: 'Modliq Pricing — Manufacturing Intelligence Pilot Plans in INR',
+  description:
+    'View Modliq pricing in INR, including free launch pilot slots, paid pilot plans, Pro plant pricing, and Enterprise options.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/pricing',
+  },
   openGraph: {
-    title: "Modliq Pricing — Early Access for Indian Manufacturers",
-    description: "Affordable pricing for Indian MSME manufacturers. Demo free, Pilot ₹99,000, Pro ₹49,000/month, Enterprise custom.",
-    type: "website",
-    url: "https://modliq.io/pricing",
+    title: 'Modliq Pricing — Manufacturing Intelligence Pilot Plans in INR',
+    description:
+      'View Modliq pricing in INR, including free launch pilot slots, paid pilot plans, Pro plant pricing, and Enterprise options.',
+    url: 'https://modliq-io.vercel.app/pricing',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modliq Pricing — Manufacturing Intelligence Pilot Plans in INR',
+    description:
+      'View Modliq pricing in INR, including free launch pilot slots, paid pilot plans, Pro plant pricing, and Enterprise options.',
+    images: ['/og/modliq-og.png'],
   },
 };
 

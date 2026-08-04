@@ -1,0 +1,48 @@
+# Modliq
+
+Modliq is a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India.
+
+Website: https://modliq-io.vercel.app/
+Parent company: Qeltrava AI
+Parent website: https://qeltravaai.vercel.app/en
+LinkedIn: https://www.linkedin.com/company/qeltravai/
+Instagram: https://www.instagram.com/qeltravaai
+
+Modliq helps manufacturers upload or connect production data, check dataset readiness, optimize process settings, validate quality with SPC and Cp/Cpk, track OEE and supplier risk, manage lean actions, and generate buyer-ready Quality Passports.
+
+Primary audience:
+- Manufacturing companies
+- Indian MSME manufacturers
+- Plant heads
+- Quality managers
+- Process engineers
+- Operations managers
+- Supplier quality teams
+- Lean and continuous improvement teams
+
+Core features:
+- CSV and Excel data ingestion
+- PDF and Word reference documents
+- Supabase/Postgres and MongoDB connectors
+- Dataset health scoring
+- Natural language goal parsing
+- Review and Confirm setup wizard
+- ML process optimization
+- Quality Studio with SPC, Cp/Cpk, and AQL
+- OEE and operations intelligence
+- Supplier and material lot traceability
+- Lean and Kaizen tracking
+- AI Copilot for explanation and documentation
+- Quality Passport for buyer-ready reporting
+
+Important safety note:
+Modliq provides decision-support recommendations based on user-provided data. It does not guarantee production outcomes, buyer approval, audit certification, or regulatory compliance. All process changes should be validated through controlled trials and responsible engineering review.
+
+Key pages:
+- https://modliq-io.vercel.app/
+- https://modliq-io.vercel.app/features
+- https://modliq-io.vercel.app/workflow
+- https://modliq-io.vercel.app/system-architecture
+- https://modliq-io.vercel.app/pricing
+- https://modliq-io.vercel.app/roi
+- https://modliq-io.vercel.app/contact

@@ -4,15 +4,25 @@ import PublicFooter from '@/components/layout/PublicFooter';
 import { Factory, MapPin, Users, Target, Lightbulb, Shield, Scale, Rocket, ExternalLink } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'About Modliq — A Manufacturing Intelligence Product by Qeltrava AI',
+  title: 'About Modliq — A Product by Qeltrava AI',
   description:
-    'Modliq is a manufacturing intelligence product built by Qeltrava AI from Tamil Nadu, India. We help manufacturers turn production data into better process decisions, quality evidence, and buyer-ready Quality Passports.',
+    'Learn about Modliq, a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India for manufacturing teams.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/about',
+  },
   openGraph: {
-    title: 'About Modliq — A Manufacturing Intelligence Product by Qeltrava AI',
+    title: 'About Modliq — A Product by Qeltrava AI',
     description:
-      'Modliq is built by Qeltrava AI from Tamil Nadu for the manufacturing world. Helping manufacturers turn production data into better decisions.',
-    type: 'website',
-    url: 'https://modliq.io/about',
+      'Learn about Modliq, a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India for manufacturing teams.',
+    url: 'https://modliq-io.vercel.app/about',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Modliq — A Product by Qeltrava AI',
+    description:
+      'Learn about Modliq, a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India for manufacturing teams.',
+    images: ['/og/modliq-og.png'],
   },
 };
 

@@ -7,13 +7,25 @@ import IndiaBadge from "@/components/marketing/IndiaBadge";
 import DisclaimerBox from "@/components/marketing/DisclaimerBox";
 
 export const metadata: Metadata = {
-  title: "ROI Calculator — Modliq Manufacturing Intelligence Platform",
-  description: "Calculate your factory savings with Modliq ROI calculator in INR. Estimate yield savings, rejection savings, and downtime savings for your manufacturing operation.",
+  title: 'Modliq ROI Calculator — Estimate Manufacturing Quality and Yield Savings',
+  description:
+    'Use the Modliq ROI calculator to estimate potential savings from yield improvement, defect reduction, downtime reduction, and better manufacturing decisions.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/roi',
+  },
   openGraph: {
-    title: "Modliq ROI Calculator — Estimate Your Factory Savings",
-    description: "Calculate monthly and annual savings from yield improvement, rejection reduction, and downtime savings in Indian Rupees (₹).",
-    type: "website",
-    url: "https://modliq.io/roi",
+    title: 'Modliq ROI Calculator — Estimate Manufacturing Quality and Yield Savings',
+    description:
+      'Use the Modliq ROI calculator to estimate potential savings from yield improvement, defect reduction, downtime reduction, and better manufacturing decisions.',
+    url: 'https://modliq-io.vercel.app/roi',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modliq ROI Calculator — Estimate Manufacturing Quality and Yield Savings',
+    description:
+      'Use the Modliq ROI calculator to estimate potential savings from yield improvement, defect reduction, downtime reduction, and better manufacturing decisions.',
+    images: ['/og/modliq-og.png'],
   },
 };
 

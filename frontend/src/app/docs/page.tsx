@@ -5,13 +5,25 @@ import IndiaBadge from "@/components/marketing/IndiaBadge";
 import { BookOpen, FileText, Database, Upload, Settings, Shield, Brain, Key, Terminal, Table } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Docs — Modliq Manufacturing Intelligence Platform",
-  description: "Modliq documentation: Getting started, uploading data, dataset health, writing goals, optimization, Quality Studio, operations, supply chain, lean, Quality Passport, AI Copilot, and security.",
+  title: 'Modliq Docs — Manufacturing Intelligence Platform Guide',
+  description:
+    'Learn how to use Modliq for data upload, dataset health checks, optimization goals, Quality Studio, OEE, supplier traceability, lean actions, and Quality Passport.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/docs',
+  },
   openGraph: {
-    title: "Modliq Documentation — Manufacturing Intelligence Platform",
-    description: "Practical docs for uploading data, connecting databases, writing goals, running optimization, and generating Quality Passports.",
-    type: "website",
-    url: "https://modliq.io/docs",
+    title: 'Modliq Docs — Manufacturing Intelligence Platform Guide',
+    description:
+      'Learn how to use Modliq for data upload, dataset health checks, optimization goals, Quality Studio, OEE, supplier traceability, lean actions, and Quality Passport.',
+    url: 'https://modliq-io.vercel.app/docs',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modliq Docs — Manufacturing Intelligence Platform Guide',
+    description:
+      'Learn how to use Modliq for data upload, dataset health checks, optimization goals, Quality Studio, OEE, supplier traceability, lean actions, and Quality Passport.',
+    images: ['/og/modliq-og.png'],
   },
 };
 

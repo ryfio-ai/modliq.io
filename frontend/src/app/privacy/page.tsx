@@ -3,13 +3,25 @@ import PublicNavbar from "@/components/marketing/PublicNavbar";
 import PublicFooter from "@/components/marketing/PublicFooter";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Modliq",
-  description: "Modliq privacy policy. We do not sell your manufacturing data. API keys and connector credentials are encrypted and never shared.",
+  title: 'Modliq Privacy Policy — Data Security & Privacy',
+  description:
+    'Modliq Privacy Policy detailing data security, encrypted connectors, and user data protection.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/privacy',
+  },
   openGraph: {
-    title: "Modliq Privacy Policy",
-    description: "Your manufacturing data is safe with Modliq. We do not sell, share, or use your data for training without consent.",
-    type: "website",
-    url: "https://modliq.io/privacy",
+    title: 'Modliq Privacy Policy — Data Security & Privacy',
+    description:
+      'Modliq Privacy Policy detailing data security, encrypted connectors, and user data protection.',
+    url: 'https://modliq-io.vercel.app/privacy',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modliq Privacy Policy — Data Security & Privacy',
+    description:
+      'Modliq Privacy Policy detailing data security, encrypted connectors, and user data protection.',
+    images: ['/og/modliq-og.png'],
   },
 };
 

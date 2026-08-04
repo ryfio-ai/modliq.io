@@ -5,13 +5,25 @@ import SystemArchitectureDiagram from "@/components/marketing/SystemArchitecture
 import IndiaBadge from "@/components/marketing/IndiaBadge";
 
 export const metadata: Metadata = {
-  title: "System Architecture — Modliq Manufacturing Intelligence Platform",
-  description: "Modliq system architecture: Next.js frontend, Express API Gateway, MongoDB Atlas, BullMQ + Redis queue, FastAPI ML Engine, AI Gateway, Cloudflare R2 storage, NextAuth.js / JWT auth.",
+  title: 'Modliq System Architecture — Secure Manufacturing Data Platform',
+  description:
+    'Understand Modliq’s secure architecture with Next.js frontend, Express API gateway, MongoDB, Redis, FastAPI ML engine, service keys, and backend-only AI providers.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/system-architecture',
+  },
   openGraph: {
-    title: "Modliq System Architecture",
-    description: "See how Modliq's architecture secures your data with server-side API keys, encrypted connector credentials, and scoped project data.",
-    type: "website",
-    url: "https://modliq.io/system-architecture",
+    title: 'Modliq System Architecture — Secure Manufacturing Data Platform',
+    description:
+      'Understand Modliq’s secure architecture with Next.js frontend, Express API gateway, MongoDB, Redis, FastAPI ML engine, service keys, and backend-only AI providers.',
+    url: 'https://modliq-io.vercel.app/system-architecture',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modliq System Architecture — Secure Manufacturing Data Platform',
+    description:
+      'Understand Modliq’s secure architecture with Next.js frontend, Express API gateway, MongoDB, Redis, FastAPI ML engine, service keys, and backend-only AI providers.',
+    images: ['/og/modliq-og.png'],
   },
 };
 

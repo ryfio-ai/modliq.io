@@ -5,13 +5,25 @@ import WorkflowSteps from "@/components/marketing/WorkflowSteps";
 import IndiaBadge from "@/components/marketing/IndiaBadge";
 
 export const metadata: Metadata = {
-  title: "Workflow — Modliq Manufacturing Intelligence Platform",
-  description: "Step-by-step workflow for using Modliq: create project, upload data, review health, set goals, run optimization, validate quality, and generate Quality Passports.",
+  title: 'Modliq Workflow — From Factory Data to Quality Passport',
+  description:
+    'See the Modliq workflow from data ingestion and health scoring to optimization, quality validation, operations insight, and buyer-ready Quality Passport.',
+  alternates: {
+    canonical: 'https://modliq-io.vercel.app/workflow',
+  },
   openGraph: {
-    title: "Modliq Workflow — Step-by-Step Manufacturing Intelligence",
-    description: "10-step workflow from project creation to Quality Passport generation.",
-    type: "website",
-    url: "https://modliq.io/workflow",
+    title: 'Modliq Workflow — From Factory Data to Quality Passport',
+    description:
+      'See the Modliq workflow from data ingestion and health scoring to optimization, quality validation, operations insight, and buyer-ready Quality Passport.',
+    url: 'https://modliq-io.vercel.app/workflow',
+    images: ['/og/modliq-og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modliq Workflow — From Factory Data to Quality Passport',
+    description:
+      'See the Modliq workflow from data ingestion and health scoring to optimization, quality validation, operations insight, and buyer-ready Quality Passport.',
+    images: ['/og/modliq-og.png'],
   },
 };
 
