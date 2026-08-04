@@ -1,10 +1,10 @@
 services:
-  # ── Python ML Engine Web Service ────────────────────────────────────
+  # ── Python ML Engine Web Service (100% Free Plan) ───────────────────
   - type: web
     name: modliq-ml-engine
     env: python
     region: oregon
-    plan: starter
+    plan: free
     rootDir: ml-engine
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -14,12 +14,12 @@ services:
       - key: LOG_LEVEL
         value: INFO
 
-  # ── Node.js Express Backend API Web Service ─────────────────────────
+  # ── Node.js Express Backend API Web Service (100% Free Plan) ────────
   - type: web
     name: modliq-backend
     env: node
     region: oregon
-    plan: starter
+    plan: free
     rootDir: backend
     buildCommand: npm install && npx prisma generate && npm run build
     startCommand: npm start
@@ -33,18 +33,13 @@ services:
           type: web
           name: modliq-ml-engine
           property: host
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: modliq-redis
-          property: connectionString
 
-  # ── Next.js Frontend Web Service ────────────────────────────────────
+  # ── Next.js Frontend Web Service (100% Free Plan) ───────────────────
   - type: web
     name: modliq-frontend
     env: node
     region: oregon
-    plan: starter
+    plan: free
     rootDir: frontend
     buildCommand: npm install && npm run build
     startCommand: npm start
@@ -56,36 +51,3 @@ services:
           type: web
           name: modliq-backend
           property: host
-
-  # ── Node.js BullMQ Background Worker Service ────────────────────────
-  - type: worker
-    name: modliq-worker
-    env: node
-    region: oregon
-    plan: starter
-    rootDir: backend
-    buildCommand: npm install && npx prisma generate && npm run build
-    startCommand: npx ts-node src/workers/jobs.worker.ts
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: modliq-redis
-          property: connectionString
-      - key: ML_ENGINE_URL
-        fromService:
-          type: web
-          name: modliq-ml-engine
-          property: host
-
-  # ── Redis Key-Value Store ───────────────────────────────────────────
-  - type: redis
-    name: modliq-redis
-    region: oregon
-    plan: starter
-    maxmemoryPolicy: allkeys-lru
-    ipAllowList:
-      - source: 0.0.0.0/0
-        description: internal-access
