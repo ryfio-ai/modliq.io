@@ -4,11 +4,22 @@
 
 ---
 
-## 📚 Documentation & System Blueprint
+## 📚 Launch Documentation Pack
 
-- 🏗️ **[System Architecture Blueprint](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/SYSTEM_ARCHITECTURE.md)** — Complete 3-tier microservice architecture, Mermaid topology diagrams, folder responsibilities, and scalability guidelines.
-- 📋 **[Development Roadmap & Launch Checklist](file:///c:/Users/sathish/Desktop/Modliq/Modliq/TODO.md)** — Core platform features status, P0 launch blockers, and P1 polish tasks.
-- 📖 **[Phase 2 Features Implementation Guide](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/PHASE_2_IMPLEMENTATION_GUIDE.md)** — MinIO S3 storage, OAuth 2.0, RBAC, PyTest/Jest/Playwright test suites, Sentry tracking, and Slack webhook alerts.
+Modliq features a launch-ready documentation pack located in [`/docs`](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/README.md):
+
+- 📖 **[Documentation Index & Onboarding Paths](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/README.md)** — Main documentation hub and persona onboarding guides
+- 📌 **[Product Overview](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PRODUCT_OVERVIEW.md)** — Platform vision, problem statement, Qeltrava AI & Tamil Nadu positioning
+- 🏗️ **[System Architecture Blueprint](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/01-architecture/SYSTEM_ARCHITECTURE.md)** — 3-tier microservice architecture, Mermaid topology & data flows
+- 🎨 **[Frontend Architecture Overview](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/FRONTEND_OVERVIEW.md)** — Next.js 15 App Router, UI components, & theme system
+- ⚙️ **[Backend API Gateway Overview](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/03-backend/BACKEND_OVERVIEW.md)** — Express API gateway, Prisma ORM, & middleware stack
+- 🐍 **[ML Engine Architecture](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/04-ml-engine/ML_ENGINE_OVERVIEW.md)** — FastAPI Python microservice, AutoML zoo, & SPC quality stats
+- 🚢 **[Production Deployment Overview](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/08-deployment/DEPLOYMENT_OVERVIEW.md)** — Vercel + Render + MongoDB Atlas + Redis topology
+- 💻 **[Local Development Setup Guide](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/11-developer-onboarding/SETUP_LOCAL.md)** — Step-by-step local environment setup
+- 🚀 **[Public Launch Signoff Report](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/10-launch/LAUNCH_SIGNOFF.md)** — 10-phase audit signoff & final verdict
+
+> 📜 **Documentation Maintenance Rule:**  
+> Whenever routes, database models, environment variables, service boundaries, deployment settings, or launch status change, update the relevant documentation files in `/docs` in the same pull request.
 
 ---
 
