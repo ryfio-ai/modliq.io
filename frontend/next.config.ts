@@ -21,7 +21,10 @@ const nextConfig: NextConfig = {
     return config;
   },
   async rewrites() {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+    let backendUrl = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001").trim();
+    if (!/^https?:\/\//.test(backendUrl)) {
+      backendUrl = `http://${backendUrl}`;
+    }
     return [
       {
         source: "/api/v1/:path*",
