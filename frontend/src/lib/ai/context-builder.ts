@@ -218,7 +218,7 @@ export async function buildWorkspaceAIContext(userId: string): Promise<Workspace
         where: { userId, status: { not: 'Completed' } }
       });
       const wasteEvents = await prisma.leanWasteEvent.findMany({ where: { userId } });
-      const totalEstimatedLoss = wasteEvents.reduce((sum, w) => sum + (w.estimatedLoss || 0), 0);
+      const totalEstimatedLoss = wasteEvents.reduce((sum: number, w: any) => sum + (w.estimatedLoss || 0), 0);
 
       const latestAudit = await prisma.fiveSAudit.findFirst({
         where: { userId },
