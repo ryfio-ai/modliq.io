@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma';
+import prisma from '../lib/prisma';
 
 export async function getDashboardMetrics(userId: string) {
   const totalDatasets = await prisma.dataset.count({

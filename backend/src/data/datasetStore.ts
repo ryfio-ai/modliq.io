@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma';
+import prisma from '../lib/prisma';
 
 export async function saveDataset(datasetId: string, data: any) {
   try {
