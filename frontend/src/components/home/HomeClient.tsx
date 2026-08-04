@@ -326,27 +326,41 @@ export default function HomeClient() {
             <h2 className="text-xl sm:text-3xl font-bold text-[#1B2A4A]">Modliq Pricing in INR</h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 bg-white border-2 border-[#2B70AB] rounded-2xl space-y-3">
-              <span className="px-2 py-0.5 bg-amber-50 text-amber-700 text-[10px] font-bold rounded-full">10 Slots Open</span>
-              <h3 className="text-base font-bold text-[#1B2A4A]">Launch Pilot</h3>
-              <p className="text-2xl font-extrabold text-[#2B70AB]">₹0</p>
-              <p className="text-xs text-slate-500">Free for first 10 selected companies.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="p-6 bg-white border-2 border-[#2B70AB] rounded-2xl space-y-4 shadow-sm relative">
+              <span className="px-2.5 py-1 bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold rounded-full uppercase tracking-wide">
+                10 Slots Open
+              </span>
+              <h3 className="text-xl font-extrabold text-[#1B2A4A]">Launch Pilot</h3>
+              <p className="text-3xl font-black text-[#2B70AB]">₹0</p>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Free for the first 10 selected manufacturing companies. Includes dataset health scoring, process optimization, Quality Studio, and buyer-ready Quality Passports.
+              </p>
+              <a
+                href="/contact?interest=free-pilot"
+                className="inline-block w-full text-center py-2.5 px-4 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white text-xs font-bold rounded-xl transition"
+              >
+                Apply for Free Launch Pilot
+              </a>
             </div>
-            <div className="p-5 bg-white border border-[#D0E2F0] rounded-2xl space-y-3">
-              <h3 className="text-base font-bold text-[#1B2A4A]">Paid Pilot</h3>
-              <p className="text-2xl font-extrabold text-[#1B2A4A]">₹99,000</p>
-              <p className="text-xs text-slate-500">30-day single line pilot program.</p>
-            </div>
-            <div className="p-5 bg-white border border-[#D0E2F0] rounded-2xl space-y-3">
-              <h3 className="text-base font-bold text-[#1B2A4A]">Pro Plant</h3>
-              <p className="text-2xl font-extrabold text-[#1B2A4A]">₹49,000 / mo</p>
-              <p className="text-xs text-slate-500">Per plant / month unlimited users.</p>
-            </div>
-            <div className="p-5 bg-[#1B2A4A] text-white rounded-2xl space-y-3">
-              <h3 className="text-base font-bold text-white">Enterprise</h3>
-              <p className="text-2xl font-extrabold text-[#2B70AB]">Custom</p>
-              <p className="text-xs text-slate-300">Multi-plant & dedicated support.</p>
+
+            <div className="p-6 bg-[#1B2A4A] text-white rounded-2xl space-y-4 shadow-md flex flex-col justify-between">
+              <div className="space-y-3">
+                <span className="px-2.5 py-1 bg-blue-900/60 text-blue-200 border border-blue-700/50 text-[10px] font-bold rounded-full uppercase tracking-wide">
+                  Enterprise Grade
+                </span>
+                <h3 className="text-xl font-extrabold text-white">Custom Enterprise</h3>
+                <p className="text-3xl font-black text-[#2B70AB]">Custom</p>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Multi-plant deployment, custom database connectors, dedicated SLA support, air-gapped installation, and custom Quality Passport templates.
+                </p>
+              </div>
+              <a
+                href="/contact"
+                className="inline-block w-full text-center py-2.5 px-4 bg-white text-[#1B2A4A] hover:bg-slate-100 text-xs font-bold rounded-xl transition"
+              >
+                Contact Enterprise Team
+              </a>
             </div>
           </div>
         </div>

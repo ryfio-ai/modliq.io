@@ -143,8 +143,8 @@ export default function ContactClient() {
                 <label className="block text-xs font-medium text-slate-700 mb-2">Interested in</label>
                 <div className="flex flex-wrap gap-4">
                   {[
-                    { label: 'Free Pilot (10 slots)', val: 'free-pilot' },
-                    { label: 'Paid pilot', val: 'paid-pilot' },
+                    { label: 'Launch Pilot (10 slots free)', val: 'free-pilot' },
+                    { label: 'Custom Enterprise Plan', val: 'enterprise' },
                     { label: 'Quality Passport', val: 'quality-passport' },
                     { label: 'Data integration', val: 'data-integration' },
                   ].map((opt) => (
