@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/workflow", label: "Workflow" },
   { href: "/comparison", label: "Comparison" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/docs", label: "Docs" },
   { href: "/contact", label: "Contact" },
 ];
 

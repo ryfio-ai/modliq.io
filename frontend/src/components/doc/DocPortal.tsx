@@ -91,7 +91,7 @@ export default function DocPortal({ initialSlug }: DocPortalProps) {
   const handleSelectDoc = (slug: string) => {
     setSelectedSlug(slug);
     setMobileMenuOpen(false);
-    router.push(`/doc/${slug}`, { scroll: false });
+    router.push(`/developer/doc/${slug}`, { scroll: false });
   };
 
   const toggleCategory = (catId: string) => {
