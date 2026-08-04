@@ -56,14 +56,21 @@ router.post('/upload', upload.single('file'), async (req: any, res: any) => {
   }
 });
 
-// Database connector proxy endpoint
+// Database connector proxy endpoint (SSRF & Credential Protection)
 router.post('/connect-db', async (req: any, res: any) => {
   const schema = z.object({
     connectionUrl: z.string(),
-    query: z.string()
+    query: z.string().optional()
   });
   const parsed = schema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: 'Invalid config', details: parsed.error });
+
+  try {
+    const { validateConnectorHost } = await import('../security/ssrf');
+    await validateConnectorHost(parsed.data.connectionUrl);
+  } catch (err: any) {
+    return res.status(400).json({ error: err.message || 'SSRF check failed for connection target' });
+  }
 
   const datasetId = `ds_db_${Date.now()}`;
   res.status(200).json({ datasetId, message: 'Database connected', profile: { row_count: 500, col_count: 8, quality_score: 98.0, columns: [] } });

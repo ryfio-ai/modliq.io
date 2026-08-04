@@ -99,20 +99,37 @@ router.patch('/preferences/modules', requireAuth, async (req, res) => {
   }
 });
 
-// Get single project
+// Get single project (IDOR protected: verifies userId ownership)
 router.get('/:id', requireAuth, async (req, res) => {
+  const userId = (req as any).user?.userId || (req as any).user?.id;
+  if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+
   try {
     const project = await getProject(req.params.id as string);
     if (!project) return res.status(404).json({ success: false, error: 'Project not found' });
+
+    if (project.userId !== userId) {
+      return res.status(403).json({ success: false, error: 'Forbidden: Access denied to this project' });
+    }
+
     res.json({ success: true, project });
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message || 'Failed to fetch project' });
   }
 });
 
-// Update project
+// Update project (IDOR protected: verifies userId ownership)
 router.patch('/:id', requireAuth, async (req, res) => {
+  const userId = (req as any).user?.userId || (req as any).user?.id;
+  if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+
   try {
+    const existing = await getProject(req.params.id as string);
+    if (!existing) return res.status(404).json({ success: false, error: 'Project not found' });
+    if (existing.userId !== userId) {
+      return res.status(403).json({ success: false, error: 'Forbidden: Access denied to update this project' });
+    }
+
     const { name, datasetId, parsedGoal, optimizationJobId, status } = req.body;
     const project = await updateProject(req.params.id as string, {
       name,
@@ -127,9 +144,18 @@ router.patch('/:id', requireAuth, async (req, res) => {
   }
 });
 
-// Delete project
+// Delete project (IDOR protected: verifies userId ownership)
 router.delete('/:id', requireAuth, async (req, res) => {
+  const userId = (req as any).user?.userId || (req as any).user?.id;
+  if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+
   try {
+    const existing = await getProject(req.params.id as string);
+    if (!existing) return res.status(404).json({ success: false, error: 'Project not found' });
+    if (existing.userId !== userId) {
+      return res.status(403).json({ success: false, error: 'Forbidden: Access denied to delete this project' });
+    }
+
     await deleteProject(req.params.id as string);
     res.json({ success: true });
   } catch (err: any) {
