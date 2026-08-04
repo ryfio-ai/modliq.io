@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     const wasteLosses: Record<string, number> = {};
     let totalEstimatedLoss = 0;
 
-    wasteEvents.forEach(w => {
+    wasteEvents.forEach((w: any) => {
       const type = w.wasteType || 'Other';
       const loss = w.estimatedLoss || 0;
       wasteLosses[type] = (wasteLosses[type] || 0) + loss;
@@ -39,16 +39,16 @@ export async function GET(request: Request) {
       .sort((a, b) => b.value - a.value);
 
     // Calculate Kaizen stats
-    const openKaizenCount = kaizenActions.filter(a => a.status !== 'Completed').length;
-    const completedKaizenCount = kaizenActions.filter(a => a.status === 'Completed').length;
+    const openKaizenCount = kaizenActions.filter((a: any) => a.status !== 'Completed').length;
+    const completedKaizenCount = kaizenActions.filter((a: any) => a.status === 'Completed').length;
     
     // Group Kaizen actions by status for Kanban visualization
     const kanbanGroups = {
-      Backlog: kaizenActions.filter(a => a.status === 'Backlog'),
-      Planned: kaizenActions.filter(a => a.status === 'Planned'),
-      InProgress: kaizenActions.filter(a => a.status === 'In Progress'),
-      Validating: kaizenActions.filter(a => a.status === 'Validating'),
-      Completed: kaizenActions.filter(a => a.status === 'Completed'),
+      Backlog: kaizenActions.filter((a: any) => a.status === 'Backlog'),
+      Planned: kaizenActions.filter((a: any) => a.status === 'Planned'),
+      InProgress: kaizenActions.filter((a: any) => a.status === 'In Progress'),
+      Validating: kaizenActions.filter((a: any) => a.status === 'Validating'),
+      Completed: kaizenActions.filter((a: any) => a.status === 'Completed'),
     };
 
     // Calculate latest 5S score
