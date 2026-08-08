@@ -23,6 +23,7 @@ import {
   BarChart2,
 } from 'lucide-react';
 import { usePipelineStore } from '@/store/pipelineStore';
+import PaginatedPreviewTable from './PaginatedPreviewTable';
 import { apiFetch } from '@/lib/apiFetch';
 
 interface DataIngestionTabsProps {
@@ -399,28 +400,9 @@ export default function DataIngestionTabs({ userId, projectId }: DataIngestionTa
                 </div>
               )}
 
-              {/* Preview Table */}
+              {/* Paginated Preview Table */}
               {ingestResult.preview && ingestResult.preview.length > 0 && (
-                <div className="overflow-x-auto max-h-64 border border-slate-200 rounded-xl">
-                  <table className="w-full text-xs text-left text-slate-700">
-                    <thead className="bg-slate-50 text-slate-500 uppercase text-[10px] sticky top-0">
-                      <tr>
-                        {Object.keys(ingestResult.preview[0]).map((h) => (
-                          <th key={h} className="px-3 py-2 border-b">{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {ingestResult.preview.slice(0, 5).map((row: any, i: number) => (
-                        <tr key={i} className="border-b hover:bg-slate-50">
-                          {Object.values(row).map((v: any, j: number) => (
-                            <td key={j} className="px-3 py-2 truncate max-w-[150px]">{String(v)}</td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <PaginatedPreviewTable rows={ingestResult.preview} title="Ingested Dataset Rows" />
               )}
             </div>
           )}

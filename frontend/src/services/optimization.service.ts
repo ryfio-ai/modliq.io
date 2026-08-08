@@ -1,12 +1,25 @@
 import { apiClient } from '@/utils/api';
 
 export const parseGoal = async (goal_text: string, template_id: string, columns: string[]) => {
-  const response = await apiClient.post('/api/v1/parse-goal', {
-    goal_text,
-    template_id,
-    columns,
-  });
-  return response.data;
+  try {
+    const response = await apiClient.post('/api/v1/parse-goal', {
+      goal_text,
+      template_id,
+      columns,
+    });
+    return response.data;
+  } catch (err: any) {
+    if (err?.response?.status === 404) {
+      // Fallback route attempt if legacy path returns 404
+      const response = await apiClient.post('/api/v1/goal/parse', {
+        goal_text,
+        template_id,
+        columns,
+      });
+      return response.data;
+    }
+    throw err;
+  }
 };
 
 export const createOptimizationJob = async (payload: {

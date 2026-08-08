@@ -322,7 +322,7 @@ router.get('/optimization/jobs/:id', requireAuth, async (req, res) => {
 });
 
 // ─── Parse Goal ───────────────────────────────────────────────────────────────
-router.post('/parse-goal', requireAuth, rateLimit, async (req, res) => {
+const parseGoalHandler = async (req: any, res: any) => {
   try {
     const response = await axios.post(`${ML_ENGINE_URL}/parse-goal`, req.body, {
       headers: mlHeaders(),
@@ -334,7 +334,12 @@ router.post('/parse-goal', requireAuth, rateLimit, async (req, res) => {
       error.response?.data || { success: false, error: error.message || 'Goal parsing failed' }
     );
   }
-});
+};
+
+router.post('/parse-goal', requireAuth, rateLimit, parseGoalHandler);
+router.post('/goal/parse', requireAuth, rateLimit, parseGoalHandler);
+router.post('/projects/:projectId/goal/parse', requireAuth, rateLimit, parseGoalHandler);
+router.post('/projects/:projectId/parse-goal', requireAuth, rateLimit, parseGoalHandler);
 
 // ─── QC Routes ────────────────────────────────────────────────────────────────
 async function proxyQc(subpath: string, req: any, res: any) {

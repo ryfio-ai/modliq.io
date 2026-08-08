@@ -11,6 +11,8 @@ import qualityPassportRoutes from '../routes/qualityPassport.routes';
 import aiRoutes from '../routes/ai.routes';
 import edaRoutes from '../routes/eda.routes';
 import analyticsWorkflowRoutes from '../routes/analyticsWorkflow.routes';
+import goalCrosscheckRoutes from '../routes/goalCrosscheck.routes';
+import templateRoutes from '../routes/template.routes';
 import legacyRoutes from '../routes/legacy.routes';
 import publicRoutes from '../routes/public.routes';
 import { initDb } from '../db/optimizationJobs';
@@ -36,6 +38,8 @@ console.log(`[backend] CLIENT_ORIGIN=${CLIENT_ORIGIN}`);
 // API V1 Routes
 const apiV1 = express.Router();
 apiV1.use('/projects', projectsRoutes);
+apiV1.use('/projects/:projectId/goal', goalCrosscheckRoutes);
+apiV1.use('/projects/:projectId/templates', templateRoutes);
 apiV1.use('/projects/:projectId/quality-passport', qualityPassportRoutes);
 apiV1.use('/projects/:projectId/datasets/:datasetId/eda', edaRoutes);
 apiV1.use('/projects/:projectId/analytics', analyticsWorkflowRoutes);
