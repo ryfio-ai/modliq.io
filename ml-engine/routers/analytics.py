@@ -10,10 +10,16 @@ analytics_router = APIRouter(prefix="/analytics", tags=["analytics"])
 automl_router = APIRouter(prefix="/automl", tags=["automl"])
 features_router = APIRouter(prefix="/features", tags=["features"])
 models_router = APIRouter(prefix="/models", tags=["models"])
+goal_router = APIRouter(prefix="", tags=["goal"])
 
 class DataQueryRequest(BaseModel):
     data: List[Dict[str, Any]]
     question: str
+
+class ParseGoalRequest(BaseModel):
+    goal_text: str
+    template_id: Optional[str] = "yield_optimizer"
+    columns: Optional[List[str]] = []
 
 class AutoMlBenchmarkRequest(BaseModel):
     data: List[Dict[str, Any]]
@@ -59,3 +65,45 @@ def drift_check_endpoint(req: DriftCheckRequest):
         return res
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@goal_router.post("/parse-goal")
+def parse_goal_endpoint(req: ParseGoalRequest):
+    text = req.goal_text.lower()
+    cols = req.columns or []
+    candidate_cols = [c for c in cols if not any(k in c.lower() for k in ["exp", "experiment", "id", "no.", "sl_no", "index"])]
+    cols_to_use = candidate_cols if candidate_cols else cols
+    
+    is_minimize = any(k in text for k in ["min", "lower", "reduce", "less", "decrease", "defect", "roughness", "stringing", "scrap", "downtime", "burr", "impurity"])
+    goal_direction = "minimize" if is_minimize else "maximize"
+    
+    target = None
+    for c in cols_to_use:
+        if c.lower() in text:
+            target = c
+            break
+    if not target:
+        for c in cols_to_use:
+            if any(k in c.lower() for k in ["yield", "quality", "roughness", "cylindricity", "thickness", "stringing", "moisture", "hardness", "density"]):
+                target = c
+                break
+    if not target and cols_to_use:
+        target = cols_to_use[-1]
+    if not target:
+        target = "Yield"
+        
+    features = [c for c in cols_to_use if c != target]
+    if not features and cols:
+        features = [c for c in cols if c != target]
+        
+    constraints = {f: {"min": 10.0, "max": 250.0} for f in features}
+    
+    return {
+        "success": True,
+        "raw_text": req.goal_text,
+        "template_id": req.template_id or "yield_optimizer",
+        "target": target,
+        "goal_direction": goal_direction,
+        "threshold": 0.5 if is_minimize else 92.0,
+        "features": features,
+        "constraints": constraints,
+    }

@@ -18,7 +18,7 @@ import uvicorn
 from routers.train import router as train_router, predict_router
 from routers.monitor import router as monitor_router
 from routers.eda import router as eda_router
-from routers.analytics import analytics_router, automl_router, features_router, models_router
+from routers.analytics import analytics_router, automl_router, features_router, models_router, goal_router
 from services.storage import ModelStorage
 
 # ── Structured Logging ──────────────────────────────────────────────
@@ -143,6 +143,12 @@ app.include_router(
     models_router,
     prefix="",
     tags=["Models"],
+    dependencies=[Depends(verify_service_key)],
+)
+app.include_router(
+    goal_router,
+    prefix="",
+    tags=["Goal"],
     dependencies=[Depends(verify_service_key)],
 )
 

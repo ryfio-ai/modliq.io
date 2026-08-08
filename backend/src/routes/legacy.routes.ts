@@ -321,19 +321,61 @@ router.get('/optimization/jobs/:id', requireAuth, async (req, res) => {
   }
 });
 
-// ─── Parse Goal ───────────────────────────────────────────────────────────────
+function parseGoalFallback(goalText: string, templateId?: string, columns: string[] = []) {
+  const text = (goalText || '').toLowerCase();
+  
+  const candidateCols = columns.filter(
+    (c) => !/exp|experiment|id|no\.|sl_no|index|sample_id/i.test(c)
+  );
+  
+  const colsToUse = candidateCols.length > 0 ? candidateCols : columns;
+
+  const isMinimize = /min|lower|reduce|less|decrease|defect|roughness|stringing|scrap|downtime|burr|impurity/i.test(text);
+  const goalDirection = isMinimize ? 'minimize' : 'maximize';
+
+  let target = colsToUse.find((c) => text.includes(c.toLowerCase()));
+  if (!target) {
+    target = colsToUse.find((c) => /yield|quality|roughness|cylindricity|thickness|stringing|moisture|hardness|density/i.test(c)) || colsToUse[colsToUse.length - 1] || 'Yield';
+  }
+
+  const features = colsToUse.filter((c) => c !== target);
+  if (features.length === 0 && columns.length > 0) {
+    features.push(...columns.filter((c) => c !== target));
+  }
+
+  const constraints: Record<string, { min?: number; max?: number }> = {};
+  features.forEach((f) => {
+    constraints[f] = { min: 10, max: 250 };
+  });
+
+  return {
+    success: true,
+    raw_text: goalText,
+    template_id: templateId || 'yield_optimizer',
+    target,
+    goal_direction: goalDirection,
+    threshold: isMinimize ? 0.5 : 92.0,
+    features,
+    constraints,
+  };
+}
+
 const parseGoalHandler = async (req: any, res: any) => {
+  const { goal_text, template_id, columns } = req.body || {};
   try {
     const response = await axios.post(`${ML_ENGINE_URL}/parse-goal`, req.body, {
+      timeout: 10000,
       headers: mlHeaders(),
     });
-    res.status(response.status).json(response.data);
+    if (response.status === 200 && response.data) {
+      return res.json(response.data);
+    }
   } catch (error: any) {
-    const status = error.response?.status || 500;
-    res.status(status).json(
-      error.response?.data || { success: false, error: error.message || 'Goal parsing failed' }
-    );
+    console.warn('[goal-parser] ML Engine parse-goal failed or offline. Using fallback parser:', error.message);
   }
+
+  const fallback = parseGoalFallback(goal_text, template_id, columns);
+  return res.json(fallback);
 };
 
 router.post('/parse-goal', requireAuth, rateLimit, parseGoalHandler);

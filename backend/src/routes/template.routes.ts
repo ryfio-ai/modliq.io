@@ -90,9 +90,18 @@ router.get('/', async (req: Request, res: Response) => {
       templates = DEFAULT_TEMPLATES as any;
     }
 
-    res.json({ success: true, data: templates });
+    res.json({ success: true, data: templates, templates });
   } catch (error: any) {
-    res.json({ success: true, data: DEFAULT_TEMPLATES });
+    res.json({ success: true, data: DEFAULT_TEMPLATES, templates: DEFAULT_TEMPLATES });
+  }
+});
+
+// GET /api/v1/templates/recommended — Recommended manufacturing templates
+router.get('/recommended', async (req: Request, res: Response) => {
+  try {
+    res.json({ success: true, templates: DEFAULT_TEMPLATES, data: DEFAULT_TEMPLATES });
+  } catch (error: any) {
+    res.json({ success: true, templates: DEFAULT_TEMPLATES, data: DEFAULT_TEMPLATES });
   }
 });
 
