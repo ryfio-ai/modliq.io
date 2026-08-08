@@ -9,6 +9,7 @@ datasource db {
 
 model User {
   id                       String   @id @map("_id")
+  publicId                 String?  @unique
   name                     String?
   email                    String?   @unique
   emailVerified            DateTime?
@@ -91,6 +92,7 @@ model VerificationToken {
 
 model Dataset {
   id                   String   @id @map("_id")
+  publicId             String?  @unique
   userId               String
   projectId            String?
   name                 String?
@@ -201,6 +203,7 @@ model DatasetVersion {
 
 model OptimizationJob {
   id                  String   @id @map("_id")
+  publicId            String?  @unique
   userId      String
   datasetId   String?
   status      String   @default("running")
@@ -366,8 +369,6 @@ model MaterialLot {
   supplierName   String?
   lotCode        String
   materialType   String?
-  quantity       Float?
-  unit           String?
   receivedDate   DateTime?
   incomingStatus String?
   defectRate     Float?
@@ -482,6 +483,7 @@ model WorkspaceState {
 
 model Project {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId            String?  @unique
   userId              String   @db.ObjectId
   organizationId      String?  @db.ObjectId
   name                String   @default("Project 1")
@@ -501,6 +503,7 @@ model Project {
 
 model QualityPassport {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId         String?  @unique
   userId           String
   projectId        String
   title            String
@@ -563,6 +566,7 @@ model ApiKey {
 
 model Organization {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId    String?  @unique
   name        String
   slug        String   @unique
   ownerUserId String
@@ -634,6 +638,7 @@ model Notification {
 
 model SupportTicket {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId       String?  @unique
   userId         String
   organizationId String?
   subject        String
@@ -752,5 +757,12 @@ model HomePageSection {
   updatedAt   DateTime @updatedAt
 }
 
+model PublicIdSequence {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  entityType  String
+  dateKey     String   // YYYYMMDD
+  nextSeq     Int      @default(1000)
+  updatedAt   DateTime @default(now()) @updatedAt
 
-
+  @@unique([entityType, dateKey])
+}

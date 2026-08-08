@@ -1,4 +1,5 @@
 import prisma from '../lib/prisma';
+import { generatePublicId } from '../services/publicId.service';
 
 const isMongoObjectId = (str: any): boolean => typeof str === 'string' && /^[0-9a-fA-F]{24}$/.test(str);
 
@@ -45,9 +46,12 @@ export async function createProject(userId: string, name?: string) {
       projectName = `Project ${existingCount + 1}`;
     }
 
+    const publicId = await generatePublicId('PROJECT');
+
     return await prisma.project.create({
       data: {
         userId,
+        publicId,
         name: projectName,
         status: 'draft',
       },

@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import prisma from '../lib/prisma';
 import { requireAuth } from '../middleware/auth';
+import { generatePublicId } from '../services/publicId.service';
 
 const router = Router({ mergeParams: true });
 
@@ -277,7 +278,7 @@ router.get('/', requireAuth, async (req: Request, res: Response) => {
     else if (score >= 75) readinessStatus = 'CONDITIONALLY_COMPLIANT';
     else if (score >= 50) readinessStatus = 'REVIEW_REQUIRED';
 
-    const certificateId = `QP-${effectiveProjectId.slice(-6).toUpperCase()}-${Date.now().toString().slice(-4)}`;
+    const certificateId = await generatePublicId('PASSPORT');
 
     // Generate Executive Summary
     const executiveSummary = `This Quality Passport certifies that ${projectName} achieves an Audit Readiness Score of ${score}/100 (${readinessStatus.replace('_', ' ')}). The process dataset (${dataset?.filename || 'Uploaded Dataset'}) comprises ${dataset?.totalRows || 500} rows across ${dataset?.totalColumns || 12} variables. Statistical Process Control (SPC) capability is established with an estimated Cp/Cpk of 1.42/1.35, meeting standard industrial buyer requirements. Operations OEE is verified at ${oee.toFixed(1)}%.`;
@@ -421,6 +422,7 @@ ${recommendations.length > 0 ? recommendations.map((r) => `- ${r}`).join('\n') :
     await prisma.qualityPassport.create({
       data: {
         userId,
+        publicId: certificateId,
         projectId: effectiveProjectId,
         title: `Quality Passport - ${projectName}`,
         auditScore: score,

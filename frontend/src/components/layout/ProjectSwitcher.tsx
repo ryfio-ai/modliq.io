@@ -8,6 +8,7 @@ import { apiFetch } from '@/lib/apiFetch';
 
 interface Project {
   id: string;
+  publicId?: string;
   name: string;
   status: 'draft' | 'queued' | 'optimizing' | 'completed' | 'error';
   datasetId?: string | null;
@@ -148,9 +149,9 @@ export default function ProjectSwitcher({ userId: propUserId }: ProjectSwitcherP
                     }`}
                   >
                     <div className="truncate min-w-0 pr-2">
-                      <p className="truncate">{proj.name}</p>
-                      <p className="text-[10px] text-slate-400 capitalize">
-                        {proj.status === 'optimizing' ? 'Optimizing...' : proj.status}
+                      <p className="truncate font-medium text-slate-800">{proj.name}</p>
+                      <p className="text-[10px] text-[#2B70AB] font-mono font-semibold truncate">
+                        {proj.publicId || `MODLIQ-PROJECT-20260808-1000`}
                       </p>
                     </div>
                     {isSelected && <Check size={14} className="text-[#2B70AB] shrink-0" />}

@@ -5,6 +5,7 @@ import { getPostLoginRedirect, isAdmin } from '@/lib/auth/redirects';
 
 export interface AuthUser {
   id: string;
+  publicId?: string;
   email?: string;
   name?: string;
   role?: string;
@@ -94,6 +95,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const data = await res.json();
             const rawUser: AuthUser = {
               id: data.id,
+              publicId: data.publicId || `MODLIQ-USER-20260808-1000`,
               email: data.email,
               name: data.name,
               role: data.role,

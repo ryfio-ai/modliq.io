@@ -8,7 +8,8 @@
     "build": "prisma generate --schema=src/db/prisma/schema.prisma && tsc",
     "start": "node dist/entrypoint/server.js",
     "prisma:generate": "prisma generate --schema=src/db/prisma/schema.prisma",
-    "seed:admin": "ts-node src/scripts/seedAdmin.ts"
+    "seed:admin": "ts-node src/scripts/seedAdmin.ts",
+    "backfill:public-ids": "ts-node src/scripts/backfillPublicIds.ts"
   },
   "prisma": {
     "schema": "src/db/prisma/schema.prisma"

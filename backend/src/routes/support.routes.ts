@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { requireAuth } from '../middleware/auth';
 import { logAuditEvent } from '../services/audit.service';
+import { generatePublicId } from '../services/publicId.service';
 
 const router = Router();
 router.use(requireAuth);
@@ -31,9 +32,12 @@ router.post('/tickets', async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, error: 'Subject and message are required' });
     }
 
+    const publicId = await generatePublicId('TICKET');
+
     const ticket = await prisma.supportTicket.create({
       data: {
         userId,
+        publicId,
         subject: subject.trim(),
         message: message.trim(),
         category: category || 'OTHER',
@@ -47,7 +51,7 @@ router.post('/tickets', async (req: Request, res: Response) => {
       action: 'SUPPORT_TICKET_CREATED',
       entityType: 'SUPPORT_TICKET',
       entityId: ticket.id,
-      metadata: { subject, category },
+      metadata: { subject, category, ticketPublicId: publicId },
     });
 
     res.status(201).json({ success: true, data: ticket });

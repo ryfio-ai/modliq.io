@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from '../auth/jwt';
 import prisma from '../lib/prisma';
 import { seedAdmin } from '../scripts/seedAdmin';
+import { generatePublicId, ensureUserPublicId } from '../services/publicId.service';
 
 const router = Router();
 
@@ -100,12 +101,14 @@ router.post('/signup', async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 10);
     const userId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const role = email === 'admin@modliq.io' ? 'ADMIN' : 'USER';
+    const userPublicId = await generatePublicId('USER');
     let user: any;
 
     try {
       user = await prisma.user.create({
         data: {
           id: userId,
+          publicId: userPublicId,
           email,
           name: name || email.split('@')[0],
           password: passwordHash,
@@ -116,8 +119,10 @@ router.post('/signup', async (req, res) => {
 
       // Create default Organization and Project for normal user
       if (role === 'USER') {
+        const orgPublicId = await generatePublicId('ORG');
         const org = await prisma.organization.create({
           data: {
+            publicId: orgPublicId,
             name: `${user.name || 'Default'}'s Factory`,
             slug: `org-${userId}`,
             ownerUserId: userId,
@@ -133,8 +138,10 @@ router.post('/signup', async (req, res) => {
           },
         });
 
+        const projectPublicId = await generatePublicId('PROJECT');
         await prisma.project.create({
           data: {
+            publicId: projectPublicId,
             userId,
             organizationId: org.id,
             name: 'Default Plant Project',
@@ -149,7 +156,7 @@ router.post('/signup', async (req, res) => {
       }
     } catch (dbErr) {
       // Fallback in-memory
-      user = { id: userId, email, name: name || email.split('@')[0], role, isDemo: false };
+      user = { id: userId, publicId: userPublicId, email, name: name || email.split('@')[0], role, isDemo: false };
       memoryUsers.set(email, { ...user, password: passwordHash });
     }
 
@@ -160,6 +167,7 @@ router.post('/signup', async (req, res) => {
       token,
       user: {
         id: user.id,
+        publicId: user.publicId || userPublicId,
         email: user.email,
         name: user.name,
         role: user.role,
@@ -191,6 +199,12 @@ router.post('/login', async (req, res) => {
 
     const userId = user.id || user._id;
     const role = user.role || (user.email === 'admin@modliq.io' ? 'ADMIN' : 'USER');
+    let publicId = user.publicId;
+
+    if (!publicId) {
+      publicId = await ensureUserPublicId(userId);
+    }
+
     const token = jwt.signJwt({ userId, email: user.email || '', role, name: user.name });
     const dashboardPath = role === 'ADMIN' ? '/admin' : `/${userId}/modliq-console/dashboard`;
 
@@ -198,6 +212,7 @@ router.post('/login', async (req, res) => {
       token,
       user: {
         id: userId,
+        publicId,
         email: user.email,
         name: user.name,
         role,
@@ -230,10 +245,17 @@ router.get('/me', async (req, res) => {
 
     const userId = user.id || user._id;
     const role = user.role || (user.email === 'admin@modliq.io' ? 'ADMIN' : 'USER');
+    let publicId = user.publicId;
+
+    if (!publicId) {
+      publicId = await ensureUserPublicId(userId);
+    }
+
     const dashboardPath = role === 'ADMIN' ? '/admin' : `/${userId}/modliq-console/dashboard`;
 
     return res.json({
       id: userId,
+      publicId,
       email: user.email,
       name: user.name,
       role,

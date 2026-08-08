@@ -166,6 +166,7 @@ router.get('/users', async (req: Request, res: Response) => {
     const where: any = {};
     if (search) {
       where.OR = [
+        { publicId: { contains: search, mode: 'insensitive' } },
         { name: { contains: search, mode: 'insensitive' } },
         { email: { contains: search, mode: 'insensitive' } },
       ];
@@ -183,6 +184,7 @@ router.get('/users', async (req: Request, res: Response) => {
         orderBy: { updatedAt: 'desc' },
         select: {
           id: true,
+          publicId: true,
           name: true,
           email: true,
           role: true,
@@ -203,6 +205,7 @@ router.get('/users', async (req: Request, res: Response) => {
 
     const formattedUsers = users.map((u) => ({
       id: u.id,
+      publicId: u.publicId || `MODLIQ-USER-${u.id.slice(-6)}`,
       name: u.name || 'Anonymous User',
       email: u.email || 'N/A',
       role: u.role,

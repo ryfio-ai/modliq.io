@@ -11,6 +11,7 @@ import { Eye, Shield, UserCheck, AlertCircle } from 'lucide-react';
 
 interface UserRecord {
   id: string;
+  publicId?: string;
   name: string;
   email: string;
   role: string;
@@ -125,11 +126,11 @@ export default function AdminUsersPage() {
   const columns: ColumnDef<UserRecord>[] = [
     {
       key: 'name',
-      header: 'Name / Account',
+      header: 'Name / Public ID',
       render: (u) => (
         <div>
           <span className="font-bold text-[#1B2A4A] block">{u.name}</span>
-          <span className="text-[11px] text-slate-400 font-normal">{u.id}</span>
+          <span className="text-[10px] text-[#2B70AB] font-mono font-bold block">{u.publicId || u.id}</span>
         </div>
       ),
     },

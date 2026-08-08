@@ -211,9 +211,10 @@ export default function ProfilePage() {
                 <span className="text-slate-500 block text-[10px]">Assigned System Role</span>
                 <span className="font-bold text-slate-900 uppercase">{(user as any)?.role || 'USER'}</span>
               </div>
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <span className="text-slate-500 block text-[10px]">User Identifier</span>
-                <span className="font-mono text-[11px] text-blue-700 font-semibold">{user?.id || 'usr_demo'}</span>
+              <div className="p-3 bg-blue-50/60 rounded-xl border border-blue-200">
+                <span className="text-slate-500 block text-[10px] font-bold uppercase tracking-wider">User Public ID</span>
+                <span className="font-mono text-xs text-[#2B70AB] font-extrabold block mt-0.5">{user?.publicId || `MODLIQ-USER-20260808-1000`}</span>
+                <span className="text-[9px] text-slate-400 block mt-1">Internal Ref: {user?.id || 'usr_demo'}</span>
               </div>
             </div>
           </div>
