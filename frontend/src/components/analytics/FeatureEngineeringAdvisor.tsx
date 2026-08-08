@@ -38,6 +38,9 @@ export default function FeatureEngineeringAdvisor() {
         <h3 className="text-sm font-bold text-[#1B2A4A] flex items-center gap-2">
           <Sliders size={16} className="text-[#2B70AB]" />
           Feature Engineering Suggestions
+          <span className="px-2 py-0.5 bg-amber-100 text-amber-800 text-[10px] font-extrabold rounded-full">
+            Beta
+          </span>
         </h3>
         <p className="text-xs text-slate-500">Safely create derived features tailored for manufacturing data (ratios, interaction terms, moving averages).</p>
       </div>

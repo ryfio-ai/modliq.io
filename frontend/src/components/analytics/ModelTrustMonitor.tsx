@@ -27,6 +27,9 @@ export default function ModelTrustMonitor({
           <h3 className="text-sm font-bold text-[#1B2A4A] flex items-center gap-2">
             <ShieldCheck size={16} className={isStable ? 'text-emerald-600' : 'text-amber-500'} />
             Model Trust & Drift Monitor
+            <span className="px-2 py-0.5 bg-amber-100 text-amber-800 text-[10px] font-extrabold rounded-full">
+              Beta
+            </span>
           </h3>
           <p className="text-xs text-slate-500">Monitors input distribution drift, schema shifts, and model reliability. No auto-retraining without confirmation.</p>
         </div>

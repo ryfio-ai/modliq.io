@@ -33,6 +33,9 @@ export default function AutoMLLeaderboard({ bestModel, leaderboard }: AutoMLLead
           <h3 className="text-sm font-bold text-[#1B2A4A] flex items-center gap-2">
             <Cpu size={16} className="text-purple-600" />
             Manufacturing AutoML Benchmark Leaderboard
+            <span className="px-2 py-0.5 bg-amber-100 text-amber-800 text-[10px] font-extrabold rounded-full">
+              Beta
+            </span>
           </h3>
           <p className="text-xs text-slate-500">Evaluates multiple model candidates across R², RMSE, MAE, and cross-validation scores.</p>
         </div>
