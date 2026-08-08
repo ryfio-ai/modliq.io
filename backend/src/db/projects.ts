@@ -40,9 +40,25 @@ export async function getProject(id: string) {
 
 export async function createProject(userId: string, name?: string) {
   try {
+    // Auto-upsert User if not already present in DB
+    try {
+      const existingUser = await prisma.user.findUnique({ where: { id: userId } });
+      if (!existingUser) {
+        await prisma.user.create({
+          data: {
+            id: userId,
+            email: `${userId}@modliq.io`,
+            name: 'Modliq User',
+            role: 'USER',
+            isDemo: userId.includes('demo') || userId.includes('google'),
+          },
+        }).catch(() => {});
+      }
+    } catch (e) {}
+
     let projectName = name;
     if (!projectName) {
-      const existingCount = await prisma.project.count({ where: { userId } });
+      const existingCount = await prisma.project.count({ where: { userId } }).catch(() => 0);
       projectName = `Project ${existingCount + 1}`;
     }
 

@@ -142,7 +142,7 @@ model Dataset {
 
 model DataConnector {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String    @db.ObjectId
+  userId          String
   projectId       String?   @db.ObjectId
   name            String
   type            String    // postgres | supabase | mongodb | mysql | sqlserver
@@ -159,7 +159,7 @@ model DataConnector {
 
 model IngestedDocument {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String   @db.ObjectId
+  userId       String
   projectId    String?  @db.ObjectId
   name         String
   fileType     String   // pdf | docx | doc
@@ -177,7 +177,7 @@ model IngestedDocument {
 
 model ImportJob {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String   @db.ObjectId
+  userId      String
   projectId   String?  @db.ObjectId
   connectorId String?  @db.ObjectId
   status      String   @default("QUEUED") // QUEUED | RUNNING | COMPLETED | FAILED
@@ -468,7 +468,7 @@ model AiMessage {
 }
 
 model WorkspaceState {
-  userId                   String   @id @map("_id") @db.ObjectId
+  userId                   String   @id @map("_id")
   activeDatasetId          String?
   activeWorkflowId         String?
   activeDatasetFilename    String?
@@ -486,7 +486,7 @@ model WorkspaceState {
 model Project {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
   publicId            String?  @unique
-  userId              String   @db.ObjectId
+  userId              String
   organizationId      String?  @db.ObjectId
   name                String   @default("Project 1")
   datasetId           String?
