@@ -18,14 +18,17 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.role = (user as any).role || "EDITOR";
+        token.name = user.name;
+        token.role = (user as any).role || (user.email === 'admin@modliq.io' ? 'ADMIN' : 'USER');
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).id = token.id;
-        (session.user as any).role = token.role;
+        (session.user as any).id = token.id as string;
+        (session.user as any).role = token.role as string;
+        (session.user as any).email = token.email as string;
+        (session.user as any).name = token.name as string;
       }
       return session;
     },

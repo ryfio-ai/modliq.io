@@ -21,6 +21,8 @@ import shareLinkRoutes from './routes/shareLink.routes';
 import templateRoutes from './routes/template.routes';
 import accountRoutes from './routes/account.routes';
 import adminRoutes from './routes/admin.routes';
+import websiteAdminRoutes from './routes/websiteAdmin.routes';
+import publicWebsiteRoutes from './routes/publicWebsite.routes';
 import { authMiddleware } from './middleware/auth.middleware';
 import { updateProject } from './db/projects';
 
@@ -253,7 +255,9 @@ apiV1.use('/notifications', notificationRoutes);
 apiV1.use('/support', supportRoutes);
 apiV1.use('/templates', templateRoutes);
 apiV1.use('/account', accountRoutes);
+apiV1.use('/admin/website', websiteAdminRoutes);
 apiV1.use('/admin', adminRoutes);
+app.use('/api/v1/public', publicWebsiteRoutes);
 apiV1.use('/', shareLinkRoutes);
 
 // --------------------------------------------------

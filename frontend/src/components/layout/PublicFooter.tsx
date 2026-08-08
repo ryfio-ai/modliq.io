@@ -35,15 +35,15 @@ export default function PublicFooter() {
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed max-w-sm">
-              Modliq is a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India. It connects data ingestion, health scoring, process optimization, Quality Studio, operations, supplier risk, and buyer-ready Quality Passports.
+              Modliq is a manufacturing intelligence product by Qeltrava AI. It connects data ingestion, health scoring, process optimization, Quality Studio, operations, supplier risk, and buyer-ready Quality Passports.
             </p>
 
             <div className="p-3 bg-white border border-[#D0E2F0] rounded-xl text-xs space-y-1 inline-block">
               <span className="font-bold text-[#1B2A4A] flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#2B70AB]" /> Built in Tamil Nadu, India
+                <MapPin className="w-3.5 h-3.5 text-[#2B70AB]" /> Global Manufacturing Intelligence
               </span>
               <p className="text-[11px] text-slate-500">
-                Serving automotive, textile, chemical, food, pharma, plastics, & biomanufacturing clusters.
+                Serving automotive, specialty chemical, food, pharma, plastics, &amp; biomanufacturing clusters.
               </p>
             </div>
           </div>
@@ -52,14 +52,14 @@ export default function PublicFooter() {
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#1B2A4A]">Platform Modules</h4>
             <ul className="space-y-2 text-xs text-slate-600">
-              <li><a href="#features" className="hover:text-[#2B70AB] transition">Data Ingestion</a></li>
-              <li><a href="#features" className="hover:text-[#2B70AB] transition">Dataset Health Check</a></li>
-              <li><a href="#features" className="hover:text-[#2B70AB] transition">Goal Parser & Wizard</a></li>
-              <li><a href="#features" className="hover:text-[#2B70AB] transition">ML Process Optimization</a></li>
-              <li><a href="#features" className="hover:text-[#2B70AB] transition">Quality Studio SPC</a></li>
-              <li><a href="#features" className="hover:text-[#2B70AB] transition">Operations & OEE</a></li>
-              <li><a href="#features" className="hover:text-[#2B70AB] transition">Supply Chain Traceability</a></li>
-              <li><a href="#passport" className="hover:text-[#2B70AB] transition">Quality Passport</a></li>
+              <li><Link href="/product" className="hover:text-[#2B70AB] transition">Product Overview</Link></li>
+              <li><Link href="/workflow" className="hover:text-[#2B70AB] transition">No-Code Workflow</Link></li>
+              <li><Link href="/features" className="hover:text-[#2B70AB] transition">Feature Directory</Link></li>
+              <li><Link href="/algorithms" className="hover:text-[#2B70AB] transition">ML &amp; Algorithms</Link></li>
+              <li><Link href="/quality-passport" className="hover:text-[#2B70AB] transition">Quality Passport</Link></li>
+              <li><Link href="/pricing" className="hover:text-[#2B70AB] transition">Pricing Tiers</Link></li>
+              <li><Link href="/docs" className="hover:text-[#2B70AB] transition">Documentation</Link></li>
+              <li><Link href="/contact" className="hover:text-[#2B70AB] transition">Contact Support</Link></li>
             </ul>
           </div>
 

@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDatasetVersion = exports.getDatasetVersions = exports.getAllDatasets = exports.getDataset = exports.saveDataset = void 0;
-const prisma_1 = __importDefault(require("@/lib/prisma"));
+const prisma_1 = __importDefault(require("../lib/prisma"));
 async function saveDataset(datasetId, data) {
     try {
         const userId = data.userId || 'demo-user-static-backend';

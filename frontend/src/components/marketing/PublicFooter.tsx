@@ -42,7 +42,7 @@ export default function PublicFooter() {
           </div>
         </div>
         <div className="border-t border-slate-700 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <p>Made in Tamil Nadu, India. Built for manufacturers.</p>
+          <p>Engineered by Qeltrava AI. Built for manufacturers.</p>
           <p>&copy; {new Date().getFullYear()} Modliq. All rights reserved.</p>
         </div>
       </div>

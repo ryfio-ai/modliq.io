@@ -119,7 +119,7 @@ export default function GoalPage({ params }: { params: Promise<{ userId: string 
     <div className="p-8 max-w-5xl mx-auto h-full flex flex-col">
       <header className="mb-8">
         <h1 className="text-2xl font-bold text-[#1B2A4A]">Define Goal</h1>
-        <p className="text-slate-500 text-sm mt-1">Describe your optimization goal in plain English.</p>
+        <p className="text-slate-500 text-sm mt-1">Write your goal in plain English. No code or ML engineering setup required.</p>
       </header>
 
       {/* Readiness banner (generic report from upload) */}

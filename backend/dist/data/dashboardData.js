@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDashboardMetrics = void 0;
-const prisma_1 = __importDefault(require("@/lib/prisma"));
+const prisma_1 = __importDefault(require("../lib/prisma"));
 async function getDashboardMetrics(userId) {
     const totalDatasets = await prisma_1.default.dataset.count({
         where: { userId },

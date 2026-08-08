@@ -3,16 +3,29 @@ import HomeClient from '@/components/home/HomeClient';
 import StructuredData from '@/components/seo/StructuredData';
 
 export const metadata: Metadata = {
-  title: 'Modliq — Manufacturing Intelligence Platform Made in Tamil Nadu',
+  title: 'Modliq — No-Code Manufacturing Intelligence and ML Platform',
   description:
-    'Modliq helps manufacturers upload production data, optimize process settings, validate quality with SPC and Cp/Cpk, track OEE and supplier risk, and generate buyer-ready Quality Passports.',
+    'Modliq is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India. It helps factory teams upload data, run ML optimization, validate quality, track operations, and generate buyer-ready Quality Passports.',
+  keywords: [
+    'no code machine learning platform',
+    'no code ML platform',
+    'no code ML for manufacturing',
+    'no code manufacturing ML',
+    'no code process optimization',
+    'no code manufacturing intelligence',
+    'no code quality analytics',
+    'no code factory analytics',
+    'manufacturing AutoML alternative',
+    'AutoML for manufacturing',
+    'machine learning for manufacturing teams',
+  ],
   alternates: {
     canonical: 'https://modliq-io.vercel.app/',
   },
   openGraph: {
-    title: 'Modliq — Manufacturing Intelligence Platform',
+    title: 'Modliq — No-Code Manufacturing Intelligence and ML Platform',
     description:
-      'Modliq is a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India. It connects data ingestion, health scoring, process optimization, Quality Studio, operations, supplier risk, and buyer-ready Quality Passports.',
+      'Modliq is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India. It helps factory teams upload data, run ML optimization, validate quality, track operations, and generate buyer-ready Quality Passports.',
     url: 'https://modliq-io.vercel.app/',
     siteName: 'Modliq',
     images: [
@@ -20,15 +33,15 @@ export const metadata: Metadata = {
         url: '/og/modliq-og.png',
         width: 1200,
         height: 630,
-        alt: 'Modliq — Manufacturing Intelligence Platform by Qeltrava AI',
+        alt: 'Modliq — No-Code Manufacturing Intelligence and ML Platform by Qeltrava AI',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Modliq — Manufacturing Intelligence Platform',
+    title: 'Modliq — No-Code Manufacturing Intelligence and ML Platform',
     description:
-      'Modliq is a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India. It connects data ingestion, health scoring, process optimization, Quality Studio, operations, supplier risk, and buyer-ready Quality Passports.',
+      'Modliq is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India. It helps factory teams upload data, run ML optimization, validate quality, track operations, and generate buyer-ready Quality Passports.',
     images: ['/og/modliq-og.png'],
   },
 };

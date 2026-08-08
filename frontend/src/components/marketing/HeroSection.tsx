@@ -11,7 +11,7 @@ export default function HeroSection() {
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-extrabold text-[#1B2A4A] tracking-tight leading-[1.1] mb-6">
-            Made in Tamil Nadu. Built for manufacturers.
+            Engineered for Process Teams &amp; Manufacturers.
           </h1>
 
           <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">

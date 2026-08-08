@@ -1,10 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import AdminFilterBar from '@/components/admin/AdminFilterBar';
+import AdminDataTable, { ColumnDef } from '@/components/admin/AdminDataTable';
+import AdminLoadingSkeleton from '@/components/admin/AdminLoadingSkeleton';
+import AdminErrorState from '@/components/admin/AdminErrorState';
+import { BarChart3 } from 'lucide-react';
 
-interface EventItem {
+interface UsageRecord {
   id: string;
   userId?: string;
+  organizationId?: string;
   eventType: string;
   quantity: number;
   metadataJson?: string;
@@ -12,65 +18,125 @@ interface EventItem {
 }
 
 export default function AdminUsagePage() {
-  const [events, setEvents] = useState<EventItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [events, setEvents] = useState<UsageRecord[]>([]);
+  const [pagination, setPagination] = useState({ page: 1, limit: 25, total: 0, totalPages: 1 });
+  const [typeFilter, setTypeFilter] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchUsage = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const token = localStorage.getItem('modliq_token') || '';
+      const params = new URLSearchParams({
+        page: String(pagination.page),
+        limit: String(pagination.limit),
+        ...(typeFilter ? { type: typeFilter } : {}),
+      });
+
+      const res = await fetch(`/api/v1/admin/usage?${params}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (data.success) {
+        setEvents(data.data || []);
+        if (data.pagination) setPagination(data.pagination);
+      } else {
+        setError(data.error || 'Failed to fetch usage events');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Error connecting to server');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsage = async () => {
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-        const res = await fetch(`${apiUrl}/api/v1/admin/usage`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token') || ''}` },
-        });
-        const resp = await res.json();
-        if (resp.success && resp.data) {
-          setEvents(resp.data);
-        }
-      } catch {
-        // Fallback
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUsage();
-  }, []);
+  }, [pagination.page, typeFilter]);
+
+  const columns: ColumnDef<UsageRecord>[] = [
+    {
+      key: 'id',
+      header: 'Event ID',
+      render: (u) => <span className="font-mono text-xs text-slate-500">{u.id}</span>,
+    },
+    {
+      key: 'eventType',
+      header: 'Event Type',
+      render: (u) => (
+        <span className="px-2.5 py-0.5 bg-blue-50 text-[#2B70AB] font-bold text-xs rounded-full border border-blue-200">
+          {u.eventType}
+        </span>
+      ),
+    },
+    {
+      key: 'quantity',
+      header: 'Quantity',
+      render: (u) => <span className="font-bold text-xs text-[#1B2A4A]">{u.quantity}</span>,
+    },
+    {
+      key: 'userId',
+      header: 'User Account',
+      render: (u) => <span className="text-xs text-slate-600 font-mono">{u.userId || 'System / Public'}</span>,
+    },
+    {
+      key: 'createdAt',
+      header: 'Timestamp',
+      render: (u) => (
+        <span className="text-slate-500 font-normal">
+          {new Date(u.createdAt).toLocaleString()}
+        </span>
+      ),
+    },
+  ];
 
   return (
-    <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
-      <div className="border-b border-slate-800 pb-6">
-        <h1 className="text-2xl font-bold text-white">Platform Usage Events & Metering</h1>
-        <p className="text-sm text-slate-400 mt-1">Track AI calls, optimization jobs, dataset uploads, and passport exports.</p>
+    <div className="space-y-6 font-sans text-[#1B2A4A]">
+      <div className="border-b border-[#D0E2F0] pb-5 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold text-[#1B2A4A] tracking-tight">Metered Usage Analytics</h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Audit trail of AI calls, optimization runs, dataset uploads, and passport exports.
+          </p>
+        </div>
       </div>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-        {loading ? (
-          <div className="p-12 text-center text-slate-400 text-sm">Loading usage events...</div>
-        ) : (
-          <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-slate-950/80 border-b border-slate-800 text-slate-400 font-bold uppercase">
-              <tr>
-                <th className="p-4">Event Type</th>
-                <th className="p-4">User ID</th>
-                <th className="p-4">Quantity</th>
-                <th className="p-4">Metadata</th>
-                <th className="p-4">Timestamp</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800">
-              {events.map((e) => (
-                <tr key={e.id} className="hover:bg-slate-800/40 transition">
-                  <td className="p-4 font-mono font-bold text-blue-400">{e.eventType}</td>
-                  <td className="p-4">{e.userId || 'Anonymous'}</td>
-                  <td className="p-4 font-semibold">{e.quantity}</td>
-                  <td className="p-4 text-slate-400 max-w-xs truncate">{e.metadataJson || '{}'}</td>
-                  <td className="p-4">{new Date(e.createdAt).toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      <AdminFilterBar
+        filters={[
+          {
+            key: 'type',
+            label: 'Event Type',
+            value: typeFilter,
+            options: [
+              { label: 'AI Gateway Call', value: 'AI_CALL' },
+              { label: 'Optimization Job', value: 'OPTIMIZATION_JOB' },
+              { label: 'Dataset Upload', value: 'DATASET_UPLOAD' },
+            ],
+            onChange: setTypeFilter,
+          },
+        ]}
+        onClearFilters={() => setTypeFilter('')}
+        onRefresh={fetchUsage}
+        isRefreshing={loading}
+      />
+
+      {error ? (
+        <AdminErrorState message={error} onRetry={fetchUsage} />
+      ) : loading ? (
+        <AdminLoadingSkeleton count={6} />
+      ) : (
+        <AdminDataTable
+          columns={columns}
+          data={events}
+          pagination={pagination}
+          onPageChange={(page) => setPagination((prev) => ({ ...prev, page }))}
+          keyExtractor={(u) => u.id}
+          emptyTitle="No Usage Events"
+          emptyDescription="No usage metering events logged."
+        />
+      )}
     </div>
   );
 }

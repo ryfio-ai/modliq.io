@@ -24,6 +24,8 @@ const shareLink_routes_1 = __importDefault(require("./routes/shareLink.routes"))
 const template_routes_1 = __importDefault(require("./routes/template.routes"));
 const account_routes_1 = __importDefault(require("./routes/account.routes"));
 const admin_routes_1 = __importDefault(require("./routes/admin.routes"));
+const websiteAdmin_routes_1 = __importDefault(require("./routes/websiteAdmin.routes"));
+const publicWebsite_routes_1 = __importDefault(require("./routes/publicWebsite.routes"));
 const auth_middleware_1 = require("./middleware/auth.middleware");
 const projects_1 = require("./db/projects");
 const datasetStore_1 = require("./data/datasetStore");
@@ -51,6 +53,19 @@ const corsOrigins = process.env.NODE_ENV === 'production'
     ? [CLIENT_ORIGIN]
     : [CLIENT_ORIGIN, 'http://localhost:3000', 'http://localhost:5173'];
 app.use((0, cors_1.default)({ origin: corsOrigins }));
+// Security Headers Middleware
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    if (process.env.NODE_ENV === 'production') {
+        res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+    next();
+});
+const sanitization_1 = require("./security/sanitization");
+app.use(sanitization_1.noSqlInjectionProtection);
 app.use(express_1.default.json({ limit: '10mb' }));
 app.set('trust proxy', true);
 function mlEngineHeaders() {
@@ -219,7 +234,9 @@ apiV1.use('/notifications', notification_routes_1.default);
 apiV1.use('/support', support_routes_1.default);
 apiV1.use('/templates', template_routes_1.default);
 apiV1.use('/account', account_routes_1.default);
+apiV1.use('/admin/website', websiteAdmin_routes_1.default);
 apiV1.use('/admin', admin_routes_1.default);
+app.use('/api/v1/public', publicWebsite_routes_1.default);
 apiV1.use('/', shareLink_routes_1.default);
 // --------------------------------------------------
 // Workspace

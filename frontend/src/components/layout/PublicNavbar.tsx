@@ -7,6 +7,17 @@ import { Sparkles, Menu, X } from 'lucide-react';
 export default function PublicNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const navLinks = [
+    { label: 'Product', href: '/product' },
+    { label: 'Workflow', href: '/workflow' },
+    { label: 'Features', href: '/features' },
+    { label: 'Algorithms', href: '/algorithms' },
+    { label: 'Quality Passport', href: '/quality-passport' },
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'Docs', href: '/docs' },
+    { label: 'Contact', href: '/contact' },
+  ];
+
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#D0E2F0]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-22 flex items-center justify-between gap-4">
@@ -20,35 +31,20 @@ export default function PublicNavbar() {
           />
         </Link>
 
-        {/* Spacious Clean Navigation Links (Never Wrap) */}
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs xl:text-sm font-semibold text-[#1B2A4A] whitespace-nowrap">
-          <a href="#product" className="hover:text-[#2B70AB] transition-colors">
-            Product
-          </a>
-          <a href="#workflow" className="hover:text-[#2B70AB] transition-colors">
-            Workflow
-          </a>
-          <a href="#features" className="hover:text-[#2B70AB] transition-colors">
-            Features
-          </a>
-          <a href="#algorithms" className="hover:text-[#2B70AB] transition-colors">
-            Algorithms
-          </a>
-          <a href="#passport" className="hover:text-[#2B70AB] transition-colors">
-            Quality Passport
-          </a>
-          <a href="#pricing" className="hover:text-[#2B70AB] transition-colors">
-            Pricing
-          </a>
-          <Link href="/docs" className="hover:text-[#2B70AB] transition-colors">
-            Docs
-          </Link>
-          <Link href="/contact" className="hover:text-[#2B70AB] transition-colors">
-            Contact
-          </Link>
+        {/* Spacious Clean Navigation Links (Dedicated Standalone Pages) */}
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-xs xl:text-sm font-semibold text-[#1B2A4A] whitespace-nowrap">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="hover:text-[#2B70AB] transition-colors py-1 px-1.5 rounded-md hover:bg-slate-50"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
-        {/* Clean Action CTAs (Never Wrap) */}
+        {/* Clean Action CTAs */}
         <div className="hidden sm:flex items-center gap-3 shrink-0 whitespace-nowrap">
           <Link
             href="/login"
@@ -79,77 +75,30 @@ export default function PublicNavbar() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-[#D0E2F0] px-4 pt-4 pb-6 space-y-3 shadow-lg">
-          <a
-            href="#product"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-semibold text-[#1B2A4A] py-1 hover:text-[#2B70AB]"
-          >
-            Product
-          </a>
-          <a
-            href="#workflow"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-semibold text-[#1B2A4A] py-1 hover:text-[#2B70AB]"
-          >
-            Workflow
-          </a>
-          <a
-            href="#features"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-semibold text-[#1B2A4A] py-1 hover:text-[#2B70AB]"
-          >
-            Features
-          </a>
-          <a
-            href="#algorithms"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-semibold text-[#1B2A4A] py-1 hover:text-[#2B70AB]"
-          >
-            Algorithms
-          </a>
-          <a
-            href="#passport"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-semibold text-[#1B2A4A] py-1 hover:text-[#2B70AB]"
-          >
-            Quality Passport
-          </a>
-          <a
-            href="#pricing"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-semibold text-[#1B2A4A] py-1 hover:text-[#2B70AB]"
-          >
-            Pricing
-          </a>
-          <Link
-            href="/docs"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-semibold text-[#1B2A4A] py-1 hover:text-[#2B70AB]"
-          >
-            Docs
-          </Link>
-          <Link
-            href="/contact"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-semibold text-[#1B2A4A] py-1 hover:text-[#2B70AB]"
-          >
-            Contact
-          </Link>
-
-          <div className="pt-3 border-t border-[#D0E2F0] flex flex-col gap-2.5">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm font-semibold text-[#1B2A4A] py-1.5 hover:text-[#2B70AB]"
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className="pt-3 border-t border-[#D0E2F0] flex flex-col gap-2">
             <Link
               href="/login"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-2.5 bg-[#F0F6FA] text-[#1B2A4A] border border-[#D0E2F0] rounded-xl text-xs font-semibold text-center"
+              className="text-sm font-semibold text-[#1B2A4A] text-center py-2 bg-slate-50 rounded-xl"
             >
               Sign In
             </Link>
             <Link
               href="/contact?interest=free-pilot"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-3 bg-[#2B70AB] text-white rounded-xl text-xs font-semibold text-center flex items-center justify-center gap-2"
+              className="text-sm font-semibold text-white bg-[#2B70AB] text-center py-2.5 rounded-xl"
             >
-              <Sparkles className="w-4 h-4" /> Apply for Free Pilot
+              Apply for Free Pilot
             </Link>
           </div>
         </div>

@@ -1,34 +1,68 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Users, Shield, Check } from 'lucide-react';
+import AdminFilterBar from '@/components/admin/AdminFilterBar';
+import AdminDataTable, { ColumnDef } from '@/components/admin/AdminDataTable';
+import AdminStatusBadge from '@/components/admin/AdminStatusBadge';
+import AdminDetailDrawer from '@/components/admin/AdminDetailDrawer';
+import AdminLoadingSkeleton from '@/components/admin/AdminLoadingSkeleton';
+import AdminErrorState from '@/components/admin/AdminErrorState';
+import { Eye, Shield, UserCheck, AlertCircle } from 'lucide-react';
 
-interface UserItem {
+interface UserRecord {
   id: string;
-  name?: string;
-  email?: string;
+  name: string;
+  email: string;
   role: string;
+  status: string;
   isDemo: boolean;
-  updatedAt: string;
+  orgCount: number;
+  projectCount: number;
+  datasetCount: number;
+  jobCount: number;
+  createdAt: string;
+  lastActive: string;
 }
 
 export default function AdminUsersPage() {
-  const [users, setUsers] = useState<UserItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [users, setUsers] = useState<UserRecord[]>([]);
+  const [pagination, setPagination] = useState({ page: 1, limit: 25, total: 0, totalPages: 1 });
+  const [search, setSearch] = useState('');
+  const [roleFilter, setRoleFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Drawer state
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerLoading, setDrawerLoading] = useState(false);
 
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-      const res = await fetch(`${apiUrl}/api/v1/admin/users`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token') || ''}` },
+      setError(null);
+      const token = localStorage.getItem('modliq_token') || '';
+      const params = new URLSearchParams({
+        page: String(pagination.page),
+        limit: String(pagination.limit),
+        ...(search ? { search } : {}),
+        ...(roleFilter ? { role: roleFilter } : {}),
+        ...(statusFilter ? { status: statusFilter } : {}),
+      });
+
+      const res = await fetch(`/api/v1/admin/users?${params}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
-      if (data.success && data.data) {
-        setUsers(data.data);
+      if (data.success) {
+        setUsers(data.data || []);
+        if (data.pagination) setPagination(data.pagination);
+      } else {
+        setError(data.error || 'Failed to fetch users');
       }
-    } catch {
-      // Fallback
+    } catch (err: any) {
+      setError(err.message || 'Error connecting to server');
     } finally {
       setLoading(false);
     }
@@ -36,80 +70,255 @@ export default function AdminUsersPage() {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [pagination.page, search, roleFilter, statusFilter]);
 
-  const handleRoleToggle = async (userId: string, currentRole: string) => {
-    const newRole = currentRole === 'ADMIN' ? 'USER' : 'ADMIN';
+  const handleInspectUser = async (user: UserRecord) => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-      await fetch(`${apiUrl}/api/v1/admin/users/${userId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-        },
-        body: JSON.stringify({ role: newRole }),
+      setDrawerLoading(true);
+      setIsDrawerOpen(true);
+      const token = localStorage.getItem('modliq_token') || '';
+      const res = await fetch(`/api/v1/admin/users/${user.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setUsers((prev) => prev.map((u) => (u.id === userId ? { ...u, role: newRole } : u)));
+      const data = await res.json();
+      if (data.success) {
+        setSelectedUser(data.data);
+      } else {
+        setSelectedUser({ profile: user });
+      }
     } catch {
-      // Ignore
+      setSelectedUser({ profile: user });
+    } finally {
+      setDrawerLoading(false);
     }
   };
 
+  const handleToggleRole = async (userId: string, currentRole: string) => {
+    const newRole = currentRole === 'ADMIN' ? 'USER' : 'ADMIN';
+    if (!confirm(`Are you sure you want to change user role to ${newRole}?`)) return;
+
+    try {
+      const token = localStorage.getItem('modliq_token') || '';
+      const res = await fetch(`/api/v1/admin/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ role: newRole }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        fetchUsers();
+        if (selectedUser?.profile?.id === userId) {
+          setSelectedUser((prev: any) => ({
+            ...prev,
+            profile: { ...prev.profile, role: newRole },
+          }));
+        }
+      }
+    } catch {
+      alert('Failed to update role');
+    }
+  };
+
+  const columns: ColumnDef<UserRecord>[] = [
+    {
+      key: 'name',
+      header: 'Name / Account',
+      render: (u) => (
+        <div>
+          <span className="font-bold text-[#1B2A4A] block">{u.name}</span>
+          <span className="text-[11px] text-slate-400 font-normal">{u.id}</span>
+        </div>
+      ),
+    },
+    {
+      key: 'email',
+      header: 'Email',
+      render: (u) => <span className="text-slate-600 font-mono text-[11px]">{u.email}</span>,
+    },
+    {
+      key: 'role',
+      header: 'Role',
+      render: (u) => <AdminStatusBadge status={u.role} type="role" />,
+    },
+    {
+      key: 'status',
+      header: 'Account Status',
+      render: (u) => <AdminStatusBadge status={u.status} type="generic" />,
+    },
+    {
+      key: 'counts',
+      header: 'Projects / Datasets / Jobs',
+      render: (u) => (
+        <span className="text-slate-600">
+          {u.projectCount} prj • {u.datasetCount} ds • {u.jobCount} jobs
+        </span>
+      ),
+    },
+    {
+      key: 'createdAt',
+      header: 'Created Date',
+      render: (u) => (
+        <span className="text-slate-500 font-normal">
+          {new Date(u.createdAt).toLocaleDateString()}
+        </span>
+      ),
+    },
+    {
+      key: 'actions',
+      header: 'Actions',
+      align: 'right',
+      render: (u) => (
+        <div className="flex items-center justify-end gap-2">
+          <button
+            onClick={() => handleInspectUser(u)}
+            className="p-1.5 bg-[#F0F6FA] text-[#2B70AB] hover:bg-blue-100 rounded-lg transition"
+            title="Inspect Detail"
+          >
+            <Eye className="w-3.5 h-3.5" />
+          </button>
+          <button
+            onClick={() => handleToggleRole(u.id, u.role)}
+            className="p-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-lg transition text-[10px] font-bold"
+            title="Toggle Admin/User Role"
+          >
+            {u.role === 'ADMIN' ? 'Demote' : 'Promote'}
+          </button>
+        </div>
+      ),
+    },
+  ];
+
   return (
-    <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
-      <div className="border-b border-slate-800 pb-6">
-        <h1 className="text-2xl font-bold text-white">Platform User Directory</h1>
-        <p className="text-sm text-slate-400 mt-1">View user accounts and manage system administration roles.</p>
+    <div className="space-y-6 font-sans text-[#1B2A4A]">
+      {/* Header */}
+      <div className="border-b border-[#D0E2F0] pb-5 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold text-[#1B2A4A] tracking-tight">User Account Directory</h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Manage user accounts, roles, workspace activity, and security permissions.
+          </p>
+        </div>
       </div>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-        {loading ? (
-          <div className="p-12 text-center text-slate-400 text-sm">Loading users...</div>
-        ) : (
-          <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-slate-950/80 border-b border-slate-800 text-slate-400 font-bold uppercase">
-              <tr>
-                <th className="p-4">User</th>
-                <th className="p-4">Email</th>
-                <th className="p-4">Role</th>
-                <th className="p-4">Type</th>
-                <th className="p-4">Last Updated</th>
-                <th className="p-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800">
-              {users.map((u) => (
-                <tr key={u.id} className="hover:bg-slate-800/40 transition">
-                  <td className="p-4 font-semibold text-white">{u.name || 'Manufacturer'}</td>
-                  <td className="p-4">{u.email}</td>
-                  <td className="p-4">
-                    <span
-                      className={`px-2.5 py-0.5 text-[10px] font-bold rounded-full border uppercase ${
-                        u.role === 'ADMIN'
-                          ? 'bg-purple-500/20 text-purple-400 border-purple-500/30'
-                          : 'bg-slate-800 text-slate-400 border-slate-700'
-                      }`}
-                    >
-                      {u.role}
-                    </span>
-                  </td>
-                  <td className="p-4">{u.isDemo ? 'Demo Account' : 'Standard'}</td>
-                  <td className="p-4">{new Date(u.updatedAt).toLocaleDateString()}</td>
-                  <td className="p-4 text-right">
-                    <button
-                      onClick={() => handleRoleToggle(u.id, u.role)}
-                      className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-[11px] font-semibold transition"
-                    >
-                      Toggle Admin
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      {/* Filter Bar */}
+      <AdminFilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search by name or email..."
+        filters={[
+          {
+            key: 'role',
+            label: 'Role',
+            value: roleFilter,
+            options: [
+              { label: 'Admin', value: 'ADMIN' },
+              { label: 'Standard User', value: 'USER' },
+            ],
+            onChange: setRoleFilter,
+          },
+          {
+            key: 'status',
+            label: 'Status',
+            value: statusFilter,
+            options: [
+              { label: 'Active', value: 'STANDARD' },
+              { label: 'Demo Account', value: 'DEMO' },
+            ],
+            onChange: setStatusFilter,
+          },
+        ]}
+        onClearFilters={() => {
+          setSearch('');
+          setRoleFilter('');
+          setStatusFilter('');
+        }}
+        onRefresh={fetchUsers}
+        isRefreshing={loading}
+      />
+
+      {/* Data Table */}
+      {error ? (
+        <AdminErrorState message={error} onRetry={fetchUsers} />
+      ) : loading ? (
+        <AdminLoadingSkeleton count={6} />
+      ) : (
+        <AdminDataTable
+          columns={columns}
+          data={users}
+          pagination={pagination}
+          onPageChange={(page) => setPagination((prev) => ({ ...prev, page }))}
+          keyExtractor={(u) => u.id}
+          emptyTitle="No Users Found"
+          emptyDescription="No registered users match your search criteria."
+        />
+      )}
+
+      {/* Detail Drawer */}
+      <AdminDetailDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        title={selectedUser?.profile?.name || 'User Account Details'}
+        subtitle={`ID: ${selectedUser?.profile?.id || ''}`}
+      >
+        {drawerLoading ? (
+          <div className="p-8 text-center text-slate-400">Loading user metadata...</div>
+        ) : selectedUser ? (
+          <div className="space-y-6">
+            {/* Profile Overview */}
+            <div className="p-4 bg-[#F0F6FA] border border-[#D0E2F0] rounded-2xl space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-500 uppercase">Profile Details</span>
+                <AdminStatusBadge status={selectedUser.profile?.role} type="role" />
+              </div>
+              <p className="text-sm font-bold text-[#1B2A4A]">{selectedUser.profile?.email}</p>
+              <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-600">
+                <div>Account Type: <span className="font-semibold">{selectedUser.profile?.isDemo ? 'Demo' : 'Standard'}</span></div>
+                <div>Default Org: <span className="font-semibold">{selectedUser.profile?.defaultOrgId || 'None'}</span></div>
+              </div>
+            </div>
+
+            {/* Projects List */}
+            <div className="space-y-2">
+              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">User Projects ({selectedUser.projects?.length || 0})</h3>
+              {selectedUser.projects && selectedUser.projects.length > 0 ? (
+                <div className="space-y-1.5">
+                  {selectedUser.projects.map((p: any) => (
+                    <div key={p.id} className="p-3 bg-white border border-[#D0E2F0] rounded-xl flex items-center justify-between">
+                      <span className="font-bold text-xs">{p.name}</span>
+                      <AdminStatusBadge status={p.status} type="job" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-xs text-slate-400 italic">No projects created yet.</p>
+              )}
+            </div>
+
+            {/* Datasets List */}
+            <div className="space-y-2">
+              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">User Datasets ({selectedUser.datasets?.length || 0})</h3>
+              {selectedUser.datasets && selectedUser.datasets.length > 0 ? (
+                <div className="space-y-1.5">
+                  {selectedUser.datasets.map((d: any) => (
+                    <div key={d.id} className="p-3 bg-white border border-[#D0E2F0] rounded-xl flex items-center justify-between">
+                      <div>
+                        <span className="font-bold text-xs block">{d.name || d.filename}</span>
+                        <span className="text-[10px] text-slate-400">{d.filename}</span>
+                      </div>
+                      <span className="text-xs font-bold text-[#2B70AB]">Health: {d.healthScore ?? 'N/A'}%</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-xs text-slate-400 italic">No datasets uploaded yet.</p>
+              )}
+            </div>
+          </div>
+        ) : null}
+      </AdminDetailDrawer>
     </div>
   );
 }

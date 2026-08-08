@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { Mail, Lock, User, ArrowRight, ShieldCheck, X } from 'lucide-react';
+import { getPostLoginRedirect } from '@/lib/auth/redirects';
+import { Mail, Lock, User, ArrowRight, X } from 'lucide-react';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -28,17 +29,15 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setLoading(true);
 
     try {
-      if (isLogin) {
-        await login(email, password);
-        router.push(`/user_demo/modliq-console/dashboard`);
-        onClose();
-      } else {
-        await signup(name, email, password);
-        router.push(`/user_registered/modliq-console/dashboard`);
-        onClose();
-      }
+      const authUser = isLogin
+        ? await login(email, password)
+        : await signup(name, email, password);
+
+      const targetPath = getPostLoginRedirect(authUser);
+      router.push(targetPath);
+      onClose();
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred');
+      setError(err.message || 'Invalid email or password');
     } finally {
       setLoading(false);
     }
@@ -48,8 +47,9 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setError('');
     setLoading(true);
     try {
-      await oauthLogin(provider);
-      router.push(`/user_${provider}/modliq-console/dashboard`);
+      const authUser = await oauthLogin(provider);
+      const targetPath = getPostLoginRedirect(authUser);
+      router.push(targetPath);
       onClose();
     } catch (err: any) {
       setError(`${provider} sign in failed`);
@@ -151,7 +151,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
               </div>
             </div>
           )}
-          
+
           <div>
             <label className="block text-slate-700 font-semibold mb-1">
               Work Email

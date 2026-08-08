@@ -1,38 +1,64 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { HelpCircle, CheckCircle2, MessageSquare } from 'lucide-react';
+import AdminFilterBar from '@/components/admin/AdminFilterBar';
+import AdminDataTable, { ColumnDef } from '@/components/admin/AdminDataTable';
+import AdminStatusBadge from '@/components/admin/AdminStatusBadge';
+import AdminDetailDrawer from '@/components/admin/AdminDetailDrawer';
+import AdminLoadingSkeleton from '@/components/admin/AdminLoadingSkeleton';
+import AdminErrorState from '@/components/admin/AdminErrorState';
+import { HelpCircle, Edit3 } from 'lucide-react';
 
-interface Ticket {
+interface TicketRecord {
   id: string;
   userId: string;
   subject: string;
   message: string;
   category: string;
   status: string;
+  priority: string;
   adminResponse?: string;
   createdAt: string;
 }
 
 export default function AdminSupportPage() {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
-  const [responseText, setResponseText] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
+  const [tickets, setTickets] = useState<TicketRecord[]>([]);
+  const [pagination, setPagination] = useState({ page: 1, limit: 25, total: 0, totalPages: 1 });
+  const [statusFilter, setStatusFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Drawer
+  const [selectedTicket, setSelectedTicket] = useState<TicketRecord | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [responseText, setResponseText] = useState('');
+  const [ticketStatus, setTicketStatus] = useState('');
 
   const fetchTickets = async () => {
     try {
       setLoading(true);
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-      const res = await fetch(`${apiUrl}/api/v1/admin/support/tickets`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token') || ''}` },
+      setError(null);
+      const token = localStorage.getItem('modliq_token') || '';
+      const params = new URLSearchParams({
+        page: String(pagination.page),
+        limit: String(pagination.limit),
+        ...(statusFilter ? { status: statusFilter } : {}),
+        ...(categoryFilter ? { category: categoryFilter } : {}),
       });
-      const resp = await res.json();
-      if (resp.success && resp.data) {
-        setTickets(resp.data);
+
+      const res = await fetch(`/api/v1/admin/support/tickets?${params}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (data.success) {
+        setTickets(data.data || []);
+        if (data.pagination) setPagination(data.pagination);
+      } else {
+        setError(data.error || 'Failed to fetch support tickets');
       }
-    } catch {
-      // Fallback
+    } catch (err: any) {
+      setError(err.message || 'Error connecting to server');
     } finally {
       setLoading(false);
     }
@@ -40,120 +66,213 @@ export default function AdminSupportPage() {
 
   useEffect(() => {
     fetchTickets();
-  }, []);
+  }, [pagination.page, statusFilter, categoryFilter]);
 
-  const handleResolveTicket = async (status: string) => {
+  const handleUpdateTicket = async () => {
     if (!selectedTicket) return;
-
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-      await fetch(`${apiUrl}/api/v1/admin/support/tickets/${selectedTicket.id}`, {
+      const token = localStorage.getItem('modliq_token') || '';
+      const res = await fetch(`/api/v1/admin/support/tickets/${selectedTicket.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ status, adminResponse: responseText }),
+        body: JSON.stringify({
+          status: ticketStatus,
+          adminResponse: responseText,
+        }),
       });
-      setSelectedTicket(null);
-      setResponseText('');
-      fetchTickets();
+      const data = await res.json();
+      if (data.success) {
+        alert('Ticket updated!');
+        fetchTickets();
+        setIsDrawerOpen(false);
+      }
     } catch {
-      // Ignore
+      alert('Failed to update ticket');
     }
   };
 
+  const columns: ColumnDef<TicketRecord>[] = [
+    {
+      key: 'subject',
+      header: 'Subject & User',
+      render: (t) => (
+        <div>
+          <span className="font-bold text-[#1B2A4A] block text-xs">{t.subject}</span>
+          <span className="text-[10px] text-slate-400 font-mono">User: {t.userId}</span>
+        </div>
+      ),
+    },
+    {
+      key: 'category',
+      header: 'Category',
+      render: (t) => (
+        <span className="text-xs font-semibold text-slate-700 uppercase">{t.category}</span>
+      ),
+    },
+    {
+      key: 'priority',
+      header: 'Priority',
+      render: (t) => (
+        <span
+          className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+            t.priority === 'HIGH'
+              ? 'bg-rose-50 text-rose-700 border border-rose-200'
+              : 'bg-slate-100 text-slate-600'
+          }`}
+        >
+          {t.priority}
+        </span>
+      ),
+    },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (t) => <AdminStatusBadge status={t.status} type="ticket" />,
+    },
+    {
+      key: 'createdAt',
+      header: 'Submitted At',
+      render: (t) => (
+        <span className="text-slate-500 font-normal">
+          {new Date(t.createdAt).toLocaleDateString()}
+        </span>
+      ),
+    },
+    {
+      key: 'actions',
+      header: 'Actions',
+      align: 'right',
+      render: (t) => (
+        <button
+          onClick={() => {
+            setSelectedTicket(t);
+            setResponseText(t.adminResponse || '');
+            setTicketStatus(t.status);
+            setIsDrawerOpen(true);
+          }}
+          className="p-1.5 bg-[#F0F6FA] text-[#2B70AB] hover:bg-blue-100 rounded-lg transition"
+          title="Respond to Ticket"
+        >
+          <Edit3 className="w-3.5 h-3.5" />
+        </button>
+      ),
+    },
+  ];
+
   return (
-    <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
-      <div className="border-b border-slate-800 pb-6">
-        <h1 className="text-2xl font-bold text-white">Platform Support & Feedback Queue</h1>
-        <p className="text-sm text-slate-400 mt-1">Review user support requests and provide engineer responses.</p>
+    <div className="space-y-6 font-sans text-[#1B2A4A]">
+      <div className="border-b border-[#D0E2F0] pb-5 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold text-[#1B2A4A] tracking-tight">Support Ticket Queue</h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Engineer review queue for user bug reports, feature requests, and dataset issues.
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Ticket List */}
-        <div className="lg:col-span-1 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-          <div className="p-4 bg-slate-950/80 border-b border-slate-800 font-bold text-xs text-slate-300 uppercase">
-            Tickets ({tickets.length})
+      <AdminFilterBar
+        filters={[
+          {
+            key: 'status',
+            label: 'Status',
+            value: statusFilter,
+            options: [
+              { label: 'Open', value: 'OPEN' },
+              { label: 'In Progress', value: 'IN_PROGRESS' },
+              { label: 'Resolved', value: 'RESOLVED' },
+              { label: 'Closed', value: 'CLOSED' },
+            ],
+            onChange: setStatusFilter,
+          },
+          {
+            key: 'category',
+            label: 'Category',
+            value: categoryFilter,
+            options: [
+              { label: 'Bug', value: 'BUG' },
+              { label: 'Billing', value: 'BILLING' },
+              { label: 'Data', value: 'DATA' },
+              { label: 'Other', value: 'OTHER' },
+            ],
+            onChange: setCategoryFilter,
+          },
+        ]}
+        onClearFilters={() => {
+          setStatusFilter('');
+          setCategoryFilter('');
+        }}
+        onRefresh={fetchTickets}
+        isRefreshing={loading}
+      />
+
+      {error ? (
+        <AdminErrorState message={error} onRetry={fetchTickets} />
+      ) : loading ? (
+        <AdminLoadingSkeleton count={6} />
+      ) : (
+        <AdminDataTable
+          columns={columns}
+          data={tickets}
+          pagination={pagination}
+          onPageChange={(page) => setPagination((prev) => ({ ...prev, page }))}
+          keyExtractor={(t) => t.id}
+          emptyTitle="No Support Tickets"
+          emptyDescription="Support queue is clear."
+        />
+      )}
+
+      {/* Drawer */}
+      <AdminDetailDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        title={selectedTicket?.subject || 'Support Ticket'}
+        subtitle={`Ticket ID: ${selectedTicket?.id || ''}`}
+      >
+        {selectedTicket && (
+          <div className="space-y-6">
+            <div className="p-4 bg-[#F0F6FA] border border-[#D0E2F0] rounded-2xl space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-500 uppercase">User Query</span>
+                <AdminStatusBadge status={selectedTicket.status} type="ticket" />
+              </div>
+              <p className="text-xs text-slate-700">{selectedTicket.message}</p>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-slate-500 uppercase">Update Ticket Status</h4>
+              <select
+                value={ticketStatus}
+                onChange={(e) => setTicketStatus(e.target.value)}
+                className="w-full p-2.5 bg-white border border-[#D0E2F0] rounded-xl text-xs font-bold focus:outline-none"
+              >
+                <option value="OPEN">OPEN</option>
+                <option value="IN_PROGRESS">IN_PROGRESS</option>
+                <option value="RESOLVED">RESOLVED</option>
+                <option value="CLOSED">CLOSED</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text-xs font-bold text-slate-500 uppercase">Engineer Resolution Note</h4>
+              <textarea
+                value={responseText}
+                onChange={(e) => setResponseText(e.target.value)}
+                placeholder="Type resolution notes or response to send to user..."
+                className="w-full h-32 p-3 bg-white border border-[#D0E2F0] rounded-xl text-xs focus:outline-none focus:border-[#2B70AB]"
+              />
+              <button
+                onClick={handleUpdateTicket}
+                className="px-4 py-2 bg-[#2B70AB] text-white font-bold rounded-xl text-xs hover:bg-[#1B2A4A] transition"
+              >
+                Save Ticket Response
+              </button>
+            </div>
           </div>
-
-          {loading ? (
-            <div className="p-8 text-center text-xs text-slate-500">Loading tickets...</div>
-          ) : (
-            <div className="divide-y divide-slate-800 max-h-96 overflow-y-auto">
-              {tickets.map((t) => (
-                <div
-                  key={t.id}
-                  onClick={() => {
-                    setSelectedTicket(t);
-                    setResponseText(t.adminResponse || '');
-                  }}
-                  className={`p-4 cursor-pointer hover:bg-slate-800/50 transition space-y-1 ${
-                    selectedTicket?.id === t.id ? 'bg-slate-800/80 border-l-2 border-purple-500' : ''
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-white truncate">{t.subject}</span>
-                    <span className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-blue-500/20 text-blue-400">
-                      {t.status}
-                    </span>
-                  </div>
-                  <span className="text-[10px] text-slate-400 block">Category: {t.category}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Response Panel */}
-        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-          {selectedTicket ? (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                <div>
-                  <h3 className="text-base font-bold text-white">{selectedTicket.subject}</h3>
-                  <span className="text-xs text-slate-400">User ID: {selectedTicket.userId}</span>
-                </div>
-                <span className="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-bold rounded-full">
-                  {selectedTicket.status}
-                </span>
-              </div>
-
-              <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-300">
-                {selectedTicket.message}
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-300">Engineer Response</label>
-                <textarea
-                  rows={4}
-                  value={responseText}
-                  onChange={(e) => setResponseText(e.target.value)}
-                  placeholder="Provide resolution details..."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-purple-500 resize-none"
-                />
-              </div>
-
-              <div className="flex items-center justify-end gap-3">
-                <button
-                  onClick={() => handleResolveTicket('IN_PROGRESS')}
-                  className="px-4 py-2 bg-slate-800 text-slate-200 rounded-xl text-xs font-semibold hover:bg-slate-700"
-                >
-                  Mark In Progress
-                </button>
-                <button
-                  onClick={() => handleResolveTicket('RESOLVED')}
-                  className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-semibold"
-                >
-                  Resolve & Save
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="p-12 text-center text-xs text-slate-500">Select a ticket from the left panel to inspect and respond.</div>
-          )}
-        </div>
-      </div>
+        )}
+      </AdminDetailDrawer>
     </div>
   );
 }

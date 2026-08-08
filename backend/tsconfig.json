@@ -1,11 +1,10 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
     "module": "commonjs",
     "target": "es2020",
-    "types": [],
+    "types": ["node"],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
@@ -21,4 +20,3 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "tests"]
 }
-

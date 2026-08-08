@@ -139,7 +139,7 @@ export default function OptimizationProgressPage({ params }: { params: Promise<{
     <div className="p-8 max-w-5xl mx-auto h-full flex flex-col">
       <header className="mb-8">
         <h1 className="text-2xl font-bold text-[#1B2A4A]">Optimization Progress</h1>
-        <p className="text-slate-500 text-sm mt-1">Running optimization for: {intent.target} ({intent.goal_direction})</p>
+        <p className="text-slate-500 text-sm mt-1">Modliq runs the ML workflow for {intent.target} ({intent.goal_direction}) after your confirmed setup — no code or ML setup required.</p>
       </header>
 
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8">

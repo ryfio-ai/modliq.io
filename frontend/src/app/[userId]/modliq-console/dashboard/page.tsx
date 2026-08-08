@@ -96,8 +96,8 @@ export default function DashboardPage() {
         <div className="flex-1">
           <EmptyState
             icon={LayoutDashboard}
-            title="No Data Yet"
-            description="Upload your first process dataset to start optimizing yields and analyzing quality."
+            title="Start Without a Data Science Team"
+            description="Upload a dataset, choose a template or type your manufacturing goal, and Modliq will guide you through health checks, setup review, optimization, validation, and reporting — no code or ML engineering setup required."
           />
         </div>
       </div>

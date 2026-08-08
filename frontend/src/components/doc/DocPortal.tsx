@@ -152,16 +152,17 @@ export default function DocPortal({ initialSlug }: DocPortalProps) {
 
     const flushCodeBlock = (key: string) => {
       const codeText = codeBuffer.join("\n");
+      const blockKey = `code-block-${key}`;
       elements.push(
-        <div key={key} className="my-6 rounded-xl overflow-hidden border border-slate-800 bg-[#0F172A] text-slate-100 font-mono text-xs shadow-lg">
+        <div key={blockKey} className="my-6 rounded-xl overflow-hidden border border-slate-800 bg-[#0F172A] text-slate-100 font-mono text-xs shadow-lg">
           <div className="flex items-center justify-between px-4 py-2 bg-slate-900/90 border-b border-slate-800 text-slate-400">
             <span className="text-[11px] font-semibold text-blue-400 uppercase tracking-wider">{codeLanguage || "text"}</span>
             <button
-              onClick={() => copyToClipboard(codeText, key)}
+              onClick={() => copyToClipboard(codeText, blockKey)}
               className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition px-2 py-1 rounded bg-slate-800 hover:bg-slate-700"
             >
-              {copiedCode === key ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
-              <span>{copiedCode === key ? "Copied!" : "Copy"}</span>
+              {copiedCode === blockKey ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
+              <span>{copiedCode === blockKey ? "Copied!" : "Copy"}</span>
             </button>
           </div>
           <pre className="p-4 overflow-x-auto leading-relaxed whitespace-pre font-mono text-slate-200">
@@ -173,8 +174,9 @@ export default function DocPortal({ initialSlug }: DocPortalProps) {
     };
 
     const flushTable = (key: string) => {
+      const tableKey = `table-${key}`;
       elements.push(
-        <div key={key} className="my-6 overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
+        <div key={tableKey} className="my-6 overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
           <table className="w-full text-xs text-left text-slate-700 border-collapse">
             <thead className="bg-[#F0F6FA] border-b border-slate-200 text-[#1B2A4A] font-bold">
               <tr>

@@ -699,19 +699,57 @@ model GoalReview {
 }
 
 model ContactLead {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  company    String?
-  email      String
-  phone      String?
-  city       String?
-  industry   String?
-  role       String?
-  interest   String?
-  message    String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  company   String?
+  email     String
+  phone     String?
+  city      String?
+  industry  String?
+  role      String?
+  interest  String?
+  message   String?
+  status    String   @default("NEW") // NEW | CONTACTED | QUALIFIED | DEMO_SCHEDULED | PILOT_ACCEPTED | PILOT_REJECTED | CONVERTED
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+
+model PlatformSettings {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  freePilotEnabled    Boolean  @default(true)
+  freePilotSlotsLimit Int      @default(50)
+  aiFeaturesEnabled   Boolean  @default(true)
+  defaultPlan         String   @default("DEMO")
+  uploadMaxMb         Int      @default(100)
+  importMaxRows       Int      @default(500000)
+  supportEmail        String   @default("support@modliq.io")
+  maintenanceMode     Boolean  @default(false)
+  updatedAt           DateTime @default(now()) @updatedAt
+}
+
+model WebsiteSettings {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  key       String   @unique
+  valueJson String
+  updatedBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HomePageSection {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  sectionKey  String   @unique
+  title       String
+  subtitle    String?
+  contentJson String
+  visible     Boolean  @default(true)
+  order       Int
+  updatedBy   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 
 
 

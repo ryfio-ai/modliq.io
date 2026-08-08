@@ -7,7 +7,8 @@
     "dev": "nodemon --exec \"ts-node -r tsconfig-paths/register src/entrypoint/server.ts\"",
     "build": "prisma generate --schema=src/db/prisma/schema.prisma && tsc",
     "start": "node dist/entrypoint/server.js",
-    "prisma:generate": "prisma generate --schema=src/db/prisma/schema.prisma"
+    "prisma:generate": "prisma generate --schema=src/db/prisma/schema.prisma",
+    "seed:admin": "ts-node src/scripts/seedAdmin.ts"
   },
   "prisma": {
     "schema": "src/db/prisma/schema.prisma"

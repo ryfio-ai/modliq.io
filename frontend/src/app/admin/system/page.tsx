@@ -1,114 +1,103 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Activity, Server, Database, Cpu, HardDrive } from 'lucide-react';
-
-interface SystemStatus {
-  backendVersion: string;
-  nodeEnv: string;
-  databaseStatus: string;
-  mlEngineHealth: string;
-  mlEngineUrl: string;
-  redisQueueStatus: string;
-  clientOrigin: string;
-  uptimeSeconds: number;
-}
+import AdminStatusBadge from '@/components/admin/AdminStatusBadge';
+import AdminLoadingSkeleton from '@/components/admin/AdminLoadingSkeleton';
+import AdminErrorState from '@/components/admin/AdminErrorState';
+import { Activity, Server, Database, Cpu, HardDrive, Shield } from 'lucide-react';
 
 export default function AdminSystemPage() {
-  const [status, setStatus] = useState<SystemStatus | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [system, setSystem] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchSystem = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const token = localStorage.getItem('modliq_token') || '';
+      const res = await fetch('/api/v1/admin/system', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSystem(data.data);
+      } else {
+        setError(data.error || 'Failed to fetch system status');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Error connecting to server');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchSystem = async () => {
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-        const res = await fetch(`${apiUrl}/api/v1/admin/system`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token') || ''}` },
-        });
-        const resp = await res.json();
-        if (resp.success && resp.data) {
-          setStatus(resp.data);
-        }
-      } catch {
-        // Fallback
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchSystem();
   }, []);
 
+  if (loading) return <AdminLoadingSkeleton type="full" />;
+  if (error) return <AdminErrorState message={error} onRetry={fetchSystem} />;
+
+  const components = system?.components || [];
+
   return (
-    <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
-      <div className="border-b border-slate-800 pb-6">
-        <h1 className="text-2xl font-bold text-white">System Architecture & Infrastructure Status</h1>
-        <p className="text-sm text-slate-400 mt-1">Status of Express Gateway, FastAPI ML Engine, MongoDB Atlas, Redis, and MinIO storage.</p>
+    <div className="space-y-8 font-sans text-[#1B2A4A]">
+      <div className="border-b border-[#D0E2F0] pb-5 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold text-[#1B2A4A] tracking-tight">System Infrastructure Status</h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Express Gateway, MongoDB Atlas, FastAPI ML Engine, BullMQ/Redis, and Cloud Storage health.
+          </p>
+        </div>
+        <button
+          onClick={fetchSystem}
+          className="px-3 py-1.5 bg-white border border-[#D0E2F0] rounded-xl text-xs font-semibold text-slate-600 hover:text-[#2B70AB] transition"
+        >
+          Refresh Infrastructure
+        </button>
       </div>
 
-      {loading ? (
-        <div className="p-12 text-center text-slate-400 text-sm">Loading system status...</div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-3 shadow-lg">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase">Express API Gateway</span>
-              <Server className="w-5 h-5 text-blue-400" />
-            </div>
-            <p className="text-xl font-bold text-white">v{status?.backendVersion || '2.0.0'}</p>
-            <div className="text-xs text-slate-400 space-y-1">
-              <p>Node Environment: {status?.nodeEnv}</p>
-              <p>Uptime: {Math.floor((status?.uptimeSeconds || 0) / 60)} minutes</p>
-            </div>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-3 shadow-lg">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase">Database Layer</span>
-              <Database className="w-5 h-5 text-emerald-400" />
-            </div>
-            <p className="text-xl font-bold text-emerald-400">MongoDB Atlas</p>
-            <div className="text-xs text-slate-400 space-y-1">
-              <p>Connection: {status?.databaseStatus || 'Connected'}</p>
-              <p>Prisma Client v5.22.0</p>
-            </div>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-3 shadow-lg">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase">FastAPI ML Engine</span>
-              <Cpu className="w-5 h-5 text-purple-400" />
-            </div>
-            <p className="text-xl font-bold text-white capitalize">{status?.mlEngineHealth || 'Healthy'}</p>
-            <div className="text-xs text-slate-400 space-y-1">
-              <p className="truncate">URL: {status?.mlEngineUrl}</p>
-              <p>Auth: Service-Key Protected</p>
-            </div>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-3 shadow-lg">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase">BullMQ / Redis Queue</span>
-              <Activity className="w-5 h-5 text-amber-400" />
-            </div>
-            <p className="text-xl font-bold text-white capitalize">{status?.redisQueueStatus?.replace(/_/g, ' ')}</p>
-            <div className="text-xs text-slate-400 space-y-1">
-              <p>Job Retries & Exponential Backoff Active</p>
-            </div>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-3 shadow-lg">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase">Model Storage</span>
-              <HardDrive className="w-5 h-5 text-indigo-400" />
-            </div>
-            <p className="text-xl font-bold text-white">MinIO / S3 Storage</p>
-            <div className="text-xs text-slate-400 space-y-1">
-              <p>Local disk fallback enabled</p>
-            </div>
-          </div>
+      {/* Meta Specs */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="p-5 bg-white border border-[#D0E2F0] rounded-2xl space-y-1">
+          <span className="text-xs font-bold text-slate-500 uppercase">Backend Version</span>
+          <p className="text-2xl font-extrabold text-[#1B2A4A]">v{system?.backendVersion || '2.0.0'}</p>
+          <span className="text-xs text-slate-500 font-medium">Node Environment: {system?.nodeEnv || 'production'}</span>
         </div>
-      )}
+
+        <div className="p-5 bg-white border border-[#D0E2F0] rounded-2xl space-y-1">
+          <span className="text-xs font-bold text-slate-500 uppercase">Process Uptime</span>
+          <p className="text-2xl font-extrabold text-emerald-600">
+            {Math.floor((system?.uptimeSeconds || 0) / 3600)}h {Math.floor(((system?.uptimeSeconds || 0) % 3600) / 60)}m
+          </p>
+          <span className="text-xs text-slate-500 font-medium">Server continuous uptime</span>
+        </div>
+
+        <div className="p-5 bg-white border border-[#D0E2F0] rounded-2xl space-y-1">
+          <span className="text-xs font-bold text-slate-500 uppercase">Overall Health</span>
+          <div className="mt-1">
+            <AdminStatusBadge status="HEALTHY" type="health" />
+          </div>
+          <span className="text-xs text-slate-500 font-medium block mt-1">All core subsystems operational</span>
+        </div>
+      </div>
+
+      {/* Component Grid */}
+      <div className="space-y-3">
+        <h2 className="text-sm font-bold text-[#1B2A4A] uppercase tracking-wider">Subsystem Architecture Matrix</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {components.map((comp: any) => (
+            <div key={comp.name} className="p-5 bg-white border border-[#D0E2F0] rounded-2xl space-y-3 shadow-xs">
+              <div className="flex items-center justify-between">
+                <span className="font-extrabold text-sm text-[#1B2A4A]">{comp.name}</span>
+                <AdminStatusBadge status={comp.status} type="health" />
+              </div>
+              <p className="text-xs text-slate-500 font-medium">{comp.details}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

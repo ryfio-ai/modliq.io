@@ -4,9 +4,9 @@ export declare function getDataset(datasetId: string): Promise<{
     name: string | null;
     isDemo: boolean;
     updatedAt: Date;
+    createdAt: Date;
     userId: string;
     status: string;
-    createdAt: Date;
     projectId: string | null;
     filename: string;
     originalName: string;
@@ -44,9 +44,9 @@ export declare function getAllDatasets(): Promise<{
     name: string | null;
     isDemo: boolean;
     updatedAt: Date;
+    createdAt: Date;
     userId: string;
     status: string;
-    createdAt: Date;
     projectId: string | null;
     filename: string;
     originalName: string;
@@ -82,15 +82,15 @@ export declare function getAllDatasets(): Promise<{
 export declare function getDatasetVersions(datasetId: string): Promise<{
     id: string;
     data: string | null;
-    datasetId: string;
     createdAt: Date;
+    datasetId: string;
     versionId: string;
 }[]>;
 export declare function getDatasetVersion(datasetId: string, versionId: string): Promise<{
     id: string;
     data: string | null;
-    datasetId: string;
     createdAt: Date;
+    datasetId: string;
     versionId: string;
 } | null>;
 //# sourceMappingURL=datasetStore.d.ts.map

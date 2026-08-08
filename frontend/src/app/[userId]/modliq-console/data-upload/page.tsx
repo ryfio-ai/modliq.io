@@ -15,7 +15,7 @@ export default function DataUploadPage({ params }: { params: Promise<{ userId: s
           <Upload className="text-[#2B70AB]" size={28} /> Universal Data Ingestion & Connectors
         </h1>
         <p className="text-sm text-slate-500 mt-1">
-          Import manufacturing data into Modliq from files (CSV, Excel, PDF, Word) or read-only database connectors.
+          Start with CSV or Excel. Modliq profiles your columns and checks dataset health automatically — no data science team needed.
         </p>
       </div>
 
