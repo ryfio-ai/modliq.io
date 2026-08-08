@@ -101,7 +101,7 @@ export default function HomeClient() {
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto font-medium">
-              Modliq combines manufacturing analytics and no-code machine learning so factory teams can explore data, detect quality issues, optimize process settings, and generate buyer-ready reports — without hiring data analysts or ML engineers.
+              Modliq combines no-code analytics and no-code machine learning for manufacturing teams. It helps factories analyze what happened, optimize what happens next, and prove decisions with buyer-ready Quality Passports — without hiring a data analyst, data scientist, or ML engineer to get started.
             </p>
 
             <p className="text-xs sm:text-sm text-[#2B70AB] font-bold">

@@ -41,6 +41,25 @@
 
 ---
 
+## 🤖 No-Code Analytics + AutoML Workflows Status
+
+| Module / Feature | Rollout Status | Security & Execution Rule |
+| :--- | :--- | :--- |
+| **Ask Your Factory Data** | **Live** | Deterministic query planner (`groupBy`, `filter`, `sort`, `mean`, `sum`, `count`, `min`, `max`, `correlation`). Zero arbitrary code/SQL execution. |
+| **Data Cleaning Advisor** | **Live** | Advisory by default. Confirmed actions create versioned Dataset Version 2. Original dataset remains unchanged. |
+| **Smart Chart Suggestions** | **Live** | Recommends histograms, bar charts, scatter plots, heatmaps, and Pareto charts based on feature types. |
+| **Insight Narratives** | **Live** | Plain-language executive summary compiled from computed EDA, quality math, and operations data. |
+| **KPI Auto-Mapping** | **Live** | Auto-detects Yield, Defects, Quality Rate, Downtime, Availability, Performance, Traceability, and Scrap. |
+| **Feature Engineering Suggestions** | **Beta** | Tailored manufacturing ratio & interaction terms. Enabled by explicit user toggle. |
+| **AutoML Benchmark Leaderboard** | **Beta** | Candidate benchmark suite (Random Forest, Gradient Boosting, Extra Trees, Linear). Resource limits: $10,000$ max rows, $4$ models, $120\text{s}$ timeout. Evaluates $R^2$, RMSE, MAE. |
+| **Model Trust & Drift Monitor** | **Beta** | Monitors Kolmogorov-Smirnov distribution drift & schema shifts. Displays Trust Score (0-100%). |
+| **Retraining Recommendations** | **Beta** | Advisory status. Requires explicit user confirmation to create a new optimization run. |
+| **Quality Passport MLOps Evidence** | **Live** | Audit-ready documentation of model algorithm, $R^2$ accuracy, features, and drift status in Section 7. |
+
+> **Security & Execution Rule**: Modliq does not execute arbitrary user code or arbitrary SQL. Natural language questions are converted into safe deterministic query plans.
+
+---
+
 ## 🔗 Related Documentation
 
 - [PRODUCT_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PRODUCT_OVERVIEW.md) — Product vision & problem statement
