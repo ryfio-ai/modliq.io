@@ -147,57 +147,57 @@ export default function ProjectGoalPage({
   };
 
   return (
-    <div className="p-6 sm:p-8 max-w-5xl mx-auto space-y-8">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+    <div className="p-6 sm:p-8 max-w-5xl mx-auto space-y-8 bg-slate-50 min-h-screen">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-blue-400">Guided Process Setup</span>
-          <h1 className="text-2xl font-bold text-white mt-1 flex items-center gap-3">
-            <Target className="text-blue-400" size={28} /> Define & Confirm Optimization Goal
+          <span className="text-xs font-bold uppercase tracking-wider text-blue-600">Guided Process Setup</span>
+          <h1 className="text-2xl font-bold text-slate-900 mt-1 flex items-center gap-3">
+            <Target className="text-blue-600" size={28} /> Define & Confirm Optimization Goal
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-slate-600 mt-1">
             Specify your manufacturing target. Modliq will parse your goal, crosscheck constraints, and request setup confirmation.
           </p>
         </div>
 
         <button
           onClick={() => setShowTemplateModal(true)}
-          className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-2 transition border border-slate-700"
+          className="px-4 py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-xl text-xs font-bold flex items-center gap-2 transition border border-slate-300 shadow-sm"
         >
-          <BookOpen className="w-4 h-4 text-blue-400" /> Use a Goal Template
+          <BookOpen className="w-4 h-4 text-blue-600" /> Use a Goal Template
         </button>
       </div>
 
       {error && (
-        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-3">
-          <AlertCircle size={18} className="shrink-0" />
+        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-3 font-medium shadow-sm">
+          <AlertCircle size={18} className="shrink-0 text-red-600" />
           <span>{error}</span>
         </div>
       )}
 
       {/* Goal Input Section */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
             Natural Language Goal Prompt
           </label>
           <textarea
             value={goalText}
             onChange={(e) => setGoalText(e.target.value)}
             rows={4}
-            className="w-full p-4 rounded-xl bg-slate-950 border border-slate-800 focus:border-blue-500 focus:outline-none text-sm text-white font-mono"
+            className="w-full p-4 rounded-xl bg-slate-50 border border-slate-300 focus:border-blue-600 focus:bg-white focus:outline-none text-sm text-slate-900 font-mono shadow-inner transition-all"
             placeholder="e.g. Maximize Yield above 95% while keeping reaction Temperature below 90°C."
           />
         </div>
 
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-slate-800">
-          <span className="text-xs text-slate-500">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-slate-200">
+          <span className="text-xs text-slate-500 font-medium">
             Modliq will crosscheck targets, features, and metadata before asking for final setup confirmation.
           </span>
 
           <button
             onClick={handleParseAndCrosscheck}
             disabled={parsing || !goalText.trim()}
-            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50 w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all shadow-md shadow-blue-600/20 disabled:opacity-50 w-full sm:w-auto cursor-pointer"
           >
             {parsing ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
             Parse Goal & Review Setup <ArrowRight size={16} />
@@ -217,7 +217,7 @@ export default function ProjectGoalPage({
 
       {/* Template Modal */}
       {showTemplateModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <TemplateSelector
               templates={templates}

@@ -130,22 +130,22 @@ export default function GoalCrosscheckWizard({
   };
 
   return (
-    <div className="bg-slate-900 border border-blue-500/30 rounded-2xl p-6 sm:p-8 space-y-8 shadow-2xl">
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-8 shadow-sm text-slate-900">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-blue-600/20 text-blue-400 rounded-xl flex items-center justify-center border border-blue-500/30">
+          <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-200 shadow-sm">
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-blue-400">Optimization Readiness Guard</span>
-            <h2 className="text-xl font-bold text-white mt-0.5">Review & Confirm Optimization Setup</h2>
-            <p className="text-xs text-slate-400 mt-0.5">Before running optimization, confirm that Modliq understood your setup correctly.</p>
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-600">Optimization Readiness Guard</span>
+            <h2 className="text-xl font-bold text-slate-900 mt-0.5">Review & Confirm Optimization Setup</h2>
+            <p className="text-xs text-slate-600 mt-0.5">Before running optimization, confirm that Modliq understood your setup correctly.</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-bold rounded-full">
+          <span className="px-3 py-1 bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold rounded-full shadow-sm">
             Setup Review Needed
           </span>
         </div>
@@ -153,11 +153,11 @@ export default function GoalCrosscheckWizard({
 
       {/* Warnings & Auto-Removals Banner */}
       {initialReview.warnings.length > 0 && (
-        <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl space-y-2">
-          <h4 className="text-xs font-bold text-amber-400 flex items-center gap-2 uppercase tracking-wide">
-            <AlertTriangle className="w-4 h-4 text-amber-400" /> Automated Safety & Metadata Adjustments
+        <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
+          <h4 className="text-xs font-bold text-amber-800 flex items-center gap-2 uppercase tracking-wide">
+            <AlertTriangle className="w-4 h-4 text-amber-600" /> Automated Safety & Metadata Adjustments
           </h4>
-          <ul className="space-y-1 text-xs text-slate-300 list-disc list-inside">
+          <ul className="space-y-1 text-xs text-slate-700 list-disc list-inside font-medium">
             {initialReview.warnings.map((warn, idx) => (
               <li key={idx}>{warn}</li>
             ))}
@@ -167,26 +167,26 @@ export default function GoalCrosscheckWizard({
 
       {/* Section A: Target Metric */}
       <div className="space-y-3">
-        <h3 className="text-sm font-bold text-white flex items-center gap-2">
-          <Tag className="w-4 h-4 text-blue-400" /> 1. Target Variable & Goal Direction
+        <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <Tag className="w-4 h-4 text-blue-600" /> 1. Target Variable & Goal Direction
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Target Metric</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1">Target Metric</label>
             <input
               type="text"
               value={target}
               onChange={(e) => setTarget(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-blue-500"
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600 shadow-sm"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Goal Direction</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1">Goal Direction</label>
             <select
               value={direction}
               onChange={(e) => setDirection(e.target.value as any)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-blue-500"
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600 shadow-sm"
             >
               <option value="maximize">Maximize ↑</option>
               <option value="minimize">Minimize ↓</option>
@@ -194,13 +194,13 @@ export default function GoalCrosscheckWizard({
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Target Threshold (Optional)</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1">Target Threshold (Optional)</label>
             <input
               type="number"
               value={threshold}
               onChange={(e) => setThreshold(e.target.value)}
               placeholder="e.g. 95.0"
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-blue-500"
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600 shadow-sm"
             />
           </div>
         </div>
@@ -208,12 +208,12 @@ export default function GoalCrosscheckWizard({
 
       {/* Section B: Controllable Features */}
       <div className="space-y-3">
-        <h3 className="text-sm font-bold text-white flex items-center gap-2">
-          <Sliders className="w-4 h-4 text-indigo-400" /> 2. Controllable Process Variables ({selectedFeatures.length} selected)
+        <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <Sliders className="w-4 h-4 text-blue-600" /> 2. Controllable Process Variables ({selectedFeatures.length} selected)
         </h3>
 
-        <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-3">
-          <p className="text-xs text-slate-400">Toggle variables that engineers can adjust on the production line:</p>
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+          <p className="text-xs text-slate-600 font-medium">Toggle variables that engineers can adjust on the production line:</p>
 
           <div className="flex flex-wrap gap-2">
             {initialReview.controllableFeatures.map((feat) => {
@@ -223,13 +223,13 @@ export default function GoalCrosscheckWizard({
                   key={feat}
                   type="button"
                   onClick={() => toggleFeature(feat)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow-sm ${
                     isSelected
-                      ? 'bg-blue-600/30 text-blue-300 border border-blue-500/50'
-                      : 'bg-slate-900 text-slate-500 border border-slate-800 hover:text-slate-300'
+                      ? 'bg-blue-600 text-white border border-blue-700'
+                      : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-100'
                   }`}
                 >
-                  <CheckCircle2 className={`w-3.5 h-3.5 ${isSelected ? 'text-blue-400' : 'text-slate-600'}`} />
+                  <CheckCircle2 className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-slate-400'}`} />
                   {feat}
                 </button>
               );
@@ -237,8 +237,8 @@ export default function GoalCrosscheckWizard({
           </div>
 
           {initialReview.removedFeatures.length > 0 && (
-            <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-500 flex items-center gap-1.5">
-              <Info className="w-3.5 h-3.5 text-amber-400" /> Excluded variables: {initialReview.removedFeatures.join(', ')}
+            <div className="pt-2 border-t border-slate-200 text-[11px] text-slate-600 flex items-center gap-1.5 font-medium">
+              <Info className="w-3.5 h-3.5 text-amber-600" /> Excluded variables: {initialReview.removedFeatures.join(', ')}
             </div>
           )}
         </div>
@@ -246,37 +246,37 @@ export default function GoalCrosscheckWizard({
 
       {/* Section C: Parsed Constraints */}
       <div className="space-y-3">
-        <h3 className="text-sm font-bold text-white flex items-center gap-2">
-          <Sliders className="w-4 h-4 text-emerald-400" /> 3. Process Limit Constraints
+        <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <Sliders className="w-4 h-4 text-emerald-600" /> 3. Process Limit Constraints
         </h3>
 
-        <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-3">
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
           {Object.keys(constraints).length === 0 ? (
             <p className="text-xs text-slate-500 italic">No operational constraints detected. You can add min/max limits below.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {Object.entries(constraints).map(([col, bounds]) => (
-                <div key={col} className="p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
-                  <span className="text-xs font-bold text-white">{col}</span>
+                <div key={col} className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+                  <span className="text-xs font-bold text-slate-900">{col}</span>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <span className="text-[10px] text-slate-400 block">Min Value</span>
+                      <span className="text-[10px] font-semibold text-slate-500 block">Min Value</span>
                       <input
                         type="number"
                         value={bounds.min}
                         onChange={(e) => updateConstraint(col, 'min', e.target.value)}
                         placeholder="Min limit"
-                        className="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-white"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1 text-xs text-slate-900 font-medium"
                       />
                     </div>
                     <div>
-                      <span className="text-[10px] text-slate-400 block">Max Value</span>
+                      <span className="text-[10px] font-semibold text-slate-500 block">Max Value</span>
                       <input
                         type="number"
                         value={bounds.max}
                         onChange={(e) => updateConstraint(col, 'max', e.target.value)}
                         placeholder="Max limit"
-                        className="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-white"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1 text-xs text-slate-900 font-medium"
                       />
                     </div>
                   </div>
@@ -289,8 +289,8 @@ export default function GoalCrosscheckWizard({
 
       {/* Section D: Recommended Output Modules */}
       <div className="space-y-3">
-        <h3 className="text-sm font-bold text-white flex items-center gap-2">
-          <Layers className="w-4 h-4 text-purple-400" /> 4. Select Output Modules & Artifacts
+        <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <Layers className="w-4 h-4 text-purple-600" /> 4. Select Output Modules & Artifacts
         </h3>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -307,10 +307,10 @@ export default function GoalCrosscheckWizard({
             return (
               <label
                 key={mod.key}
-                className={`p-3 rounded-xl border cursor-pointer transition flex items-start gap-2.5 ${
+                className={`p-3 rounded-xl border cursor-pointer transition flex items-start gap-2.5 shadow-sm ${
                   isChecked
-                    ? 'bg-purple-600/10 border-purple-500/40 text-white'
-                    : 'bg-slate-950/40 border-slate-800 text-slate-400 hover:bg-slate-800'
+                    ? 'bg-blue-50 border-blue-400 text-slate-900 font-semibold'
+                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-white'
                 }`}
               >
                 <input
@@ -319,11 +319,11 @@ export default function GoalCrosscheckWizard({
                   onChange={(e) =>
                     setSelectedModules((prev) => ({ ...prev, [mod.key]: e.target.checked }))
                   }
-                  className="mt-0.5 rounded border-slate-700 text-purple-600 focus:ring-purple-500"
+                  className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                 />
                 <div>
-                  <span className="text-xs font-bold block">{mod.label}</span>
-                  <span className="text-[10px] text-slate-500 block leading-tight">{mod.desc}</span>
+                  <span className="text-xs font-bold block text-slate-900">{mod.label}</span>
+                  <span className="text-[10px] text-slate-500 block leading-tight mt-0.5">{mod.desc}</span>
                 </div>
               </label>
             );
@@ -332,36 +332,36 @@ export default function GoalCrosscheckWizard({
       </div>
 
       {/* Section E: Safety Acknowledgement */}
-      <div className="p-4 bg-slate-950 rounded-xl border border-blue-500/30 space-y-3">
+      <div className="p-4 bg-slate-50 rounded-xl border border-slate-300 space-y-3 shadow-inner">
         <label className="flex items-start gap-3 cursor-pointer">
           <input
             type="checkbox"
             checked={safetyAcknowledged}
             onChange={(e) => setSafetyAcknowledged(e.target.checked)}
-            className="mt-0.5 w-4 h-4 rounded border-slate-700 text-blue-600 focus:ring-blue-500"
+            className="mt-0.5 w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
           />
-          <span className="text-xs font-semibold text-slate-200 leading-normal">
+          <span className="text-xs font-bold text-slate-900 leading-normal">
             I understand that Modliq recommendations must be validated through controlled trials before production rollout.
           </span>
         </label>
       </div>
 
       {validationError && (
-        <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-xs font-semibold">
+        <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs font-bold shadow-sm">
           {validationError}
         </div>
       )}
 
       {/* Actions */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
-        <span className="text-xs text-slate-500">Confirmed setup will be saved to audit trail.</span>
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200">
+        <span className="text-xs text-slate-500 font-medium">Confirmed setup will be saved to audit trail.</span>
 
         <div className="flex items-center gap-3 w-full sm:w-auto">
           {onSaveDraft && (
             <button
               type="button"
               onClick={() => onSaveDraft({ target, direction, threshold, features: selectedFeatures, constraints })}
-              className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold flex items-center gap-2 transition"
+              className="px-4 py-2.5 bg-white hover:bg-slate-100 text-slate-800 rounded-xl text-xs font-bold border border-slate-300 shadow-sm flex items-center gap-2 transition"
             >
               <Save className="w-4 h-4" /> Save Draft
             </button>
@@ -371,7 +371,7 @@ export default function GoalCrosscheckWizard({
             type="button"
             onClick={handleConfirmSubmit}
             disabled={submitting}
-            className="flex-1 sm:flex-initial px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-blue-500/20 disabled:opacity-50"
+            className="flex-1 sm:flex-initial px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition shadow-md shadow-blue-600/20 disabled:opacity-50 cursor-pointer"
           >
             <Play className="w-4 h-4" /> {submitting ? 'Confirming & Launching...' : 'Confirm & Run Optimization'}
           </button>
