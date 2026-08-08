@@ -30,6 +30,7 @@ import { usePipelineStore } from '@/store/pipelineStore';
 import AiCopilotDrawer from '@/components/ai/AiCopilotDrawer';
 import ProjectSwitcher from '@/components/layout/ProjectSwitcher';
 import CommandPalette from '@/components/ui/CommandPalette';
+import UserProfileModal from '@/components/profile/UserProfileModal';
 
 export default function ConsoleClientLayout({
   children,
@@ -186,21 +187,26 @@ export default function ConsoleClientLayout({
             </div>
           </div>
 
-          {/* User Avatar & Logout */}
-          <div className="flex items-center justify-between px-1 pt-1">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                {user?.name?.[0]?.toUpperCase() || 'A'}
+          {/* User Avatar & Profile Navigation */}
+          <div className="flex items-center justify-between px-1 pt-1 bg-slate-50 hover:bg-blue-50/60 p-2 rounded-xl border border-slate-200/80 transition-all group">
+            <Link href={`/${userId}/modliq-console/profile`} className="flex items-center gap-2.5 flex-1 min-w-0">
+              <div className="w-8 h-8 rounded-full bg-[#2B70AB] text-white flex items-center justify-center font-bold text-xs shadow-xs group-hover:scale-105 transition-transform">
+                {user?.name?.[0]?.toUpperCase() || 'U'}
               </div>
-              <div className="text-left leading-tight">
-                <p className="text-xs font-medium text-slate-800 truncate max-w-[100px]">{user?.name || 'Engineer'}</p>
-                <p className="text-[10px] text-slate-500 font-mono font-semibold">{(user as any)?.role || 'ADMIN'}</p>
+              <div className="text-left leading-tight truncate">
+                <p className="text-xs font-bold text-slate-800 truncate group-hover:text-[#2B70AB] transition-colors">{user?.name || 'Engineer'}</p>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-blue-100 text-blue-700 font-mono font-bold uppercase">
+                    {(user as any)?.role || 'USER'}
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono hover:underline">View Profile</span>
+                </div>
               </div>
-            </div>
+            </Link>
             <button
               onClick={handleSignOut}
               title="Sign Out"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-slate-100 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-white transition-colors border border-transparent hover:border-slate-200"
             >
               <LogOut size={15} />
             </button>
@@ -244,8 +250,9 @@ export default function ConsoleClientLayout({
         </main>
       </div>
 
-      {/* AI Copilot Drawer */}
+      {/* AI Copilot Drawer & User Profile Onboarding Popup */}
       <AiCopilotDrawer />
+      <UserProfileModal />
     </div>
   );
 }

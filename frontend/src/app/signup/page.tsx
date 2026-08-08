@@ -49,14 +49,18 @@ export default function SignupPage() {
       <div className="w-full grid grid-cols-1 lg:grid-cols-2">
         {/* Left Panel: High Impact Branding */}
         <div className="hidden lg:flex flex-col justify-between p-12 bg-[#1B2A4A] text-white relative overflow-hidden">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#2B70AB] p-0.5 shadow-md flex items-center justify-center font-black text-white text-lg">
-              M
-            </div>
-            <div>
-              <span className="text-xl font-bold block">Modliq</span>
-              <span className="text-xs text-blue-200 font-mono">No-Code Manufacturing Intelligence</span>
-            </div>
+          {/* Header with Original Brand Logo */}
+          <div className="flex items-center justify-between">
+            <Link href="/" className="inline-block transition-opacity hover:opacity-90">
+              <img
+                src="/logo modliq.png"
+                alt="Modliq Manufacturing Intelligence"
+                className="h-12 sm:h-14 w-auto object-contain bg-white px-3.5 py-1.5 rounded-xl shadow-md"
+              />
+            </Link>
+            <span className="text-xs text-blue-200/90 font-mono bg-blue-900/60 border border-blue-700/50 px-3 py-1 rounded-full font-semibold">
+              No-Code Intelligence
+            </span>
           </div>
 
           <div className="space-y-6 max-w-lg">

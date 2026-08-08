@@ -3,15 +3,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Key, Lock, Mail, ArrowRight, ShieldCheck, CheckCircle2, Globe, Sparkles } from "lucide-react";
+import { Lock, Mail, ArrowRight, ShieldCheck, CheckCircle2, Sparkles, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { getPostLoginRedirect } from "@/lib/auth/redirects";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("admin@modliq.io");
-  const [password, setPassword] = useState("modliq123");
-  const [name, setName] = useState("Factory Engineer");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -66,44 +66,82 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex font-sans">
       <div className="w-full grid grid-cols-1 lg:grid-cols-2">
-        {/* Left Panel: High Impact Showcase */}
-        <div className="hidden lg:flex flex-col justify-between p-12 bg-[#1B2A4A] text-white relative overflow-hidden">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#2B70AB] p-0.5 shadow-md flex items-center justify-center font-black text-white text-lg">
-              M
-            </div>
-            <div>
-              <span className="text-xl font-bold block">Modliq</span>
-              <span className="text-xs text-blue-200 font-mono">No-Code Manufacturing Intelligence</span>
-            </div>
+        {/* Left Panel: Original Logo & Manufacturing Comparison Table */}
+        <div className="hidden lg:flex flex-col justify-between p-10 bg-[#1B2A4A] text-white relative overflow-hidden">
+          {/* Header with Original Brand Logo */}
+          <div className="flex items-center justify-between">
+            <Link href="/" className="inline-block transition-opacity hover:opacity-90">
+              <img
+                src="/logo modliq.png"
+                alt="Modliq Manufacturing Intelligence"
+                className="h-12 sm:h-14 w-auto object-contain bg-white px-3.5 py-1.5 rounded-xl shadow-md"
+              />
+            </Link>
+            <span className="text-xs text-blue-200/90 font-mono bg-blue-900/60 border border-blue-700/50 px-3 py-1 rounded-full font-semibold">
+              No-Code Intelligence
+            </span>
           </div>
 
-          <div className="space-y-6 max-w-lg">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-900/60 border border-blue-400/30 rounded-full text-xs font-bold text-blue-200">
-              <Sparkles className="w-3.5 h-3.5 text-blue-300" />
-              <span>No Data Scientist Needed</span>
-            </div>
-
-            <blockquote className="text-2xl font-extrabold text-white leading-snug tracking-tight">
-              &ldquo;Turn factory data into decisions without hiring data scientists or ML engineers.&rdquo;
-            </blockquote>
-
-            <p className="text-sm text-blue-100/90 leading-relaxed font-medium">
-              Modliq makes process optimization, quality validation, SPC capability math, and buyer-ready Quality Passports comfortable for factory teams.
-            </p>
-
-            <div className="flex items-center gap-4 text-xs font-mono pt-2">
-              <div className="px-3 py-1.5 rounded-lg bg-blue-950/80 border border-blue-800 text-blue-300">
-                Admin: admin@modliq.io / modliq123
+          {/* Comparison Showcase Section */}
+          <div className="my-auto py-6 space-y-5">
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-900/60 border border-blue-400/30 rounded-full text-xs font-bold text-blue-200">
+                <Sparkles className="w-3.5 h-3.5 text-blue-300" />
+                <span>Manufacturing ML vs Generic Tools</span>
               </div>
+              <h1 className="text-2xl font-extrabold text-white tracking-tight">
+                Why Factory Teams Choose Modliq
+              </h1>
+              <p className="text-xs text-blue-200/80">
+                Purpose-built for plant data, SPC capability math, process optimization, &amp; buyer Quality Passports.
+              </p>
+            </div>
+
+            {/* Comparison Table */}
+            <div className="bg-blue-950/60 border border-blue-800/60 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm">
+              <table className="w-full text-left text-xs font-sans">
+                <thead>
+                  <tr className="bg-blue-900/70 border-b border-blue-800/80 text-blue-100">
+                    <th className="px-4 py-3 font-bold">Capability</th>
+                    <th className="px-3 py-3 font-bold text-center text-slate-300 w-32">Generic / Excel</th>
+                    <th className="px-4 py-3 font-bold text-center text-emerald-300 bg-blue-800/80 w-36">Modliq Platform</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-blue-900/40">
+                  {[
+                    { feature: "NL Manufacturing Goal Parser", generic: false, modliq: true },
+                    { feature: "SPC & Cp/Cpk Capability Math", generic: false, modliq: true },
+                    { feature: "7-Batch Trial SOP Generator", generic: false, modliq: true },
+                    { feature: "Buyer-Ready Quality Passports", generic: false, modliq: true },
+                    { feature: "Supplier Lot Yield Traceability", generic: false, modliq: true },
+                    { feature: "OEE & Downtime Pareto Analysis", generic: false, modliq: true },
+                  ].map((item, idx) => (
+                    <tr key={idx} className="hover:bg-blue-900/30 transition-colors">
+                      <td className="px-4 py-2.5 font-medium text-blue-50 text-[11px] sm:text-xs">
+                        {item.feature}
+                      </td>
+                      <td className="px-3 py-2.5 text-center">
+                        <span className="inline-flex items-center gap-1 text-slate-400 font-semibold text-[11px]">
+                          <X size={13} className="text-slate-400" /> No
+                        </span>
+                      </td>
+                      <td className="px-4 py-2.5 text-center bg-blue-900/40 font-bold">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px]">
+                          <CheckCircle2 size={13} className="text-emerald-400" /> Included
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <div className="flex items-center gap-6 text-xs font-mono text-blue-200/80 border-t border-blue-900/60 pt-6">
+          {/* Footer Branding */}
+          <div className="flex items-center justify-between text-xs font-mono text-blue-200/80 border-t border-blue-900/60 pt-4">
             <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
               <ShieldCheck size={16} /> Made in Tamil Nadu, India
             </span>
-            <span>•</span>
             <span>Qeltrava AI</span>
           </div>
         </div>

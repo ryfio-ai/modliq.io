@@ -128,7 +128,7 @@ router.post('/signup', async (req, res) => {
           data: {
             organizationId: org.id,
             userId,
-            role: 'OWNER',
+            role: 'USER',
             status: 'ACTIVE',
           },
         });
