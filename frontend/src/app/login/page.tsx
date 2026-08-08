@@ -41,6 +41,19 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
     try {
+      if (typeof window !== 'undefined') {
+        const { signIn } = await import('next-auth/react');
+        const res = await signIn('google', { redirect: false, callbackUrl: nextParam || '/admin' });
+        if (res?.url) {
+          window.location.href = res.url;
+          return;
+        }
+      }
+    } catch {
+      // Fallback to client OAuth session
+    }
+
+    try {
       const authUser = await oauthLogin(provider);
       const targetPath = nextParam || getPostLoginRedirect(authUser);
       router.push(targetPath);
