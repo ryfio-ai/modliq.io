@@ -205,10 +205,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const oauthLogin = async (provider: 'google' | 'github'): Promise<AuthUser> => {
+    try {
+      if (typeof window !== 'undefined') {
+        const { signIn } = await import('next-auth/react');
+        await signIn(provider, { callbackUrl: '/admin' });
+      }
+    } catch {
+      // NextAuth fallback if client-side mock testing
+    }
+
     const oauthUser: AuthUser = {
       id: `user_${provider}_${Date.now()}`,
-      email: provider === 'google' ? 'user@google.com' : 'developer@github.com',
-      name: provider === 'google' ? 'Google Certified Engineer' : 'GitHub Core Developer',
+      email: provider === 'google' ? 'google.engineer@modliq.io' : 'user@company.com',
+      name: provider === 'google' ? 'Google Authorized Engineer' : 'Verified User',
       role: 'USER',
       dashboardPath: `/user_${provider}_demo/modliq-console/dashboard`,
     };

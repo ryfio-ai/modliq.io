@@ -72,6 +72,7 @@ import { noSqlInjectionProtection } from './security/sanitization';
 app.use(noSqlInjectionProtection);
 
 app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.set('trust proxy', true);
 
 function mlEngineHeaders(): Record<string, string> {

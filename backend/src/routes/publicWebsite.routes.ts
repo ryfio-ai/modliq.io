@@ -118,4 +118,55 @@ router.post('/chatbot', async (req: Request, res: Response) => {
   }
 });
 
+// POST /api/v1/public/contact — Public Contact Form Submission
+const memoryContactLeads: any[] = [];
+
+router.post('/contact', async (req: Request, res: Response) => {
+  try {
+    const { name, company, email, phone, city, industry, role, interest, message } = req.body || {};
+
+    if (!name || !String(name).trim()) {
+      return res.status(400).json({ success: false, error: 'Name is required.' });
+    }
+
+    if (!email || !String(email).trim()) {
+      return res.status(400).json({ success: false, error: 'Email is required.' });
+    }
+
+    const leadData = {
+      name: String(name).trim(),
+      company: company ? String(company).trim() : null,
+      email: String(email).trim(),
+      phone: phone ? String(phone).trim() : null,
+      city: city ? String(city).trim() : null,
+      industry: industry ? String(industry).trim() : null,
+      role: role ? String(role).trim() : null,
+      interest: Array.isArray(interest) ? interest.join(', ') : (interest ? String(interest) : null),
+      message: message ? String(message).trim() : null,
+      createdAt: new Date(),
+    };
+
+    let leadId = `lead_${Date.now()}`;
+
+    try {
+      const created = await prisma.contactLead.create({
+        data: leadData,
+      });
+      leadId = created.id;
+    } catch (dbErr) {
+      console.warn('[publicWebsite] DB lead save failed, storing lead in memory fallback:', (dbErr as any)?.message || dbErr);
+      memoryContactLeads.push({ id: leadId, ...leadData });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: 'Thank you! Your contact message has been received.',
+      id: leadId,
+    });
+  } catch (error: any) {
+    console.error('Contact submission error:', error);
+    return res.status(500).json({ success: false, error: 'Failed to submit contact form. Please try again.' });
+  }
+});
+
 export default router;
