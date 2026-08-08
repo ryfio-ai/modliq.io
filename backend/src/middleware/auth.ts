@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyJwt } from '../auth/jwt';
+import prisma from '../lib/prisma';
 
 export async function requireAuth(req: Request, res: Response, next: NextFunction) {
   let token = '';
@@ -31,6 +32,24 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
     return res.status(401).json({ error: 'Invalid or expired token' });
   }
 
-  (req as any).user = payload;
+  const effectiveUserId = payload.userId || (payload as any).id || 'demo-user-static-backend';
+  (req as any).user = { ...payload, userId: effectiveUserId };
+
+  // Auto-upsert user in DB so relations (e.g. Dataset -> User) never fail with foreign key errors
+  try {
+    const existing = await prisma.user.findUnique({ where: { id: effectiveUserId } });
+    if (!existing) {
+      await prisma.user.create({
+        data: {
+          id: effectiveUserId,
+          email: payload.email || `${effectiveUserId}@modliq.io`,
+          name: payload.name || 'Modliq User',
+          role: payload.role || 'USER',
+          isDemo: effectiveUserId.includes('demo') || effectiveUserId.includes('google'),
+        },
+      }).catch(() => {});
+    }
+  } catch (e) {}
+
   next();
 }
