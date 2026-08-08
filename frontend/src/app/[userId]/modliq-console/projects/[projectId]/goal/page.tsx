@@ -74,13 +74,9 @@ export default function ProjectGoalPage({
       setIntent(intent);
 
       // 2. Trigger Goal Crosscheck API
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-      const crosscheckRes = await fetch(`${apiUrl}/api/v1/projects/${projectId}/goal/crosscheck`, {
+      const crosscheckRes = await apiFetch(`/api/v1/projects/${projectId}/goal/crosscheck`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ parsedGoal: intent }),
       });
       const crosscheckJson = await crosscheckRes.json();
@@ -104,13 +100,9 @@ export default function ProjectGoalPage({
       setError(null);
 
       // 1. Save confirmed setup to GoalReview
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-      const confirmRes = await fetch(`${apiUrl}/api/v1/projects/${projectId}/goal/confirm`, {
+      const confirmRes = await apiFetch(`/api/v1/projects/${projectId}/goal/confirm`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           goalReviewId,
           confirmed: confirmedSetup,
@@ -126,12 +118,9 @@ export default function ProjectGoalPage({
       }
 
       // 2. Submit optimization job using confirmed setup
-      const jobRes = await fetch(`${apiUrl}/api/v1/optimization/jobs`, {
+      const jobRes = await apiFetch(`/api/v1/optimization/jobs`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           projectId,
           filename: filename || 'demo_dataset.csv',

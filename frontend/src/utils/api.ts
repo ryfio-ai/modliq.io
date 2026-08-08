@@ -6,7 +6,7 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
   if (typeof document === 'undefined') {
     return {};
   }
-  const token = localStorage.getItem('modliq_token');
+  const token = localStorage.getItem('modliq_token') || localStorage.getItem('token');
   if (token) {
     return { Authorization: `Bearer ${token}` };
   }
