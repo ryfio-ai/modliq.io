@@ -19,6 +19,122 @@ const requireAdmin = (req: Request, res: Response, next: () => void) => {
 
 router.use(requireAdmin);
 
+// GET /api/v1/admin/lookup — Admin Public ID lookup for support & ops
+router.get('/lookup', async (req: Request, res: Response) => {
+  try {
+    const publicId = (req.query.publicId as string || '').trim();
+    if (!publicId) {
+      return res.status(400).json({ success: false, error: 'publicId query parameter is required' });
+    }
+
+    // 1. Try User
+    const user = await prisma.user.findFirst({
+      where: { OR: [{ publicId }, { id: publicId }] },
+      select: { id: true, publicId: true, name: true, email: true, role: true, isDemo: true, updatedAt: true },
+    });
+    if (user) {
+      return res.json({
+        success: true,
+        data: {
+          type: 'USER',
+          id: user.id,
+          publicId: user.publicId || user.id,
+          summary: { name: user.name, email: user.email, role: user.role, isDemo: user.isDemo, updatedAt: user.updatedAt },
+        },
+      });
+    }
+
+    // 2. Try Project
+    const project = await prisma.project.findFirst({
+      where: { OR: [{ publicId }, { id: publicId }] },
+      select: { id: true, publicId: true, userId: true, name: true, status: true, createdAt: true },
+    });
+    if (project) {
+      return res.json({
+        success: true,
+        data: {
+          type: 'PROJECT',
+          id: project.id,
+          publicId: project.publicId || project.id,
+          summary: { name: project.name, userId: project.userId, status: project.status, createdAt: project.createdAt },
+        },
+      });
+    }
+
+    // 3. Try QualityPassport
+    const passport = await prisma.qualityPassport.findFirst({
+      where: { OR: [{ publicId }, { id: publicId }] },
+      select: { id: true, publicId: true, title: true, auditScore: true, readinessStatus: true, createdAt: true },
+    });
+    if (passport) {
+      return res.json({
+        success: true,
+        data: {
+          type: 'PASSPORT',
+          id: passport.id,
+          publicId: passport.publicId || passport.id,
+          summary: { title: passport.title, auditScore: passport.auditScore, readinessStatus: passport.readinessStatus, createdAt: passport.createdAt },
+        },
+      });
+    }
+
+    // 4. Try SupportTicket
+    const ticket = await prisma.supportTicket.findFirst({
+      where: { OR: [{ publicId }, { id: publicId }] },
+      select: { id: true, publicId: true, subject: true, category: true, status: true, priority: true, createdAt: true },
+    });
+    if (ticket) {
+      return res.json({
+        success: true,
+        data: {
+          type: 'TICKET',
+          id: ticket.id,
+          publicId: ticket.publicId || ticket.id,
+          summary: { subject: ticket.subject, category: ticket.category, status: ticket.status, priority: ticket.priority, createdAt: ticket.createdAt },
+        },
+      });
+    }
+
+    // 5. Try Organization
+    const org = await prisma.organization.findFirst({
+      where: { OR: [{ publicId }, { id: publicId }] },
+      select: { id: true, publicId: true, name: true, slug: true, createdAt: true },
+    });
+    if (org) {
+      return res.json({
+        success: true,
+        data: {
+          type: 'ORG',
+          id: org.id,
+          publicId: org.publicId || org.id,
+          summary: { name: org.name, slug: org.slug, createdAt: org.createdAt },
+        },
+      });
+    }
+
+    // 6. Try Dataset
+    const dataset = await prisma.dataset.findFirst({
+      where: { OR: [{ publicId }, { id: publicId }] },
+      select: { id: true, publicId: true, filename: true, originalName: true, status: true, healthScore: true, createdAt: true },
+    });
+    if (dataset) {
+      return res.json({
+        success: true,
+        data: {
+          type: 'DATASET',
+          id: dataset.id,
+          publicId: dataset.publicId || dataset.id,
+          summary: { filename: dataset.filename, originalName: dataset.originalName, status: dataset.status, healthScore: dataset.healthScore, createdAt: dataset.createdAt },
+        },
+      });
+    }
+
+    return res.status(404).json({ success: false, error: `No entity found matching publicId '${publicId}'` });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Helper for parsing pagination parameters (default: page=1, limit=25, max limit=100)
 function getPagination(req: Request) {
   const page = Math.max(1, parseInt(req.query.page as string) || 1);

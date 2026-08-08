@@ -21,6 +21,13 @@ const PREFIX_MAP: Record<PublicIdEntity, string> = {
   TRIAL: 'MODLIQ-TRIAL',
 };
 
+export const PUBLIC_ID_REGEX = /^MODLIQ-(USER|PROJECT|ORG|DATASET|JOB|PASSPORT|TICKET|TRIAL)-\d{8}-\d{4,}$/;
+
+export function isValidPublicId(publicId: string): boolean {
+  if (!publicId || typeof publicId !== 'string') return false;
+  return PUBLIC_ID_REGEX.test(publicId.trim());
+}
+
 // In-memory fallback sequences if DB is offline or scaling
 const memorySequences = new Map<string, number>();
 
