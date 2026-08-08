@@ -97,6 +97,96 @@ export default function ComparisonPage() {
             </table>
           </div>
 
+          {/* NEW SECTION: Data Analyst vs ML Engineer vs Modliq */}
+          <div className="mt-12 space-y-6">
+            <div className="text-center max-w-2xl mx-auto space-y-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#2B70AB] bg-blue-50 px-3.5 py-1 rounded-full border border-blue-200">
+                Role Comparison
+              </span>
+              <h2 className="text-2xl font-extrabold text-[#1B2A4A]">
+                Data Analyst vs ML Engineer vs Modliq
+              </h2>
+              <p className="text-xs text-slate-600">
+                How Modliq combines backward-looking analytics and forward-looking machine learning into one platform for manufacturing teams.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="bg-[#F0F6FA] text-[#1B2A4A] uppercase border-b border-slate-200 text-left">
+                    <th className="px-4 py-3 font-bold">Capability</th>
+                    <th className="px-4 py-3 font-bold text-slate-700">Data Analyst</th>
+                    <th className="px-4 py-3 font-bold text-purple-700">ML Engineer</th>
+                    <th className="px-4 py-3 font-bold text-[#2B70AB]">Modliq Platform</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-700">
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Cleans and profiles data</td>
+                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
+                    <td className="px-4 py-3 text-slate-500">Sometimes</td>
+                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Dataset Health & EDA Studio)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Explains historical performance</td>
+                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
+                    <td className="px-4 py-3 text-slate-500">Sometimes</td>
+                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (OEE, SPC & Reports)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Builds dashboards & charts</td>
+                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
+                    <td className="px-4 py-3 text-slate-500">Sometimes</td>
+                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Auto-Generated Dashboards)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Trains predictive models</td>
+                    <td className="px-4 py-3 text-red-500 font-semibold">No / Limited</td>
+                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
+                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (No-Code AutoML Engine)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Runs process setpoint optimization</td>
+                    <td className="px-4 py-3 text-red-500 font-semibold">No / Limited</td>
+                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
+                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Constrained Safe Optimization)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Validates quality with SPC & Cpk</td>
+                    <td className="px-4 py-3 text-slate-600 font-semibold">Sometimes</td>
+                    <td className="px-4 py-3 text-red-500 font-semibold">No</td>
+                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Quality Studio Math)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Generates SOP / CAPA action plans</td>
+                    <td className="px-4 py-3 text-slate-500">Manual</td>
+                    <td className="px-4 py-3 text-red-500 font-semibold">No</td>
+                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (AI Copilot Generator)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Creates buyer-ready Quality Passports</td>
+                    <td className="px-4 py-3 text-red-500 font-semibold">No</td>
+                    <td className="px-4 py-3 text-red-500 font-semibold">No</td>
+                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (1-Click Evidence Document)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Requires coding (Python / SQL)</td>
+                    <td className="px-4 py-3 text-amber-600 font-semibold">Often</td>
+                    <td className="px-4 py-3 text-amber-600 font-semibold">Yes</td>
+                    <td className="px-4 py-3 font-bold text-emerald-600">No (100% No-Code Interface)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-slate-900">Designed specifically for manufacturing</td>
+                    <td className="px-4 py-3 text-slate-500">Depends</td>
+                    <td className="px-4 py-3 text-slate-500">Depends</td>
+                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Built for Factory Teams)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <div className="mt-8 bg-blue-50 border border-blue-100 rounded-xl p-5">
             <h3 className="text-sm font-bold text-[#1B2A4A] mb-2">Strategic Positioning</h3>
             <p className="text-sm text-slate-700 leading-relaxed">Modliq does not replace ERP or MES. It sits on top of existing data and helps teams make better manufacturing decisions. Think of Modliq as an intelligence layer that works alongside your existing systems.</p>

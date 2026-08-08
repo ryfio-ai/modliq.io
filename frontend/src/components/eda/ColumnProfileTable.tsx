@@ -19,7 +19,7 @@ interface ColumnProfileProps {
 
 export default function ColumnProfileTable({ columns, targetColumn }: ColumnProfileProps) {
   const getDetectedRole = (colName: string, type: string) => {
-    const lower = colName.lowerCase || colName.toLowerCase();
+    const lower = colName.toLowerCase();
     if (targetColumn && targetColumn.toLowerCase() === lower) return { label: 'Target Candidate', bg: 'bg-emerald-100 text-emerald-800' };
     if (lower.includes('id') || lower.includes('batch') || lower.includes('serial')) return { label: 'Identifier', bg: 'bg-slate-100 text-slate-700' };
     if (lower.includes('date') || lower.includes('time') || type === 'datetime') return { label: 'Datetime', bg: 'bg-indigo-100 text-indigo-800' };

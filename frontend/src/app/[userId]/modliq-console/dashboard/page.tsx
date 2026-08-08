@@ -112,7 +112,9 @@ export default function DashboardPage() {
       <header className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-[#1B2A4A]">Dashboard</h1>
-          <p className="text-slate-500 text-sm mt-1">Welcome back. Here is your current workspace overview.</p>
+          <p className="text-slate-500 text-sm mt-1">
+            Start with analysis. Move to optimization. Finish with evidence.
+          </p>
         </div>
         <Link href={`/${userId}/modliq-console/data-upload`}>
           <Button variant="outline" className="flex items-center gap-2">
@@ -121,6 +123,19 @@ export default function DashboardPage() {
           </Button>
         </Link>
       </header>
+
+      {/* Position Banner */}
+      <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+        <div>
+          <span className="font-extrabold text-[#1B2A4A] block text-sm">Data Analyst + ML Engineer in One Platform</span>
+          <p className="text-slate-600 mt-0.5">
+            Modliq helps you first analyze what happened (Dataset Health, EDA, SPC, OEE), then optimize what happens next (Goal Parser, AutoML, Safe Setpoints).
+          </p>
+        </div>
+        <Link href={`/${userId}/modliq-console/eda`} className="px-3.5 py-2 bg-[#2B70AB] text-white font-bold rounded-xl whitespace-nowrap hover:bg-[#1B2A4A] transition shrink-0">
+          Explore EDA Studio →
+        </Link>
+      </div>
 
       {/* ---- Metric cards ---- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

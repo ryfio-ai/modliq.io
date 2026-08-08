@@ -93,19 +93,19 @@ export default function HomeClient() {
           <div className="text-center max-w-4xl mx-auto space-y-4">
             <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 py-1.5 bg-blue-50 border border-blue-200 rounded-full text-xs font-bold text-[#2B70AB]">
               <Globe className="w-3.5 h-3.5 text-[#2B70AB] shrink-0" />
-              <span>No data scientist needed · Guided ML workflow · Comfortable for factory teams</span>
+              <span>Data Analyst + ML Engineer in One No-Code Manufacturing Platform</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-[#1B2A4A] tracking-tight leading-[1.15]">
-              Turn factory data into decisions without hiring data scientists or ML engineers.
+              Understand what happened. Optimize what happens next.
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto font-medium">
-              Modliq helps manufacturing teams upload or connect production data, check readiness, run guided ML optimization, validate quality, and generate buyer-ready Quality Passports — without writing code or building an AI team.
+              Modliq combines manufacturing analytics and no-code machine learning so factory teams can explore data, detect quality issues, optimize process settings, and generate buyer-ready reports — without hiring data analysts or ML engineers.
             </p>
 
             <p className="text-xs sm:text-sm text-[#2B70AB] font-bold">
-              Engineered by Qeltrava AI to make manufacturing intelligence comfortable for real factory teams.
+              Built in Tamil Nadu by Qeltrava AI for manufacturers who want practical data intelligence without the complexity of a data team.
             </p>
 
             {/* CTAs */}
@@ -138,7 +138,147 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* 3. NEW SECTION: You Should Not Need a Data Science Team */}
+      {/* 3. Data Analyst + ML Engineer Mode Comparison Section */}
+      <section className="w-full py-16 sm:py-24 bg-gradient-to-b from-white to-[#F0F6FA] border-b border-[#D0E2F0]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#2B70AB] bg-blue-50 px-3.5 py-1 rounded-full border border-blue-200">
+              Two Roles in One Platform
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#1B2A4A] tracking-tight">
+              Data Analyst + ML Engineer, built into one manufacturing platform.
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+              Traditional teams need analysts to explain past performance and ML engineers to build future-facing optimization systems. Modliq brings both workflows into one guided no-code console.
+            </p>
+          </div>
+
+          {/* Two-Column Mode Comparison Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Column 1: Data Analyst Mode */}
+            <div className="bg-white rounded-3xl border-2 border-blue-200 p-8 shadow-sm space-y-6 flex flex-col justify-between hover:shadow-md transition">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 bg-blue-100 text-blue-900 font-extrabold text-xs rounded-full uppercase tracking-wider">
+                    Backward-Looking Analytics
+                  </span>
+                  <BarChart3 className="w-6 h-6 text-[#2B70AB]" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-extrabold text-[#1B2A4A]">1. Data Analyst Mode</h3>
+                  <p className="text-sm font-bold text-[#2B70AB] mt-0.5">Analyze what happened</p>
+                  <p className="text-xs text-slate-500 mt-1">Explore historical production and quality data.</p>
+                </div>
+
+                <div className="space-y-2 pt-2">
+                  <h4 className="text-xs font-extrabold text-slate-700 uppercase tracking-wider">Core Capabilities</h4>
+                  <ul className="space-y-1.5 text-xs text-slate-700">
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Clean and profile datasets</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Detect missing values and duplicates</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Run exploratory data analysis (EDA Studio)</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Find trends, correlations, and outliers</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Create SPC and Cp/Cpk quality reports</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Analyze OEE and downtime Pareto</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Compare suppliers, shifts, and machines</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100 space-y-2">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Generated Analytics Outputs</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {['Dataset Health Report', 'EDA Report', 'Quality Studio Summary', 'OEE Dashboard', 'Supplier Risk Report'].map((tag) => (
+                    <span key={tag} className="px-2.5 py-1 bg-blue-50 text-[#2B70AB] text-[11px] font-bold rounded-lg border border-blue-100">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2: ML Engineer Mode */}
+            <div className="bg-white rounded-3xl border-2 border-purple-200 p-8 shadow-sm space-y-6 flex flex-col justify-between hover:shadow-md transition">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 bg-purple-100 text-purple-900 font-extrabold text-xs rounded-full uppercase tracking-wider">
+                    Forward-Looking Optimization
+                  </span>
+                  <Cpu className="w-6 h-6 text-purple-600" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-extrabold text-[#1B2A4A]">2. ML Engineer Mode</h3>
+                  <p className="text-sm font-bold text-purple-700 mt-0.5">Optimize what happens next</p>
+                  <p className="text-xs text-slate-500 mt-1">Use machine learning to recommend better process decisions.</p>
+                </div>
+
+                <div className="space-y-2 pt-2">
+                  <h4 className="text-xs font-extrabold text-slate-700 uppercase tracking-wider">Core Capabilities</h4>
+                  <ul className="space-y-1.5 text-xs text-slate-700">
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" /> Parse natural language manufacturing goals</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" /> Select target variables and controllable features</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" /> Train predictive ML models (RandomForest, XGBoost)</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" /> Calculate feature importance drivers</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" /> Run constrained process optimization</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" /> Recommend safe setpoints & trial ranges</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" /> Monitor model confidence and drift</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100 space-y-2">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Generated Machine Learning Outputs</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {['Optimization Job', 'Recommended Setpoints', 'Safe Trial Range', 'Feature Importance', 'Trial SOP', 'Control Plan'].map((tag) => (
+                    <span key={tag} className="px-2.5 py-1 bg-purple-50 text-purple-700 text-[11px] font-bold rounded-lg border border-purple-100">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bridge Section & Three-Panel Visual */}
+          <div className="bg-white rounded-3xl border border-[#D0E2F0] p-8 sm:p-10 shadow-sm space-y-8">
+            <div className="text-center max-w-2xl mx-auto space-y-2">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#1B2A4A]">Why factories need both.</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Knowing why yield dropped last month is useful. But manufacturing teams also need to know what settings to try next, how to validate them, and how to document the decision. Modliq connects backward-looking analysis with forward-looking machine learning recommendations.
+              </p>
+            </div>
+
+            {/* Three-Panel Visual: Analyze -> Optimize -> Prove */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+              <div className="p-5 bg-blue-50/60 rounded-2xl border border-blue-200 space-y-2">
+                <div className="flex items-center justify-between text-[#2B70AB]">
+                  <span className="text-xs font-black uppercase tracking-wider">1. Analyze</span>
+                  <BarChart3 size={18} />
+                </div>
+                <h4 className="text-sm font-bold text-slate-900">Historical Insights</h4>
+                <p className="text-xs text-slate-600">Dataset Health, EDA Studio, SPC Control Charts, OEE, Supplier Risk Scorecard.</p>
+              </div>
+
+              <div className="p-5 bg-purple-50/60 rounded-2xl border border-purple-200 space-y-2">
+                <div className="flex items-center justify-between text-purple-700">
+                  <span className="text-xs font-black uppercase tracking-wider">2. Optimize</span>
+                  <Cpu size={18} />
+                </div>
+                <h4 className="text-sm font-bold text-slate-900">Forward ML Predictions</h4>
+                <p className="text-xs text-slate-600">Goal Parser, Predictive ML Model, Feature Drivers, Constrained Safe Ranges.</p>
+              </div>
+
+              <div className="p-5 bg-emerald-50/60 rounded-2xl border border-emerald-200 space-y-2">
+                <div className="flex items-center justify-between text-emerald-700">
+                  <span className="text-xs font-black uppercase tracking-wider">3. Prove</span>
+                  <ShieldCheck size={18} />
+                </div>
+                <h4 className="text-sm font-bold text-slate-900">Quality Evidence</h4>
+                <p className="text-xs text-slate-600">Trial SOP, CAPA Action Items, Quality Passport Certificate, Buyer Share Link.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="w-full py-16 sm:py-24 bg-white border-b border-[#D0E2F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">

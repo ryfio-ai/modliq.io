@@ -20,6 +20,7 @@ import {
   Plus,
   Eye,
   RefreshCw,
+  BarChart2,
 } from 'lucide-react';
 import { usePipelineStore } from '@/store/pipelineStore';
 import { apiFetch } from '@/lib/apiFetch';

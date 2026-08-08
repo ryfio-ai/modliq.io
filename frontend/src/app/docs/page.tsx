@@ -307,7 +307,86 @@ export default function DocsPage() {
         </div>
       </section>
 
-      {/* 3. WRITING GOOD GOALS SECTION */}
+      {/* 2.5. HOW MODLIQ COMBINES ANALYTICS AND MACHINE LEARNING */}
+      <section className="py-16 bg-gradient-to-b from-white to-[#F0F6FA] border-b border-[#D0E2F0]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#2B70AB] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+              Role Integration Concept
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1B2A4A]">
+              How Modliq combines analytics and machine learning
+            </h2>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              Modliq first helps users understand what happened in their data, similar to the work of a data analyst. It checks dataset quality, summarizes columns, detects outliers, visualizes relationships, and produces quality and operations insights. Then Modliq helps users decide what to try next, similar to the work of an ML engineer. It parses goals, trains models, evaluates performance, recommends process settings, and generates safe trial ranges.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-[#D0E2F0] p-6 shadow-sm overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-[#F0F6FA] border-b border-[#D0E2F0] text-[#1B2A4A] font-bold uppercase tracking-wider">
+                <tr>
+                  <th className="p-3">Business Need</th>
+                  <th className="p-3">Traditional Role</th>
+                  <th className="p-3">Modliq Feature</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-slate-700">
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Clean and understand data</td>
+                  <td className="p-3">Data Analyst</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Dataset Health + EDA Studio</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Find patterns & correlations</td>
+                  <td className="p-3">Data Analyst</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Correlations, distributions, trends</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Analyze process capability</td>
+                  <td className="p-3">Data Analyst / Quality Eng</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Quality Studio (SPC, I-MR, Cpk)</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Analyze plant operations</td>
+                  <td className="p-3">Data Analyst / Ops Mgr</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">OEE and Downtime Pareto</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Define prediction goal</td>
+                  <td className="p-3">ML Engineer</td>
+                  <td className="p-3 font-mono font-bold text-purple-700">Natural Language Goal Parser</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Prepare model features</td>
+                  <td className="p-3">ML Engineer</td>
+                  <td className="p-3 font-mono font-bold text-purple-700">Review & Confirm Setup Wizard</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Train predictive model</td>
+                  <td className="p-3">ML Engineer</td>
+                  <td className="p-3 font-mono font-bold text-purple-700">AutoML Optimization Engine</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Recommend process setpoints</td>
+                  <td className="p-3">ML Engineer</td>
+                  <td className="p-3 font-mono font-bold text-purple-700">Constrained Safe Trial Optimization</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Validate trial output</td>
+                  <td className="p-3">Process Engineer / Quality</td>
+                  <td className="p-3 font-mono font-bold text-emerald-700">Quality Studio + Trial SOP Generator</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Document evidence for buyers</td>
+                  <td className="p-3">Quality Head / Management</td>
+                  <td className="p-3 font-mono font-bold text-emerald-700">Buyer-Ready Quality Passport</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <section id="writing-good-goals" className="py-16 bg-[#F0F6FA]/50 border-b border-[#D0E2F0] scroll-mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">

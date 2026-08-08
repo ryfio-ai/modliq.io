@@ -114,26 +114,27 @@ export default function AiCopilotDrawer({ userId }: AiCopilotDrawerProps = {}) {
         <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/60 backdrop-blur-sm animate-in fade-in">
           <div className="w-full max-w-md h-full bg-[#0F172A] border-l border-slate-800 shadow-2xl flex flex-col">
             {/* Header */}
-            <div className="p-4 border-b border-slate-800 bg-slate-900/90 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
-                  <Bot size={18} />
+            <div className="p-4 border-b border-slate-800 bg-slate-900/90 space-y-1">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+                    <Bot size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-100 text-sm">Industrial AI Copilot</h3>
+                    <p className="text-[10px] text-cyan-400 font-mono">Qeltrava AI Explanation Engine</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
-                    Industrial AI Copilot
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                  </h3>
-                  <p className="text-[10px] text-slate-400 font-mono">Process Optimization Assistant</p>
-                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+                >
+                  <X size={18} />
+                </button>
               </div>
-
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
-              >
-                <X size={18} />
-              </button>
+              <p className="text-[10px] text-slate-400 pt-1 border-t border-slate-800/80">
+                <strong className="text-cyan-300">Explanation Layer:</strong> Explains findings, drafts SOPs, and suggests actions. Math & ML remain computed by Modliq’s backend engine.
+              </p>
             </div>
 
             {/* Presets Bar */}
