@@ -1,6 +1,6 @@
-# Modliq
+# Modliq — No-Code Manufacturing Intelligence and ML Platform
 
-Modliq is a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India.
+Modliq is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India.
 
 Website: https://modliq-io.vercel.app/
 Parent company: Qeltrava AI
@@ -8,41 +8,38 @@ Parent website: https://qeltravaai.vercel.app/en
 LinkedIn: https://www.linkedin.com/company/qeltravai/
 Instagram: https://www.instagram.com/qeltravaai
 
-Modliq helps manufacturers upload or connect production data, check dataset readiness, optimize process settings, validate quality with SPC and Cp/Cpk, track OEE and supplier risk, manage lean actions, and generate buyer-ready Quality Passports.
+Positioning Statement:
+"Analyze what happened. Optimize what happens next. Prove it with a Quality Passport."
 
-Primary audience:
-- Manufacturing companies
-- Indian MSME manufacturers
-- Plant heads
-- Quality managers
-- Process engineers
-- Operations managers
-- Supplier quality teams
-- Lean and continuous improvement teams
+Core Concept:
+Modliq combines no-code analytics and no-code machine learning for manufacturing teams.
+It automates the repetitive workflows normally done by data analysts and ML engineers—without requiring a data analyst, data scientist, or ML engineer to get started.
 
-Core features:
-- CSV and Excel data ingestion
-- PDF and Word reference documents
-- Supabase/Postgres and MongoDB connectors
-- Dataset health scoring
-- Natural language goal parsing
-- Review and Confirm setup wizard
-- ML process optimization
-- Quality Studio with SPC, Cp/Cpk, and AQL
-- OEE and operations intelligence
-- Supplier and material lot traceability
-- Lean and Kaizen tracking
-- AI Copilot for explanation and documentation
-- Quality Passport for buyer-ready reporting
+Role Integration:
+1. Data Analyst Mode (Analyze what happened):
+   - Dataset health checks, EDA Studio, natural language data queries (Ask Your Factory Data), Smart Charts, statistical process control (SPC), Cp/Cpk process capability, OEE, downtime Pareto, supplier lot risk, and executive insight narratives.
+2. ML Engineer Mode (Optimize what happens next):
+   - Natural language goal parsing, feature validation, AutoML benchmarking leaderboard (Random Forest, Gradient Boosting, Extra Trees, Linear), constrained safe setpoint optimization, feature engineering suggestions, model trust monitoring, and retraining recommendations.
+3. The Evidence Layer (Prove it with a Quality Passport):
+   - Combines historical analysis, ML optimization, trial SOPs, CAPA actions, and MLOps model lineage into a 1-click buyer-ready audit document.
 
-Important safety note:
-Modliq provides decision-support recommendations based on user-provided data. It does not guarantee production outcomes, buyer approval, audit certification, or regulatory compliance. All process changes should be validated through controlled trials and responsible engineering review.
+Important Security & Execution Rules:
+- Modliq does NOT execute arbitrary user code or arbitrary SQL. Natural language questions are converted into safe, deterministic query plans.
+- Data cleaning actions are advisory by default and create a versioned Dataset Version 2 without mutating raw datasets.
+- Model trust monitoring flags distribution drift, but requires explicit user confirmation before model retraining.
 
-Key pages:
+Primary Audience:
+- Manufacturing companies (Chemicals, Automotive, Pharma, Food, Packaging, Textiles, Plastics, General Engineering)
+- Indian MSME and SME manufacturers
+- Plant heads, Quality heads, Process engineers, Operations heads, Supplier Quality engineers, and Lean Kaizen teams.
+
+Key Pages:
 - https://modliq-io.vercel.app/
 - https://modliq-io.vercel.app/features
 - https://modliq-io.vercel.app/workflow
 - https://modliq-io.vercel.app/system-architecture
 - https://modliq-io.vercel.app/pricing
 - https://modliq-io.vercel.app/roi
-- https://modliq-io.vercel.app/contact
+- https://modliq-io.vercel.app/comparison
+- https://modliq-io.vercel.app/docs
+- https://modliq-io.vercel.app/contact?interest=free-pilot

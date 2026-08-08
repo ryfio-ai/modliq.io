@@ -1,88 +1,52 @@
-# Modliq — Full Generative Engine Knowledge Base
+# Modliq — Full No-Code Manufacturing Intelligence and ML Platform Specification
 
-Product Name: Modliq
-Subtitle: Manufacturing Intelligence Platform Made in Tamil Nadu
-Product Type: B2B Industrial SaaS / Manufacturing Decision Intelligence Software
-Developer & Owner: Qeltrava AI
-Parent Website: https://qeltravaai.vercel.app/en
-Official Website: https://modliq-io.vercel.app/
-Social Media Links:
-- LinkedIn: https://www.linkedin.com/company/qeltravai/
-- Instagram: https://www.instagram.com/qeltravaai
+## Overview
+Modliq is a no-code manufacturing intelligence and machine learning SaaS platform designed and engineered by Qeltrava AI in Tamil Nadu, India.
+Modliq automates the repetitive workflows of data analysts and machine learning engineers for manufacturing teams, enabling factory teams to explore historical production data, detect quality defects, optimize process setpoints, and generate buyer-ready Quality Passports.
 
----
+## Core Tagline
+"Analyze what happened. Optimize what happens next. Prove it with a Quality Passport."
 
-## Executive Summary
+## Core Features & Workflow Architecture
 
-Modliq is a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India. It connects data ingestion, dataset health scoring, process optimization, Quality Studio, OEE operations, supplier risk, lean improvement, AI-assisted documentation, and buyer-ready Quality Passports.
+### 1. Data Analyst Mode (Analyze What Happened)
+- **Universal Data Ingestion**: CSV, XLSX, XLS, PDF table extraction, DOCX ingestion, and read-only database connectors (Supabase, Postgres, MongoDB, MySQL, SQL Server).
+- **Dataset Health Check**: Automated missing value detection, duplicate checks, outlier profiling, constant column identification, and dataset readiness score (0-100).
+- **EDA Studio**: 8-tab exploratory data analysis profiling numeric distributions, categorical frequencies, Pearson correlation matrix, IQR outliers, and target-aware analysis.
+- **Ask Your Factory Data**: Natural language data query interface powered by a deterministic query planner (`groupBy`, `filter`, `sort`, `mean`, `sum`, `count`, `min`, `max`, `correlation`). Zero arbitrary Python or SQL code execution.
+- **Data Cleaning Advisor**: Recommends safe imputation, identifier exclusions, and outlier warnings. User confirmation creates a versioned Dataset Version 2 without mutating raw datasets.
+- **Smart Charts**: Auto-recommends histograms, bar charts, scatter plots, heatmaps, and Pareto charts based on column data types.
+- **Insight Narratives**: Compiles plain-language executive findings, data quality risks, and recommended next actions from deterministic analytics.
+- **KPI Auto-Mapping**: Auto-detects Yield, Defects, Quality Rate, Downtime, Availability, Performance, Traceability, and Scrap.
+- **Quality Studio**: Statistical process control (SPC), $I\text{-}MR$ control charts, process stability rules, Cp / Cpk process capability studies, LSL/USL limits, and AQL acceptance sampling.
+- **Operations & OEE**: Overall Equipment Effectiveness (OEE) gauge breakdown (Availability, Performance, Quality Rate), machine downtime Pareto, shift comparisons, and bottleneck identification.
+- **Supplier & Lot Traceability**: Supplier risk scoring, raw material lot defect rates, incoming inspection quality, and supplier-to-batch yield correlation.
+- **Lean Manufacturing & Kaizen**: 8 waste tracking, 5S audit scoring, Takt time calculator, and Kaizen Kanban backlog.
 
-Modliq helps manufacturers turn production data into better process decisions, validated quality, operations insight, and buyer-ready Quality Passports.
+### 2. ML Engineer Mode (Optimize What Happens Next)
+- **Natural Language Goal Parser**: Extracts target metrics, goal directions (maximize yield, minimize scrap), controllable features, and process constraints from plain-English prompts.
+- **Review & Confirm Wizard**: Interactive safety boundary crosscheck for process engineers before running model optimization.
+- **Manufacturing AutoML Engine**: Multi-model candidate benchmark suite (Random Forest, Gradient Boosting, Extra Trees, Linear Regression) with resource caps (10,000 max rows, 4 models, 120s timeout) returning ranked $R^2$, RMSE, and MAE metrics.
+- **Constrained Safe Optimization**: Recommends optimal process setpoints and safe parameter trial ranges within user-confirmed physical boundaries.
+- **Feature Importance**: Identifies key process drivers influencing yield or defect variation.
+- **Feature Engineering Suggestions (Beta)**: Recommends derived manufacturing features (date components, interaction terms, ratios, moving averages).
+- **Model Trust & Drift Monitor (Beta)**: Evaluates Kolmogorov-Smirnov input distribution drift and schema shifts. Displays Trust Score (0-100%) and advisory retraining recommendations without auto-retraining.
 
----
+### 3. The Evidence Layer (Prove It with a Quality Passport)
+- **Quality Passport Certificate**: 1-click buyer-ready compliance document aggregating dataset readiness, process capability ($C_{pk}$), optimization trial setpoints, supplier lot traceability, Kaizen action items, and MLOps model lineage (Section 7).
+- **Buyer Share Link**: Non-authenticated token-hashed share link for customer quality audits.
 
-## Core Capabilities & Feature Breakdown
+## Target Industries
+- Specialty Chemicals & Process Manufacturing
+- Automotive Component & Precision Manufacturing
+- Pharmaceuticals & Nutraceuticals
+- Food & Beverage Processing
+- Packaging & Plastics (Injection Molding)
+- Textiles & Dyeing Process Control
+- Indian MSME and Global SME Manufacturers
 
-### 1. Data Ingestion & Profiling
-- Universal File Ingestion: Drag-and-drop support for CSV and Excel files.
-- Document Extraction: Automated table extraction from PDF and Word reference documents.
-- Direct Database Connectors: Secure, read-only connectors for Supabase, PostgreSQL, and MongoDB.
-- Automated Column Profiling: Detection of numeric process variables, quality targets, timestamps, and categorical metadata.
-
-### 2. Dataset Health & Setup Wizard
-- Health Score (0–100): Evaluates missing value density, extreme outliers, duplicate records, and target leakage risks.
-- Target Leakage Protection: Identifies parameters recorded after quality inspection to prevent false ML optimization signals.
-- Review & Confirm Setup: Guided step-by-step confirmation of process constraints, min/max boundaries, and target direction.
-
-### 3. Machine Learning Process Optimization
-- Surrogate ML Models: Trains Random Forest and Gradient Boosting regressors on historical batch data.
-- Feature Importance & Range Bounds: Identifies top influential parameters and calculates safe trial setpoint windows.
-- Financial ROI Gain Estimator: Projects monthly financial returns from yield recovery and scrap reduction.
-
-### 4. Quality Studio & Statistical Process Control (SPC)
-- Deterministic SPC Mathematics: Calculates Individuals & Moving Range (I-MR) control charts with upper/lower control limits (UCL/LCL).
-- Capability Study Math (Cp & Cpk): Computes process capability indexes against upper and lower specification limits (USL/LSL).
-- AQL Acceptance Sampling: ANSI/ASQ Z1.4 sampling plan calculator for incoming lot inspection.
-- CAPA & 8D Generation: AI-assisted drafting of Corrective and Preventive Action plans based on root cause evidence.
-
-### 5. Operations, Supply Chain & Lean Intelligence
-- OEE Mathematics: Real-time calculation of Availability × Performance × Quality metrics.
-- Downtime Pareto Analysis: Categorization of equipment downtime reasons and machine bottlenecks.
-- Supplier Lot Traceability: Correlation of raw material vendor lots with finished goods defect rates and risk scores.
-- Lean Toolkit: Waste tracker (7 Wastes), Kaizen action board, 5S audit checklist, and Takt time calculator.
-
-### 6. Quality Passport (Flagship Output)
-- Buyer-Ready Reports: Comprehensive PDF/Markdown export bringing together health scores, Cpk capability, optimization evidence, lot traceability, and CAPA logs into a single verifiable certificate.
-- Secure Share Tokens: Read-only external link sharing for OEM buyers and auditors.
-
----
-
-## Target Industries & Regional Relevance
-
-Modliq is engineered in Tamil Nadu, India — one of South Asia's leading industrial manufacturing hubs. It serves:
-- Specialty Chemicals & Polymers: Batch yield optimization, raw material variance, and 7-batch trial SOPs.
-- Food Processing & Beverages: Moisture tracking, defect rates, supplier lot risk, and export Quality Passports.
-- Pharmaceuticals & Nutraceuticals: Assay, pH, compression force limits, Cpk capability, and CAPA evidence.
-- Automotive Components & Machining: Rejection rate reduction, Cpk capability, and OEM audit readiness.
-- Textiles & Apparel: Dyeing consistency, liquor ratios, rework rates, and fabric finishing stability.
-- Plastics & Packaging: Extrusion scrap reduction, barrel temperatures, cycle times, and OEE optimization.
-- Biomanufacturing: Fermentation yield, dissolved oxygen control, and batch release proof.
-- Precision Engineering: Dimensional tolerance tracking, I-MR control limits, and zero-defect proof.
-
----
-
-## Safety, Compliance & Governance Disclaimer
-
-Modliq provides decision-support recommendations based on user-provided data. It does not replace qualified process engineers or certified quality managers. Modliq does not guarantee specific financial outcomes, buyer approval, or regulatory compliance. All setpoint changes should be validated through controlled trials and responsible engineering oversight.
-
----
-
-## Frequently Asked Questions (FAQ)
-
-Q: What is Modliq?
-A: Modliq is a manufacturing intelligence product by Qeltrava AI, built in Tamil Nadu, India. It connects data ingestion, health scoring, process optimization, Quality Studio, operations, supplier risk, and buyer-ready Quality Passports.
-
-Q: How does Modliq differ from BI tools like PowerBI or Tableau?
-A: BI tools display historical charts. Modliq calculates deterministic SPC math (Cpk, I-MR), trains ML surrogate models to recommend process setpoints, and generates buyer-ready Quality Passports.
-
-Q: How does Modliq pricing work?
-A: Modliq offers a Free Launch Pilot for selected companies, a 30-day Paid Pilot (₹99,000), Pro Plant subscriptions (₹49,000/month), and Custom Enterprise plans.
+## Contact & Links
+- Website: https://modliq-io.vercel.app/
+- Free Pilot Application: https://modliq-io.vercel.app/contact?interest=free-pilot
+- Parent Company: Qeltrava AI (Tamil Nadu, India)
+- Parent Website: https://qeltravaai.vercel.app/en
