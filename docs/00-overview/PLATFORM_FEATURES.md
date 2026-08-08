@@ -24,7 +24,9 @@
 | **Interactive Goal Crosscheck** | Implemented | `/(studio)` | `/api/v1/goal/confirm` | `GoalReview` | Safety boundary verification wizard |
 | **AutoML Process Optimization** | Implemented | `/(studio)/optimization-progress` | `/api/v1/jobs/submit` | `OptimizationJob` | 16-algorithm model zoo + Optuna tuning + BullMQ queue |
 | **Results & Safe Parameter Windows**| Implemented | `/(studio)/results` | `/api/v1/jobs/:id` | `OptimizationJob`, `OptimizationRun` | Safe bounds, optimal targets, SHAP process drivers |
-| **Quality Studio & Passport** | Implemented | `/[userId]/modliq-console` | `/api/v1/quality-passport/*` | `QualityPassport` | Audit score, readiness status, Markdown export |
+| **EDA Studio & Data Profiling** | Implemented | `/[userId]/modliq-console/eda` | `/api/v1/projects/:projectId/datasets/:datasetId/eda` | `EdaReport` | 8-tab no-code profiling, IQR outliers, Pearson heatmap, export |
+| **No-Code Analytics + AutoML Workflows** | Implemented | `/[userId]/modliq-console/*` | `/api/v1/projects/:projectId/analytics/*` | `Dataset`, `EdaReport` | Ask Your Factory Data, Data Cleaning Advisor, Smart Charts, Insight Narratives, KPI Mapping, AutoML Leaderboard (Beta), Model Trust Monitor (Beta) |
+| **Quality Studio & Passport** | Implemented | `/[userId]/modliq-console` | `/api/v1/quality-passport/*` | `QualityPassport` | Audit score, readiness status, MLOps evidence, Markdown export |
 | **Public Quality Passport Share** | Implemented | `/share/quality-passport/[token]` | `/api/v1/share-links/*` | `ShareLink` | Token-hashed, non-auth shareable compliance report |
 | **Operations Management** | Implemented | `/[userId]/modliq-console` | `/api/v1/operations/*` | `OperationsRecord` | Shift tracking, machine downtime, yield & scrap rates |
 | **Supplier & Material Traceability**| Implemented | `/[userId]/modliq-console` | `/api/v1/supply-chain/*` | `Supplier`, `MaterialLot` | Defect rate by lot code, incoming inspection |

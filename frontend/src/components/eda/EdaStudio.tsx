@@ -27,6 +27,11 @@ import OutlierPanel from './OutlierPanel';
 import TargetAnalysisPanel from './TargetAnalysisPanel';
 import EdaWarnings from './EdaWarnings';
 import EdaRecommendations from './EdaRecommendations';
+import NaturalLanguageDataQuery from '../analytics/NaturalLanguageDataQuery';
+import DataCleaningAdvisor from '../analytics/DataCleaningAdvisor';
+import SmartChartSuggestions from '../analytics/SmartChartSuggestions';
+import InsightNarrativeCard from '../analytics/InsightNarrativeCard';
+import KpiMappingPanel from '../analytics/KpiMappingPanel';
 
 interface EdaStudioProps {
   edaReport: any;
@@ -176,6 +181,11 @@ export default function EdaStudio({
                 outlierColumnCount={outlierColsCount}
                 strongCorrelationCount={correlations.strongPairs?.length || 0}
               />
+              <NaturalLanguageDataQuery projectId={edaReport?.projectId || 'default'} datasetId={edaReport?.datasetId || 'demo'} />
+              <DataCleaningAdvisor projectId={edaReport?.projectId || 'default'} datasetId={edaReport?.datasetId || 'demo'} />
+              <KpiMappingPanel />
+              <InsightNarrativeCard />
+              <SmartChartSuggestions />
               <EdaWarnings warnings={warnings} />
               <EdaRecommendations recommendations={recommendations} />
             </div>

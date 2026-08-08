@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { Activity, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { usePipelineStore } from '@/store/pipelineStore';
 import { createOptimizationJob, getOptimizationJob } from '@/services/optimization.service';
+import AutoMLLeaderboard from '@/components/analytics/AutoMLLeaderboard';
+import FeatureEngineeringAdvisor from '@/components/analytics/FeatureEngineeringAdvisor';
 
 type Stage = 'idle' | 'parsing_goal' | 'training_model' | 'searching_configurations' | 'done' | 'error';
 
@@ -205,6 +207,12 @@ export default function OptimizationProgressPage({ params }: { params: Promise<{
             </div>
           </>
         )}
+      </div>
+
+      {/* AutoML Benchmark & Feature Engineering Section */}
+      <div className="space-y-6">
+        <AutoMLLeaderboard />
+        <FeatureEngineeringAdvisor />
       </div>
     </div>
   );

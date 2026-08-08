@@ -8,6 +8,7 @@ import PredictionChart from '@/components/charts/PredictionChart';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import AiInsightCard from '@/components/ai/AiInsightCard';
+import ModelTrustMonitor from '@/components/analytics/ModelTrustMonitor';
 
 export default function ResultsPage() {
   const result = usePipelineStore((s) => s.result);
@@ -376,6 +377,9 @@ export default function ResultsPage() {
           </div>
         </div>
       </div>
+
+      {/* Model Trust & Drift Monitor (Beta) */}
+      <ModelTrustMonitor />
     </div>
   );
 }
