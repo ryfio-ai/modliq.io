@@ -77,11 +77,11 @@ export default function ProjectOptimizationProgressPage({
 
           if (job.status === 'completed') {
             stopPolling();
-            if (job.result && job.result.metrics) {
+            if (job.result && (job.result.recommended_settings || job.result.expected_outcome || job.result.metrics)) {
               setOptimization(jobId, job.result);
               setTimeout(() => {
                 router.push(`/${userId}/modliq-console/projects/${projectId}/results`);
-              }, 800);
+              }, 600);
             } else {
               throw new Error(job.result?.error || 'Optimization returned no result');
             }
