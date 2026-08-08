@@ -360,12 +360,21 @@ export default function DataIngestionTabs({ userId, projectId }: DataIngestionTa
                 </div>
 
                 {ingestResult.status === 'READY' && (
-                  <button
-                    onClick={() => router.push(`/${userId}/modliq-console/projects/${projectId}/goal`)}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#2B70AB] text-white font-medium text-sm hover:bg-[#205887] transition-all shadow-sm"
-                  >
-                    Continue to Goal <ArrowRight size={16} />
-                  </button>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => router.push(`/${userId}/modliq-console/projects/${projectId}/eda`)}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 text-white font-medium text-sm hover:bg-purple-700 transition-all shadow-sm"
+                    >
+                      <BarChart2 size={16} /> Open EDA Studio
+                    </button>
+
+                    <button
+                      onClick={() => router.push(`/${userId}/modliq-console/projects/${projectId}/goal`)}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#2B70AB] text-white font-medium text-sm hover:bg-[#205887] transition-all shadow-sm"
+                    >
+                      Continue to Goal <ArrowRight size={16} />
+                    </button>
+                  </div>
                 )}
               </div>
 

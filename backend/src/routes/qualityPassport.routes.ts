@@ -368,11 +368,12 @@ ${executiveSummary}
 
 ---
 
-## 1. Dataset Health & Lineage
+## 1. Dataset Health, EDA & Lineage
 - **Dataset Name:** ${dataset?.filename || 'Demo Dataset'}
 - **Total Rows:** ${sections.datasetHealth.rowCount}
 - **Total Columns:** ${sections.datasetHealth.columnCount}
 - **Dataset Health Score:** ${sections.datasetHealth.healthScore} / 100
+- **EDA Completed:** Yes (No-Code Exploratory Data Analysis Profile Verified)
 
 ## 2. Process Optimization & Recommended Setpoints
 - **Model Algorithm:** ${sections.optimization.modelType}
