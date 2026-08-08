@@ -48,13 +48,22 @@ const IDENTIFIER_KEYWORDS = [
   'uuid',
 ];
 
+function toStr(val: any): string {
+  if (val === null || val === undefined) return '';
+  if (typeof val === 'string') return val;
+  if (typeof val === 'object' && val.name) return String(val.name);
+  if (typeof val === 'object' && val.column) return String(val.column);
+  if (typeof val === 'object' && val.label) return String(val.label);
+  return String(val);
+}
+
 export function runGoalCrosscheck(input: GoalCrosscheckInput): GoalCrosscheckReview {
   const { parsedGoal, datasetColumns = [], healthReport, datasetAnalytics } = input;
 
-  const target = (parsedGoal.target || 'yield').trim();
+  const target = toStr(parsedGoal.target || 'yield').trim();
   const direction = parsedGoal.goal_direction || 'maximize';
   const threshold = parsedGoal.threshold ?? null;
-  const rawFeatures = parsedGoal.features || [];
+  const rawFeatures = (parsedGoal.features || []).map(toStr).filter(Boolean);
   const rawConstraints = parsedGoal.constraints || {};
 
   const warnings: string[] = [];
@@ -62,10 +71,14 @@ export function runGoalCrosscheck(input: GoalCrosscheckInput): GoalCrosscheckRev
   const metadataColumns: string[] = [];
   const controllableFeatures: string[] = [];
 
-  // Determine available columns
-  const allColumns = datasetColumns.length > 0
+  // Determine available columns safely as strings
+  const rawColumns = datasetColumns.length > 0
     ? datasetColumns
     : (datasetAnalytics?.columns || Object.keys(rawConstraints).concat(rawFeatures, [target]));
+
+  const allColumns: string[] = Array.isArray(rawColumns)
+    ? rawColumns.map(toStr).filter(Boolean)
+    : [];
 
   const targetLower = target.toLowerCase();
 

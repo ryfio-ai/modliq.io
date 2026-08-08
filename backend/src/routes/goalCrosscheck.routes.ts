@@ -31,7 +31,10 @@ router.post('/crosscheck', requireProjectAccess('projectId'), async (req: Reques
       if (dataset) {
         if (dataset.columnsJson) {
           try {
-            datasetColumns = JSON.parse(dataset.columnsJson);
+            const parsed = JSON.parse(dataset.columnsJson);
+            datasetColumns = Array.isArray(parsed)
+              ? parsed.map((c: any) => typeof c === 'string' ? c : (c?.name || c?.column || String(c)))
+              : [];
           } catch {
             // Ignore
           }
@@ -53,7 +56,10 @@ router.post('/crosscheck', requireProjectAccess('projectId'), async (req: Reques
       if (latestDs) {
         if (latestDs.columnsJson) {
           try {
-            datasetColumns = JSON.parse(latestDs.columnsJson);
+            const parsed = JSON.parse(latestDs.columnsJson);
+            datasetColumns = Array.isArray(parsed)
+              ? parsed.map((c: any) => typeof c === 'string' ? c : (c?.name || c?.column || String(c)))
+              : [];
           } catch {
             // Ignore
           }
