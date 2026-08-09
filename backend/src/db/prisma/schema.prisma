@@ -786,6 +786,72 @@ model EdaReport {
   updatedAt      DateTime @updatedAt
 }
 
+model AgentRun {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId       String?
+  userId         String
+  organizationId String?
+  projectId      String?
+  mode           String   // DATA_ANALYST | ML_ENGINEER | QUALITY | OPERATIONS | SUPPLY_CHAIN | PASSPORT | GENERAL
+  userPrompt     String
+  status         String   // PLANNED | WAITING_APPROVAL | RUNNING | COMPLETED | FAILED | CANCELLED
+  planJson       String?
+  resultJson     String?
+  error          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model AgentTask {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  agentRunId  String
+  toolName    String
+  status      String   // PENDING | RUNNING | COMPLETED | FAILED | SKIPPED
+  inputJson   String?
+  outputJson  String?
+  error       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ApprovalRequest {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId    String?
+  userId      String
+  projectId   String?
+  agentRunId  String?
+  actionType  String   // RUN_OPTIMIZATION | APPLY_CLEANING | RETRAIN_MODEL | CREATE_SHARE_LINK | EXPORT_QUALITY_PASSPORT | CREATE_TRIAL_PLAN
+  payloadJson String
+  status      String   // PENDING | APPROVED | REJECTED | EXPIRED
+  approvedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AgentMemory {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String
+  organizationId String?
+  projectId      String?
+  memoryType     String   // USER_PREFERENCE | PROJECT_CONTEXT | INDUSTRY_CONTEXT | TEMPLATE_USAGE
+  contentJson    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model ToolCallLog {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String?
+  projectId    String?
+  agentRunId   String?
+  toolName     String
+  success      Boolean
+  latencyMs    Int?
+  metadataJson String?
+  createdAt    DateTime @default(now())
+}
+
+
 
 
 

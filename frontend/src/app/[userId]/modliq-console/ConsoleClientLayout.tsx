@@ -23,6 +23,7 @@ import {
   FileText,
   Award,
   Search,
+  Bot,
 } from 'lucide-react';
 import React, { use, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -71,6 +72,7 @@ export default function ConsoleClientLayout({
       title: 'CORE STUDIO',
       items: [
         { name: 'Dashboard', href: `/${userId}/modliq-console/dashboard`, icon: LayoutDashboard },
+        { name: 'Modliq Agent (Beta)', href: `/${userId}/modliq-console/agent`, icon: Bot },
         { name: 'Projects', href: `/${userId}/modliq-console/projects`, icon: FolderKanban },
         { name: 'Data Ingestion', href: `/${userId}/modliq-console/data-upload`, icon: Upload },
         { name: 'EDA Studio', href: `/${userId}/modliq-console/eda`, icon: BarChart2 },

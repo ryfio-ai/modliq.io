@@ -15,6 +15,7 @@ import goalCrosscheckRoutes from '../routes/goalCrosscheck.routes';
 import templateRoutes from '../routes/template.routes';
 import legacyRoutes from '../routes/legacy.routes';
 import publicRoutes from '../routes/public.routes';
+import agentRoutes from '../routes/agent.routes';
 import { initDb } from '../db/optimizationJobs';
 
 const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
@@ -44,6 +45,8 @@ apiV1.use('/projects/:projectId/quality-passport', qualityPassportRoutes);
 apiV1.use('/projects/:projectId/datasets/:datasetId/eda', edaRoutes);
 apiV1.use('/projects/:projectId/analytics', analyticsWorkflowRoutes);
 apiV1.use('/projects/:projectId', ingestionRoutes);
+apiV1.use('/projects/:projectId', agentRoutes);
+apiV1.use('/', agentRoutes);
 apiV1.use('/user', projectsRoutes);
 apiV1.use('/ai', aiRoutes);
 // Legacy routes: demo dataset, optimization, parse-goal, QC, dashboard

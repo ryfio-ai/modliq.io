@@ -8,7 +8,9 @@ export type PublicIdEntity =
   | 'JOB'
   | 'PASSPORT'
   | 'TICKET'
-  | 'TRIAL';
+  | 'TRIAL'
+  | 'AGENT'
+  | 'APPROVAL';
 
 const PREFIX_MAP: Record<PublicIdEntity, string> = {
   USER: 'MODLIQ-USER',
@@ -19,9 +21,11 @@ const PREFIX_MAP: Record<PublicIdEntity, string> = {
   PASSPORT: 'MODLIQ-PASSPORT',
   TICKET: 'MODLIQ-TICKET',
   TRIAL: 'MODLIQ-TRIAL',
+  AGENT: 'MODLIQ-AGENT',
+  APPROVAL: 'MODLIQ-APPROVAL',
 };
 
-export const PUBLIC_ID_REGEX = /^MODLIQ-(USER|PROJECT|ORG|DATASET|JOB|PASSPORT|TICKET|TRIAL)-\d{8}-\d{4,}$/;
+export const PUBLIC_ID_REGEX = /^MODLIQ-(USER|PROJECT|ORG|DATASET|JOB|PASSPORT|TICKET|TRIAL|AGENT|APPROVAL)-\d{8}-\d{4,}$/;
 
 export function isValidPublicId(publicId: string): boolean {
   if (!publicId || typeof publicId !== 'string') return false;
