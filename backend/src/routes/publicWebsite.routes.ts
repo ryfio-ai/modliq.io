@@ -119,7 +119,7 @@ router.post('/chatbot', async (req: Request, res: Response) => {
 });
 
 // POST /api/v1/public/contact — Public Contact Form Submission
-const memoryContactLeads: any[] = [];
+export const memoryContactLeads: any[] = [];
 
 router.post('/contact', async (req: Request, res: Response) => {
   try {
@@ -143,10 +143,12 @@ router.post('/contact', async (req: Request, res: Response) => {
       role: role ? String(role).trim() : null,
       interest: Array.isArray(interest) ? interest.join(', ') : (interest ? String(interest) : null),
       message: message ? String(message).trim() : null,
-      createdAt: new Date(),
+      status: 'NEW',
     };
 
     let leadId = `lead_${Date.now()}`;
+    const memRecord = { id: leadId, ...leadData, createdAt: new Date().toISOString() };
+    memoryContactLeads.unshift(memRecord);
 
     try {
       const created = await prisma.contactLead.create({
@@ -154,8 +156,7 @@ router.post('/contact', async (req: Request, res: Response) => {
       });
       leadId = created.id;
     } catch (dbErr) {
-      console.warn('[publicWebsite] DB lead save failed, storing lead in memory fallback:', (dbErr as any)?.message || dbErr);
-      memoryContactLeads.push({ id: leadId, ...leadData });
+      console.warn('[publicWebsite] DB lead save failed, using memory fallback:', (dbErr as any)?.message || dbErr);
     }
 
     return res.status(201).json({

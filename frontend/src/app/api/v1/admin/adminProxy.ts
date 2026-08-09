@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
 import { API_URL } from '@/lib/config';
 
+export const GLOBAL_LEADS_STORE: any[] = [];
+
+export function saveLeadToGlobalStore(lead: any) {
+  GLOBAL_LEADS_STORE.unshift(lead);
+}
+
 export const MOCK_SUMMARY = {
   totalUsers: 0,
   newUsersToday: 0,
@@ -217,19 +223,39 @@ export async function handleAdminProxy(
       // Express backend unreachable fallback
     }
 
+    let activeFallback = fallbackData;
+    if (endpointPath === 'leads') {
+      activeFallback = GLOBAL_LEADS_STORE;
+    } else if (endpointPath === 'summary' && activeFallback) {
+      activeFallback = {
+        ...activeFallback,
+        pilotLeads: GLOBAL_LEADS_STORE.length,
+      };
+    }
+
     return NextResponse.json({
       success: true,
-      data: fallbackData,
-      pagination: Array.isArray(fallbackData)
-        ? { total: fallbackData.length, page: 1, limit: 25, totalPages: 1 }
+      data: activeFallback,
+      pagination: Array.isArray(activeFallback)
+        ? { total: activeFallback.length, page: 1, limit: 25, totalPages: 1 }
         : undefined,
     });
   } catch (err: any) {
+    let activeFallback = fallbackData;
+    if (endpointPath === 'leads') {
+      activeFallback = GLOBAL_LEADS_STORE;
+    } else if (endpointPath === 'summary' && activeFallback) {
+      activeFallback = {
+        ...activeFallback,
+        pilotLeads: GLOBAL_LEADS_STORE.length,
+      };
+    }
+
     return NextResponse.json({
       success: true,
-      data: fallbackData,
-      pagination: Array.isArray(fallbackData)
-        ? { total: fallbackData.length, page: 1, limit: 25, totalPages: 1 }
+      data: activeFallback,
+      pagination: Array.isArray(activeFallback)
+        ? { total: activeFallback.length, page: 1, limit: 25, totalPages: 1 }
         : undefined,
     });
   }

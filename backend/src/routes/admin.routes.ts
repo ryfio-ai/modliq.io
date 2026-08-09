@@ -3,6 +3,7 @@ import axios from 'axios';
 import { prisma } from '../lib/prisma';
 import { requireAuth } from '../middleware/auth';
 import { logAuditEvent } from '../services/audit.service';
+import { memoryContactLeads } from './publicWebsite.routes';
 
 const router = Router();
 
@@ -858,7 +859,7 @@ router.get('/leads', async (req: Request, res: Response) => {
     }
     if (status) where.status = status;
 
-    const [total, leads] = await Promise.all([
+    const [totalDb, dbLeads] = await Promise.all([
       prisma.contactLead.count({ where }),
       prisma.contactLead.findMany({
         where,
@@ -868,9 +869,16 @@ router.get('/leads', async (req: Request, res: Response) => {
       }),
     ]);
 
+    // Merge memory fallback leads not present in DB
+    const dbIds = new Set(dbLeads.map((l) => l.id));
+    const memLeads = memoryContactLeads.filter((l) => !dbIds.has(l.id));
+
+    const combinedLeads = [...dbLeads, ...memLeads];
+    const total = totalDb + memLeads.length;
+
     res.json({
       success: true,
-      data: leads,
+      data: combinedLeads,
       pagination: { total, page, limit, totalPages: Math.ceil(total / limit) },
     });
   } catch (error: any) {
