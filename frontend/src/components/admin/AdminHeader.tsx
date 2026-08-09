@@ -2,7 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, ExternalLink, Menu } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ShieldCheck, ExternalLink, Menu, LogOut, User } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface AdminHeaderProps {
   title?: string;
@@ -15,6 +17,14 @@ export default function AdminHeader({
   subtitle = 'Platform Observability & Governance',
   onMobileMenuToggle,
 }: AdminHeaderProps) {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await logout();
+    router.push('/login');
+  };
+
   return (
     <header className="h-16 bg-white border-b border-[#D0E2F0] px-6 flex items-center justify-between sticky top-0 z-40 shadow-2xs">
       <div className="flex items-center gap-3">
@@ -39,14 +49,35 @@ export default function AdminHeader({
       </div>
 
       <div className="flex items-center gap-3">
+        {user && (
+          <div className="hidden md:flex items-center gap-2.5 px-3 py-1 bg-[#F0F6FA] border border-[#D0E2F0] rounded-xl text-xs text-[#1B2A4A]">
+            <div className="w-6 h-6 rounded-full bg-[#2B70AB] text-white flex items-center justify-center font-bold text-[10px]">
+              {user.name ? user.name.charAt(0).toUpperCase() : 'A'}
+            </div>
+            <div className="text-left">
+              <span className="font-bold block text-[11px] leading-tight truncate max-w-[120px]">{user.name || 'Platform Admin'}</span>
+              <span className="text-[9px] text-slate-500 font-semibold block leading-tight truncate max-w-[120px]">{user.email || 'admin@modliq.io'}</span>
+            </div>
+          </div>
+        )}
+
         <Link
           href="/"
           target="_blank"
           className="px-3 py-1.5 bg-[#F0F6FA] hover:bg-slate-200 text-[#1B2A4A] text-xs font-semibold rounded-xl border border-[#D0E2F0] transition flex items-center gap-1.5"
         >
-          <span>View Public Site</span>
+          <span className="hidden sm:inline">View Public Site</span>
           <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
         </Link>
+
+        <button
+          onClick={handleSignOut}
+          className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 text-xs font-bold rounded-xl border border-rose-200 transition flex items-center gap-1.5"
+          title="Sign out of Admin Console"
+        >
+          <LogOut className="w-3.5 h-3.5" />
+          <span>Sign Out</span>
+        </button>
       </div>
     </header>
   );

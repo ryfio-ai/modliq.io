@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   LayoutDashboard,
   Users,
@@ -19,7 +20,7 @@ import {
   Globe,
   Shield,
   Settings,
-  ArrowLeft,
+  LogOut,
 } from 'lucide-react';
 
 export const ADMIN_NAV_ITEMS = [
@@ -42,6 +43,13 @@ export const ADMIN_NAV_ITEMS = [
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const { logout } = useAuth();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await logout();
+    router.push('/login');
+  };
 
   return (
     <aside className="w-64 bg-white border-r border-[#D0E2F0] p-4 flex flex-col justify-between hidden md:flex shrink-0">
@@ -69,13 +77,13 @@ export default function AdminSidebar() {
       </div>
 
       <div className="pt-4 border-t border-[#D0E2F0]">
-        <Link
-          href="/login"
-          className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition"
+        <button
+          onClick={handleSignOut}
+          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-rose-700 hover:bg-rose-50 transition"
         >
-          <ArrowLeft className="w-4 h-4 text-slate-400" />
-          Exit Admin Console
-        </Link>
+          <LogOut className="w-4 h-4 text-rose-500" />
+          <span>Sign Out Admin</span>
+        </button>
       </div>
     </aside>
   );
