@@ -2,19 +2,19 @@ import { NextResponse } from 'next/server';
 import { API_URL } from '@/lib/config';
 
 export const MOCK_SUMMARY = {
-  totalUsers: 48,
-  newUsersToday: 4,
-  totalOrganizations: 12,
-  totalProjects: 36,
-  totalDatasets: 84,
-  totalOptimizationJobs: 142,
-  failedOptimizationJobs: 3,
-  aiCallsToday: 320,
-  monthlyAiCalls: 9600,
-  pilotLeads: 15,
-  openSupportTickets: 2,
-  activeShareLinks: 19,
-  riskyDatasets: 1,
+  totalUsers: 0,
+  newUsersToday: 0,
+  totalOrganizations: 0,
+  totalProjects: 0,
+  totalDatasets: 0,
+  totalOptimizationJobs: 0,
+  failedOptimizationJobs: 0,
+  aiCallsToday: 0,
+  monthlyAiCalls: 0,
+  pilotLeads: 0,
+  openSupportTickets: 0,
+  activeShareLinks: 0,
+  riskyDatasets: 0,
   platformStatus: {
     frontend: 'HEALTHY',
     backend: 'HEALTHY',
@@ -25,29 +25,13 @@ export const MOCK_SUMMARY = {
     storage: 'HEALTHY',
   },
   recentActivity: {
-    users: [
-      { id: 'usr_1', name: 'Dr. Aris Thorne', email: 'athorne@apexchem.com', role: 'USER', updatedAt: new Date().toISOString() },
-      { id: 'usr_2', name: 'Elena Rostova', email: 'erostova@biopure.io', role: 'ADMIN', updatedAt: new Date().toISOString() },
-    ],
-    projects: [
-      { id: 'prj_1', name: 'Bio-Reactor Yield Batch 4', status: 'completed', createdAt: new Date().toISOString() },
-      { id: 'prj_2', name: 'Polymer Extrusion Temp Control', status: 'optimizing', createdAt: new Date().toISOString() },
-    ],
-    jobs: [
-      { id: 'job_101', status: 'completed', progress: 100, createdAt: new Date().toISOString() },
-      { id: 'job_102', status: 'failed', progress: 45, error: 'Convergence delta exceeded max steps', createdAt: new Date().toISOString() },
-    ],
-    tickets: [
-      { id: 'tkt_1', subject: 'API Rate Limit Quota Increase', status: 'OPEN', priority: 'HIGH', createdAt: new Date().toISOString() },
-    ],
-    auditLogs: [
-      { id: 'log_1', action: 'ADMIN_CHANGED_ROLE', entityType: 'USER', createdAt: new Date().toISOString() },
-    ],
+    users: [],
+    projects: [],
+    jobs: [],
+    tickets: [],
+    auditLogs: [],
   },
-  alerts: [
-    { severity: 'WARNING', title: '1 Failed Job Detected', message: 'Job #job_102 stopped due to convergence error.' },
-    { severity: 'INFO', title: '2 Open Support Tickets', message: 'Requires engineer attention in support queue.' },
-  ],
+  alerts: [],
 };
 
 export const MOCK_WEBSITE = {
@@ -129,47 +113,20 @@ export const MOCK_WEBSITE = {
   ],
 };
 
-export const MOCK_USERS = [
-  { id: 'usr_admin', name: 'Platform Admin', email: 'admin@modliq.io', role: 'ADMIN', status: 'ACTIVE', isDemo: false, orgCount: 3, projectCount: 12, datasetCount: 24, jobCount: 45, createdAt: new Date().toISOString(), lastActive: new Date().toISOString() },
-  { id: 'usr_1', name: 'Dr. Aris Thorne', email: 'athorne@apexchem.com', role: 'USER', status: 'ACTIVE', isDemo: false, orgCount: 1, projectCount: 4, datasetCount: 8, jobCount: 15, createdAt: new Date().toISOString(), lastActive: new Date().toISOString() },
-  { id: 'usr_2', name: 'Marcus Vance', email: 'mvance@titanmaterials.com', role: 'USER', status: 'DEMO', isDemo: true, orgCount: 1, projectCount: 2, datasetCount: 3, jobCount: 5, createdAt: new Date().toISOString(), lastActive: new Date().toISOString() },
-];
-
-export const MOCK_ORGANIZATIONS = [
-  { id: 'org_1', name: 'Apex Specialty Chemicals', slug: 'apex-chem', ownerUserId: 'usr_1', industry: 'Specialty Chemicals', companySize: '500-1000', memberCount: 14, projectCount: 8, datasetCount: 18, plan: 'ENTERPRISE', createdAt: new Date().toISOString() },
-  { id: 'org_2', name: 'Titan Materials Global', slug: 'titan-materials', ownerUserId: 'usr_2', industry: 'Automotive Components', companySize: '100-250', memberCount: 6, projectCount: 3, datasetCount: 5, plan: 'PRO', createdAt: new Date().toISOString() },
-];
-
-export const MOCK_PROJECTS = [
-  { id: 'prj_1', name: 'Catalyst Yield Optimization', organizationId: 'org_1', userId: 'usr_1', status: 'completed', datasetId: 'ds_101', createdAt: new Date().toISOString(), user: { name: 'Dr. Aris Thorne', email: 'athorne@apexchem.com' } },
-  { id: 'prj_2', name: 'Extruder Energy Reduction', organizationId: 'org_2', userId: 'usr_2', status: 'optimizing', datasetId: 'ds_102', createdAt: new Date().toISOString(), user: { name: 'Marcus Vance', email: 'mvance@titanmaterials.com' } },
-];
-
-export const MOCK_DATASETS = [
-  { id: 'ds_101', name: 'Reactor_Telemetry_Q3.csv', filename: 'Reactor_Telemetry_Q3.csv', originalName: 'Reactor_Telemetry_Q3.csv', sourceType: 'file', fileType: 'csv', totalRows: 142000, totalColumns: 24, healthScore: 94, healthStatus: 'EXCELLENT', status: 'READY', isDemo: false, createdAt: new Date().toISOString(), user: { name: 'Dr. Aris Thorne' } },
-  { id: 'ds_102', name: 'Extruder_Thermal_Logs.xlsx', filename: 'Extruder_Thermal_Logs.xlsx', originalName: 'Extruder_Thermal_Logs.xlsx', sourceType: 'file', fileType: 'xlsx', totalRows: 58000, totalColumns: 16, healthScore: 68, healthStatus: 'NEEDS_ATTENTION', status: 'READY', isDemo: false, createdAt: new Date().toISOString(), user: { name: 'Marcus Vance' } },
-];
-
-export const MOCK_JOBS = [
-  { id: 'job_101', userId: 'usr_1', status: 'completed', stage: 'parameter_tuning', progress: 100, createdAt: new Date().toISOString(), user: { name: 'Dr. Aris Thorne', email: 'athorne@apexchem.com' } },
-  { id: 'job_102', userId: 'usr_2', status: 'failed', stage: 'gradient_boost', progress: 45, error: 'Loss function delta diverged on step 450', createdAt: new Date().toISOString(), user: { name: 'Marcus Vance', email: 'mvance@titanmaterials.com' } },
-];
-
-export const MOCK_IMPORTS = [
-  { id: 'imp_1', userId: 'usr_1', status: 'COMPLETED', progress: 100, resultJson: '{"rows":142000,"columns":24}', createdAt: new Date().toISOString(), user: { name: 'Dr. Aris Thorne' } },
-];
+export const MOCK_USERS: any[] = [];
+export const MOCK_ORGANIZATIONS: any[] = [];
+export const MOCK_PROJECTS: any[] = [];
+export const MOCK_DATASETS: any[] = [];
+export const MOCK_JOBS: any[] = [];
+export const MOCK_IMPORTS: any[] = [];
 
 export const MOCK_AI = {
   providerMode: 'auto',
   failoverOrder: ['Groq', 'Gemini', 'NVIDIA', 'Cohere', 'Cloudflare', 'OpenRouter'],
   aiFeaturesEnabled: true,
-  aiCallsToday: 320,
+  aiCallsToday: 0,
   aiFailuresToday: 0,
-  topModulesUsed: [
-    { module: 'Optimization Goal Parser', count: 128 },
-    { module: 'Quality Passport Generator', count: 112 },
-    { module: 'Manufacturing AI Copilot', count: 80 },
-  ],
+  topModulesUsed: [],
   providers: [
     { name: 'Groq (Llama 3.3 70B)', configured: true, latencyMs: 180, reachable: true, priority: 1 },
     { name: 'Google Gemini (3.5 Flash)', configured: true, latencyMs: 240, reachable: true, priority: 2 },
@@ -194,26 +151,10 @@ export const MOCK_SYSTEM = {
   ],
 };
 
-export const MOCK_USAGE = [
-  { id: 'usg_1', userId: 'usr_1', eventType: 'AI_CALL', quantity: 1, metadataJson: '{"module":"goal_parser"}', createdAt: new Date().toISOString() },
-  { id: 'usg_2', userId: 'usr_1', eventType: 'OPTIMIZATION_JOB', quantity: 1, metadataJson: '{"jobId":"job_101"}', createdAt: new Date().toISOString() },
-  { id: 'usg_3', userId: 'usr_2', eventType: 'DATASET_UPLOAD', quantity: 1, metadataJson: '{"rows":58000}', createdAt: new Date().toISOString() },
-];
-
-export const MOCK_LEADS = [
-  { id: 'lead_1', name: 'Sarah Jenkins', company: 'Nexus BioPharma', email: 'sjenkins@nexusbio.com', phone: '+1 (555) 234-5678', city: 'Boston, MA', industry: 'Pharma / Nutraceuticals', interest: 'Quality Passport & Compliance Automation', message: 'Looking for a enterprise pilot for our 3 plants in MA.', status: 'NEW', createdAt: new Date().toISOString() },
-  { id: 'lead_2', name: 'Robert Zhang', company: 'Apex Polymer Components', email: 'rzhang@apexpoly.com', phone: '+1 (555) 876-5432', city: 'Detroit, MI', industry: 'Packaging / Plastics', interest: 'Yield Optimization', message: 'Interested in reducing scrap rate on injection moulding lines.', status: 'CONTACTED', createdAt: new Date().toISOString() },
-];
-
-export const MOCK_SUPPORT = [
-  { id: 'tkt_1', userId: 'usr_1', subject: 'API Rate Limit Quota Increase', message: 'We require 500 extra daily AI calls for batch pipeline runs.', category: 'BILLING', priority: 'HIGH', status: 'OPEN', createdAt: new Date().toISOString() },
-  { id: 'tkt_2', userId: 'usr_2', subject: 'CSV Encoding UTF-16 Support', message: 'Encountered malformed column names on UTF-16 LE encoded export.', category: 'DATA', priority: 'MEDIUM', status: 'IN_PROGRESS', createdAt: new Date().toISOString() },
-];
-
-export const MOCK_AUDIT_LOGS = [
-  { id: 'log_1', userId: 'usr_admin', action: 'ADMIN_UPDATED_USER', entityType: 'USER', entityId: 'usr_2', metadataJson: '{"role":"USER"}', createdAt: new Date().toISOString() },
-  { id: 'log_2', userId: 'usr_admin', action: 'ADMIN_RETRIED_JOB', entityType: 'OPTIMIZATION_JOB', entityId: 'job_102', createdAt: new Date().toISOString() },
-];
+export const MOCK_USAGE: any[] = [];
+export const MOCK_LEADS: any[] = [];
+export const MOCK_SUPPORT: any[] = [];
+export const MOCK_AUDIT_LOGS: any[] = [];
 
 export const MOCK_SETTINGS = {
   id: 'stg_1',
