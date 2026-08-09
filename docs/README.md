@@ -1,16 +1,18 @@
 # Modliq Platform Launch Documentation Pack Index
 
-> **Last verified:** 2026-08-04  
-> **Source of truth:** Current codebase inspection  
+> **Last verified:** 2026-08-09  
+> **Source of truth:** Current Codebase Inspection & Platform Specification  
 > **Status:** Implemented / Launch-Ready  
 
 ---
 
 ## 📌 What Modliq Is
 
-**Modliq** is a universal no-code AI Process Optimization Copilot powered by AutoML, purpose-built for manufacturing and process engineering teams. Developed in **Tamil Nadu, India** as a flagship manufacturing intelligence product by **Qeltrava AI**, Modliq translates complex industrial process data into plain-English operating targets, safe parameter windows, statistical quality controls, root-cause driver rankings, and standardized operating procedure (SOP) action plans.
+> **Analyze what happened. Optimize what happens next. Prove it with a Quality Passport.**
 
-Modliq features a modern aesthetic inspired by Notion × Figma × Vercel, bridging deep machine learning algorithms with an intuitive, role-gated UI across public marketing, user console, and enterprise admin tiers.
+**Modliq** is a no-code manufacturing intelligence and machine learning platform that helps factory teams analyze what happened, optimize what happens next, and prove decisions with buyer-ready Quality Passports — without needing a data analyst, data scientist, or ML engineer to get started.
+
+Developed in **Tamil Nadu, India** as a flagship manufacturing intelligence product by **Qeltrava AI**, Modliq combines six specialized manufacturing roles (Data Analyst, ML Engineer, Quality Engineer, Operations Analyst, Supply Chain Analyst, and Lean / Kaizen Coordinator) into a single guided platform.
 
 ---
 
@@ -20,12 +22,12 @@ The documentation is organized into 12 dedicated functional domains:
 
 ```
 /docs
-├── 00-overview/             # Product vision, feature catalog, launch status, domain glossary
+├── 00-overview/             # Product vision, 45-module feature catalog, launch status, domain glossary
 ├── 01-architecture/         # System topology, service boundaries, data flows, multi-tenancy, AI & ML design
-├── 02-frontend/             # Next.js App Router, routes, UI components, state management, design system
+├── 02-frontend/             # Next.js App Router, routes, user console, admin console, UI components, state management
 ├── 03-backend/              # Express API gateway, route handlers, RBAC authorization, jobs, Quality Passport
 ├── 04-ml-engine/            # FastAPI ML microservice, AutoML pipelines, goal parser, optimizer, QC stats
-├── 05-database/             # MongoDB Atlas + Prisma ORM schema, models, relationships, sync protocols
+├── 05-database/             # MongoDB Atlas + Prisma ORM schema, models, relationships, human-readable Public IDs
 ├── 06-ai/                   # Multi-provider AI Gateway, provider fallbacks, prompt guardrails, kill switch
 ├── 07-security/             # Zero-trust security model, auth, tenant isolation, file/SSRF protection, incident response
 ├── 08-deployment/           # Production deployment topology (Vercel + Render + MongoDB Atlas + Redis), env vars
@@ -39,44 +41,26 @@ The documentation is organized into 12 dedicated functional domains:
 
 ## 🚀 Role-Based Onboarding Paths
 
-Follow the tailored path below based on your role to get productive quickly:
+### 📈 For Product & Business Stakeholders
+1. Start with [PRODUCT_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PRODUCT_OVERVIEW.md) to understand core positioning and role combinations.
+2. Read [PLATFORM_FEATURES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PLATFORM_FEATURES.md) for the full 45-module capabilities matrix.
+3. Inspect launch readiness: [LAUNCH_SIGNOFF.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/10-launch/LAUNCH_SIGNOFF.md) & [LAUNCH_STATUS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/LAUNCH_STATUS.md).
 
 ### 🎨 For Frontend Developers
-1. Start with [PRODUCT_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PRODUCT_OVERVIEW.md) to understand the domain.
-2. Read [FRONTEND_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/FRONTEND_OVERVIEW.md) & [ROUTES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/ROUTES.md).
-3. Review [UI_THEME.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/UI_THEME.md) and [COMPONENTS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/COMPONENTS.md).
-4. Setup environment: [SETUP_LOCAL.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/11-developer-onboarding/SETUP_LOCAL.md).
+1. Read [FRONTEND_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/FRONTEND_OVERVIEW.md) & [ROUTES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/ROUTES.md).
+2. Inspect console guides: [USER_CONSOLE.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/USER_CONSOLE.md) & [ADMIN_CONSOLE.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/ADMIN_CONSOLE.md).
+3. Review UI design & components: [UI_THEME.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/UI_THEME.md) and [COMPONENTS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/02-frontend/COMPONENTS.md).
+4. Local setup: [SETUP_LOCAL.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/11-developer-onboarding/SETUP_LOCAL.md).
 
 ### ⚙️ For Backend Engineers
 1. Read [SYSTEM_ARCHITECTURE.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/01-architecture/SYSTEM_ARCHITECTURE.md).
 2. Review [BACKEND_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/03-backend/BACKEND_OVERVIEW.md) & [API_ROUTES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/03-backend/API_ROUTES.md).
-3. Inspect Database models: [PRISMA_SCHEMA.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/05-database/PRISMA_SCHEMA.md) & [MODELS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/05-database/MODELS.md).
-4. Review authorization policies: [AUTHORIZATION.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/03-backend/AUTHORIZATION.md).
+3. Inspect database schema & Public IDs: [PRISMA_SCHEMA.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/05-database/PRISMA_SCHEMA.md) & [PUBLIC_IDS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/05-database/PUBLIC_IDS.md).
 
 ### 🧪 For ML / Data Engineers
 1. Read [ML_ENGINE_ARCHITECTURE.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/01-architecture/ML_ENGINE_ARCHITECTURE.md).
 2. Review [ML_ENGINE_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/04-ml-engine/ML_ENGINE_OVERVIEW.md) & [ENDPOINTS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/04-ml-engine/ENDPOINTS.md).
 3. Deep-dive into algorithms: [PIPELINES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/04-ml-engine/PIPELINES.md), [GOAL_PARSER.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/04-ml-engine/GOAL_PARSER.md), and [OPTIMIZER.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/04-ml-engine/OPTIMIZER.md).
-
-### 🛡️ For Security Reviewers
-1. Read [SECURITY_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/07-security/SECURITY_OVERVIEW.md).
-2. Inspect [TENANT_ISOLATION.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/07-security/TENANT_ISOLATION.md) & [AUTH_SECURITY.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/07-security/AUTH_SECURITY.md).
-3. Check pre-launch checklist: [SECURITY_CHECKLIST.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/07-security/SECURITY_CHECKLIST.md) & [INCIDENT_RESPONSE.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/07-security/INCIDENT_RESPONSE.md).
-
-### 🚢 For DevOps / SRE Engineers
-1. Review [DEPLOYMENT_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/08-deployment/DEPLOYMENT_OVERVIEW.md).
-2. Verify environment configuration: [ENVIRONMENT_VARIABLES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/08-deployment/ENVIRONMENT_VARIABLES.md).
-3. Review rollback protocols: [ROLLBACK_PLAN.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/08-deployment/ROLLBACK_PLAN.md).
-
-### 🧪 For QA Engineers
-1. Start with [TESTING_STRATEGY.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/09-testing/TESTING_STRATEGY.md).
-2. Run end-to-end suite: [E2E_TEST_FLOWS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/09-testing/E2E_TEST_FLOWS.md).
-3. Execute pre-flight verification: [QA_CHECKLIST.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/09-testing/QA_CHECKLIST.md).
-
-### 📈 For Product / Business Stakeholders
-1. Read [PRODUCT_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PRODUCT_OVERVIEW.md) & [PLATFORM_FEATURES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PLATFORM_FEATURES.md).
-2. Inspect launch readiness: [LAUNCH_SIGNOFF.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/10-launch/LAUNCH_SIGNOFF.md).
-3. Review pilot terms: [PILOT_PROCESS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/10-launch/PILOT_PROCESS.md) & [FREE_PILOT_TERMS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/10-launch/FREE_PILOT_TERMS.md).
 
 ---
 
