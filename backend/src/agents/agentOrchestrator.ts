@@ -1,5 +1,6 @@
 import prisma from '../lib/prisma';
 import { generatePublicId } from '../services/publicId.service';
+import { logAuditEvent } from '../services/audit.service';
 import { validateUserPrompt, sanitizeAgentOutput } from './agentGuardrails';
 import { buildAgentContext, AgentContext } from './contextBuilder';
 import { classifyUserPrompt, AgentMode } from './intentClassifier';
@@ -34,6 +35,13 @@ export async function runAgent(input: RunAgentInput): Promise<AgentRunResponse> 
   // 1. Guardrail Validation
   const validation = validateUserPrompt(prompt);
   if (!validation.safe) {
+    await logAuditEvent({
+      userId,
+      projectId,
+      action: 'AGENT_RUN_FAILED',
+      entityType: 'AGENT_RUN',
+      metadata: { reason: 'Security Guardrail violation', prompt },
+    });
     throw new Error(validation.warning || 'Security Guardrail violation.');
   }
 
@@ -61,6 +69,24 @@ export async function runAgent(input: RunAgentInput): Promise<AgentRunResponse> 
   });
 
   plan.runId = agentRun.id;
+
+  await logAuditEvent({
+    userId,
+    projectId: context.projectId,
+    action: 'AGENT_RUN_CREATED',
+    entityType: 'AGENT_RUN',
+    entityId: agentRun.id,
+    metadata: { publicId, mode: intent.mode, prompt },
+  });
+
+  await logAuditEvent({
+    userId,
+    projectId: context.projectId,
+    action: 'AGENT_PLAN_CREATED',
+    entityType: 'AGENT_PLAN',
+    entityId: agentRun.id,
+    metadata: { taskCount: plan.tasks.length, requiresApproval: plan.requiresApproval },
+  });
 
   const toolResults: ToolExecutionResult[] = [];
   let approvalId: string | undefined = undefined;
@@ -102,6 +128,15 @@ export async function runAgent(input: RunAgentInput): Promise<AgentRunResponse> 
     const result = await executeAgentTool(task.toolName, task.input, context);
     toolResults.push(result);
 
+    await logAuditEvent({
+      userId,
+      projectId: context.projectId,
+      action: 'AGENT_TOOL_CALLED',
+      entityType: 'AGENT_TOOL',
+      entityId: agentRun.id,
+      metadata: { toolName: task.toolName, success: result.success },
+    });
+
     await prisma.agentTask.create({
       data: {
         agentRunId: agentRun.id,
@@ -128,6 +163,15 @@ export async function runAgent(input: RunAgentInput): Promise<AgentRunResponse> 
       status: finalStatus,
       resultJson: JSON.stringify(sanitizeAgentOutput(synthesized)),
     },
+  });
+
+  await logAuditEvent({
+    userId,
+    projectId: context.projectId,
+    action: finalStatus === 'COMPLETED' ? 'AGENT_RUN_COMPLETED' : 'AGENT_APPROVAL_REQUESTED',
+    entityType: 'AGENT_RUN',
+    entityId: agentRun.id,
+    metadata: { status: finalStatus, approvalId: approvalPublicId || approvalId },
   });
 
   return {

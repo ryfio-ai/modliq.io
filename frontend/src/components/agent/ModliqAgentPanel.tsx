@@ -94,7 +94,7 @@ export default function ModliqAgentPanel({ projectId }: { projectId?: string }) 
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                Your no-code data analyst, ML engineer, and quality assistant for manufacturing workflows.
+                Modliq Agent (Beta) helps manufacturing teams ask questions, run guided analysis, prepare optimization workflows, explain quality signals, and generate report evidence — with human approval required for every critical action.
               </p>
             </div>
           </div>
@@ -104,6 +104,14 @@ export default function ModliqAgentPanel({ projectId }: { projectId?: string }) 
           <ShieldCheck size={16} className="text-blue-600" />
           <span>Autonomy Bound: Level 0–3 (Human Approval Required for Actions)</span>
         </div>
+      </div>
+
+      {/* Beta Safety Disclaimer */}
+      <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-3.5 text-xs text-amber-900 flex items-center gap-2.5">
+        <Sparkles size={16} className="text-amber-600 shrink-0" />
+        <span>
+          <strong>Disclaimer:</strong> Modliq Agent is in Beta. It can analyze, plan, and prepare workflows, but critical actions require your approval. Always validate recommendations through responsible engineering review.
+        </span>
       </div>
 
       {/* Mode Selector */}

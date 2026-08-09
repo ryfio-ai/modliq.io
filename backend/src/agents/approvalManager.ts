@@ -1,5 +1,6 @@
 import prisma from '../lib/prisma';
 import { generatePublicId } from '../services/publicId.service';
+import { logAuditEvent } from '../services/audit.service';
 
 export interface CreateApprovalInput {
   userId: string;
@@ -53,6 +54,15 @@ export async function handleApprovalDecision(
       status: decision,
       approvedAt: decision === 'APPROVED' ? new Date() : null,
     },
+  });
+
+  await logAuditEvent({
+    userId,
+    projectId: approval.projectId || undefined,
+    action: decision === 'APPROVED' ? 'AGENT_APPROVAL_APPROVED' : 'AGENT_APPROVAL_REJECTED',
+    entityType: 'APPROVAL_REQUEST',
+    entityId: approval.id,
+    metadata: { actionType: approval.actionType, decision },
   });
 
   // If approved, update associated AgentRun status if present
