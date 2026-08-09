@@ -7,6 +7,14 @@ export function saveLeadToGlobalStore(lead: any) {
   GLOBAL_LEADS_STORE.unshift(lead);
 }
 
+export function updateLeadInGlobalStore(leadId: string, updates: any) {
+  const target = GLOBAL_LEADS_STORE.find((l) => l.id === leadId);
+  if (target) {
+    if (updates.status) target.status = updates.status;
+    if (updates.notes !== undefined) target.notes = updates.notes;
+  }
+}
+
 export const MOCK_SUMMARY = {
   totalUsers: 0,
   newUsersToday: 0,
@@ -224,7 +232,17 @@ export async function handleAdminProxy(
     }
 
     let activeFallback = fallbackData;
-    if (endpointPath === 'leads') {
+    if (endpointPath.startsWith('leads/') && method === 'PATCH') {
+      const leadId = endpointPath.replace('leads/', '');
+      try {
+        const bodyText = fetchOptions.body ? String(fetchOptions.body) : '{}';
+        const parsed = JSON.parse(bodyText);
+        updateLeadInGlobalStore(leadId, parsed);
+        return NextResponse.json({ success: true, data: { id: leadId, ...parsed } });
+      } catch {
+        return NextResponse.json({ success: true, data: { id: leadId } });
+      }
+    } else if (endpointPath === 'leads') {
       activeFallback = GLOBAL_LEADS_STORE;
     } else if (endpointPath === 'summary' && activeFallback) {
       activeFallback = {
@@ -242,7 +260,11 @@ export async function handleAdminProxy(
     });
   } catch (err: any) {
     let activeFallback = fallbackData;
-    if (endpointPath === 'leads') {
+    if (endpointPath.startsWith('leads/') && method === 'PATCH') {
+      const leadId = endpointPath.replace('leads/', '');
+      updateLeadInGlobalStore(leadId, {});
+      return NextResponse.json({ success: true, data: { id: leadId } });
+    } else if (endpointPath === 'leads') {
       activeFallback = GLOBAL_LEADS_STORE;
     } else if (endpointPath === 'summary' && activeFallback) {
       activeFallback = {

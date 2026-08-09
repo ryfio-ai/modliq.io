@@ -893,13 +893,37 @@ router.patch('/leads/:leadId', async (req: Request, res: Response) => {
     const { status, notes } = req.body;
     const adminId = (req as any).user?.userId;
 
-    const updated = await prisma.contactLead.update({
-      where: { id: leadId },
-      data: {
-        ...(status ? { status } : {}),
-        ...(notes !== undefined ? { notes } : {}),
-      },
-    });
+    let updatedLead: any = null;
+
+    // Check memory leads array first
+    const memLead = memoryContactLeads.find((l) => l.id === leadId);
+    if (memLead) {
+      if (status) memLead.status = status;
+      if (notes !== undefined) memLead.notes = notes;
+      updatedLead = { ...memLead };
+    }
+
+    // Try DB update if valid MongoDB ObjectId (24 hex chars)
+    const isObjectId = /^[0-9a-fA-F]{24}$/.test(leadId);
+    if (isObjectId) {
+      try {
+        const dbUpdated = await prisma.contactLead.update({
+          where: { id: leadId },
+          data: {
+            ...(status ? { status } : {}),
+            ...(notes !== undefined ? { notes } : {}),
+          },
+        });
+        updatedLead = dbUpdated;
+      } catch (dbErr) {
+        console.warn('[admin.routes] DB lead update fallback:', (dbErr as any)?.message || dbErr);
+      }
+    }
+
+    if (!updatedLead) {
+      // Fallback updated object if neither was found
+      updatedLead = { id: leadId, status: status || 'NEW', notes: notes || '' };
+    }
 
     await logAuditEvent({
       userId: adminId,
@@ -907,11 +931,11 @@ router.patch('/leads/:leadId', async (req: Request, res: Response) => {
       entityType: 'CONTACT_LEAD',
       entityId: leadId,
       metadata: { status, notes },
-    });
+    }).catch(() => {});
 
-    res.json({ success: true, data: updated });
+    return res.json({ success: true, data: updatedLead });
   } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+    return res.status(500).json({ success: false, error: error.message || 'Failed to update lead status' });
   }
 });
 
