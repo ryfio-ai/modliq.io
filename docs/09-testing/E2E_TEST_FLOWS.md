@@ -1,14 +1,55 @@
-# Modliq End-to-End (E2E) Test Suite
+# Modliq End-to-End (E2E) Test Suite Documentation
 
-> **Last verified:** 2026-08-04  
-> **Source of truth:** Current codebase inspection (`demo/test_e2e_platform.py`)  
-> **Status:** Implemented / Launch-Ready  
+> **Last verified:** 2026-08-10  
+> **Source of truth:** Current codebase (`frontend/playwright.config.ts` & `demo/test_e2e_platform.py`)  
+> **Status:** Implemented / Deployed to Main  
 
 ---
 
-## ⚡ Automated 7-Step Integration Test Suite
+## 🎭 Playwright E2E Test Suite (`frontend/tests/e2e/`)
 
-Executed via `python demo/test_e2e_platform.py`:
+Modliq features a multi-browser, role-aware Playwright test suite supporting Chromium, Firefox, WebKit (Safari), Mobile Chrome (Pixel 5), and Mobile Safari (iPhone 13).
+
+```
+frontend/
+├── playwright.config.ts           # Multi-browser, timeout, reporter & base URL config
+└── tests/e2e/
+    ├── auth/
+    │   ├── auth.setup.ts          # Storage state setup for Engineer & Admin personas
+    │   ├── login.spec.ts          # Sign-in UI, invalid credentials, & OAuth checks
+    │   └── rbac.spec.ts           # Role-Based Access Control & route protection tests
+    ├── core-workflow/
+    │   ├── upload.spec.ts         # Dataset ingestion & upload validation
+    │   ├── goal.spec.ts           # Natural language goal parsing verification
+    │   └── quality-passport.spec.ts # Quality Passport generation & public share checks
+    ├── security/
+    │   └── auth-gates.spec.ts     # Protected route redirect & sitemap security checks
+    ├── api/
+    │   └── health.spec.ts         # Backend API Gateway & ML Engine contract checks
+    └── fixtures/
+        ├── manufacturing_data.csv # Standard 15-row manufacturing test dataset
+        ├── invalid_file.exe       # Executable file rejection test
+        ├── empty.csv              # Empty file edge case fixture
+        └── large_file.csv         # Async queue large dataset fixture
+```
+
+### Execution Commands
+
+```bash
+# Run complete Playwright E2E suite
+cd frontend
+npm run test:e2e
+
+# Run specific suite or project
+npx playwright test tests/e2e/auth
+npx playwright test --project=chromium
+```
+
+---
+
+## ⚡ Automated 7-Step Integration Test Suite (`demo/test_e2e_platform.py`)
+
+In addition to browser-level Playwright tests, Modliq maintains an automated Python integration probe test suite:
 
 ```mermaid
 flowchart LR
@@ -20,7 +61,8 @@ flowchart LR
   Step6 --> Step7[7. Public Share Link Verification]
 ```
 
-### Verification Command
+### Integration Test Command
+
 ```bash
 python demo/test_e2e_platform.py
 ```
@@ -28,7 +70,6 @@ python demo/test_e2e_platform.py
 
 ---
 
-## 🔗 Related Documentation
+## ⚙️ CI/CD Integration
 
-- [TESTING_STRATEGY.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/09-testing/TESTING_STRATEGY.md) — Strategy overview
-- [BUILD_VERIFICATION.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/09-testing/BUILD_VERIFICATION.md) — Commands
+Both Playwright E2E tests and Python integration probes run automatically on GitHub Actions CI pipelines on pull requests and pushes to `main`.
