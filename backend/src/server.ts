@@ -75,6 +75,9 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.set('trust proxy', true);
 
+import { idempotencyMiddleware } from './middleware/idempotency';
+app.use(idempotencyMiddleware);
+
 function mlEngineHeaders(): Record<string, string> {
   const headers: Record<string, string> = {};
   if (ML_INTERNAL_API_KEY) {

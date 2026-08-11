@@ -769,6 +769,20 @@ model PublicIdSequence {
   @@unique([entityType, dateKey])
 }
 
+model IdempotencyKey {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  key          String
+  userId       String?
+  route        String
+  requestHash  String?
+  responseJson String?
+  status       String   // PROCESSING | COMPLETED | FAILED
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+
+  @@unique([key, route])
+}
+
 model EdaReport {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   publicId       String?  @unique
