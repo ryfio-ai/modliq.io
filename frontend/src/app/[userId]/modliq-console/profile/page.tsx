@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, Building2, Phone, MapPin, Factory, ShieldCheck, Key, Save, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { generateClientPublicId } from '@/lib/publicId';
 
 export default function ProfilePage() {
   const { user, updateProfile } = useAuth();
@@ -213,7 +214,7 @@ export default function ProfilePage() {
               </div>
               <div className="p-3 bg-blue-50/60 rounded-xl border border-blue-200">
                 <span className="text-slate-500 block text-[10px] font-bold uppercase tracking-wider">User Public ID</span>
-                <span className="font-mono text-xs text-[#2B70AB] font-extrabold block mt-0.5">{user?.publicId || `MODLIQ-USER-20260808-1000`}</span>
+                <span className="font-mono text-xs text-[#2B70AB] font-extrabold block mt-0.5">{user?.publicId || generateClientPublicId('USER', 1000)}</span>
                 <span className="text-[9px] text-slate-400 block mt-1">Internal Ref: {user?.id || 'usr_demo'}</span>
               </div>
             </div>
