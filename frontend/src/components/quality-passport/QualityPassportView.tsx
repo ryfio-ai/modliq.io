@@ -238,7 +238,7 @@ export default function QualityPassportView({ userId, projectId }: QualityPasspo
           </div>
           <div className="grid grid-cols-2 gap-3 text-xs">
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-              <span className="text-slate-400 block text-[10px]">Model Accuracy ($R^2$)</span>
+              <span className="text-slate-400 block text-[10px]">Model Accuracy (R²)</span>
               <span className="font-bold text-slate-800 text-sm">{sections.optimization.r2}</span>
             </div>
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">

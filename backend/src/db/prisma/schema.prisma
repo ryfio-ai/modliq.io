@@ -800,6 +800,23 @@ model EdaReport {
   updatedAt      DateTime @updatedAt
 }
 
+model SavedChart {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId       String?
+  userId         String
+  organizationId String?
+  projectId      String
+  datasetId      String
+  title          String
+  chartType      String
+  configJson     String
+  dataJson       String?
+  source         String?  // EDA | QUALITY | OPERATIONS | SUPPLY_CHAIN | LEAN | CUSTOM
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+
 model AgentRun {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   publicId       String?

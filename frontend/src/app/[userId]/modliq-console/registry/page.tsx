@@ -247,14 +247,14 @@ export default function ModelRegistryPage() {
 
                   <div className="text-right font-mono">
                     <span className="text-base font-extrabold text-cyan-400">{model.accuracy}%</span>
-                    <span className="text-[10px] text-slate-400 block">Accuracy ($R^2$)</span>
+                    <span className="text-[10px] text-slate-400 block">Accuracy (R²)</span>
                   </div>
                 </div>
 
                 {/* Metrics Bar */}
                 <div className="grid grid-cols-4 gap-2 mt-4 pt-3 border-t border-slate-800/80 text-xs font-mono">
                   <div>
-                    <span className="text-[10px] text-slate-400 block">F1 / $R^2$ Score</span>
+                    <span className="text-[10px] text-slate-400 block">F1 / R² Score</span>
                     <span className="font-semibold text-slate-200">{model.f1Score}</span>
                   </div>
                   <div>

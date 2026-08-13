@@ -9,14 +9,25 @@ export default function PublicNavbar() {
 
   const navLinks = [
     { label: 'Product', href: '/product' },
-    { label: 'Workflow', href: '/workflow' },
+    { label: 'Industry', href: '/#industry' },
+    { label: 'Education', href: '/#education' },
     { label: 'Features', href: '/features' },
-    { label: 'Algorithms', href: '/algorithms' },
-    { label: 'Quality Passport', href: '/quality-passport' },
+    { label: 'Workflow', href: '/workflow' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Docs', href: '/docs' },
     { label: 'Contact', href: '/contact' },
   ];
+
+  const [isPreLaunch, setIsPreLaunch] = React.useState(false);
+
+  React.useEffect(() => {
+    const launchTarget = process.env.NEXT_PUBLIC_LAUNCH_DATETIME || '2026-08-20T10:00:00+05:30';
+    const gateEnabled = process.env.NEXT_PUBLIC_LAUNCH_GATE_ENABLED !== 'false';
+    const bypassed = typeof window !== 'undefined' && localStorage.getItem('modliq_gate_bypass') === 'true';
+    if (gateEnabled && !bypassed) {
+      setIsPreLaunch(new Date().getTime() < new Date(launchTarget).getTime());
+    }
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#D0E2F0]">
@@ -26,7 +37,7 @@ export default function PublicNavbar() {
         <Link href="/" className="flex items-center gap-2.5 shrink-0 py-1">
           <img
             src="/logo modliq.png"
-            alt="Modliq Manufacturing Intelligence"
+            alt="Modliq Machine Learning Platform"
             className="h-11 sm:h-13 md:h-14 w-auto object-contain max-w-[200px] sm:max-w-[240px] transition-opacity hover:opacity-90"
           />
         </Link>
@@ -47,18 +58,11 @@ export default function PublicNavbar() {
         {/* Clean Action CTAs */}
         <div className="hidden sm:flex items-center gap-3 shrink-0 whitespace-nowrap">
           <Link
-            href="/login"
-            className="text-xs xl:text-sm font-semibold text-[#1B2A4A] hover:text-[#2B70AB] px-3 py-2 transition-colors whitespace-nowrap"
-          >
-            Sign In
-          </Link>
-
-          <Link
-            href="/contact?interest=free-pilot"
-            className="px-4 py-2.5 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white rounded-xl text-xs xl:text-sm font-semibold flex items-center gap-2 transition-all shadow-md shadow-blue-500/10 hover:shadow-lg whitespace-nowrap"
+            href="/contact?interest=demo"
+            className="px-4 py-2.5 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white rounded-xl text-xs xl:text-sm font-bold flex items-center gap-2 transition-all shadow-md shadow-blue-500/10 hover:shadow-lg whitespace-nowrap"
           >
             <Sparkles className="w-4 h-4 text-blue-200" />
-            <span>Apply for Free Pilot</span>
+            <span>Book Your Free Demo</span>
           </Link>
         </div>
 

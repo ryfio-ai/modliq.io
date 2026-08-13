@@ -27,15 +27,33 @@ export default function ContactClient() {
   });
 
   useEffect(() => {
-    if (interestParam === 'free-pilot') {
-      setSelectedInterests(['free-pilot']);
-      setHeadingText('Apply for the Modliq Free Manufacturing Pilot');
-    } else if (interestParam === 'pilot') {
-      setSelectedInterests(['paid-pilot']);
-      setHeadingText('Book a Modliq 30-Day Manufacturing Pilot');
-    } else if (interestParam === 'roi-review') {
-      setSelectedInterests(['data-integration']);
-      setHeadingText('Request a Custom Plant ROI Review');
+    if (interestParam === 'demo') {
+      setSelectedInterests(['demo']);
+      setHeadingText('Book Your Free Modliq Demo');
+    } else if (interestParam === 'manufacturing-demo') {
+      setSelectedInterests(['manufacturing-demo']);
+      setHeadingText('Book a Manufacturing Demo');
+    } else if (interestParam === 'education-demo') {
+      setSelectedInterests(['education-demo']);
+      setHeadingText('Book an Education & Research Demo');
+    } else if (interestParam === 'research') {
+      setSelectedInterests(['research']);
+      setHeadingText('Discuss Research Use');
+    } else if (interestParam === 'student-project') {
+      setSelectedInterests(['student-project']);
+      setHeadingText('Student Project Enquiry');
+    } else if (interestParam === 'faculty-demo') {
+      setSelectedInterests(['faculty-demo']);
+      setHeadingText('Faculty & Classroom Demo Request');
+    } else if (interestParam === 'manufacturing-pilot') {
+      setSelectedInterests(['manufacturing-pilot']);
+      setHeadingText('Book a Manufacturing Pilot');
+    } else if (interestParam === 'free-pilot') {
+      setSelectedInterests(['demo']);
+      setHeadingText('Book Your Free Modliq Demo');
+    } else {
+      setSelectedInterests(['demo']);
+      setHeadingText('Book Your Free Modliq Demo');
     }
   }, [interestParam]);
 
@@ -222,24 +240,29 @@ export default function ContactClient() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-2">Interested in</label>
-                  <div className="flex flex-wrap gap-4">
+                  <label className="block text-xs font-semibold text-slate-700 mb-2">Interested in (Select all that apply)</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 bg-[#F0F6FA] p-4 rounded-xl border border-[#D0E2F0]">
                     {[
-                      { label: 'Launch Pilot (10 slots free)', val: 'free-pilot' },
-                      { label: 'Custom Enterprise Plan', val: 'enterprise' },
-                      { label: 'Quality Passport', val: 'quality-passport' },
-                      { label: 'Data integration', val: 'data-integration' },
+                      { label: 'Book Free Demo', val: 'demo' },
+                      { label: 'Manufacturing Demo', val: 'manufacturing-demo' },
+                      { label: 'Education / Classroom Demo', val: 'education-demo' },
+                      { label: 'Student Project', val: 'student-project' },
+                      { label: 'Research Use', val: 'research' },
+                      { label: 'Faculty Demo', val: 'faculty-demo' },
+                      { label: 'Manufacturing Pilot', val: 'manufacturing-pilot' },
+                      { label: 'PPAP / ISIR Evidence Pack', val: 'ppap-isir' },
+                      { label: 'Partnership', val: 'partnership' },
                     ].map((opt) => (
-                      <label key={opt.val} className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+                      <label key={opt.val} className="flex items-center gap-2 text-xs font-medium text-slate-800 cursor-pointer hover:text-[#2B70AB]">
                         <input
                           type="checkbox"
                           name="interest"
                           value={opt.val}
                           checked={selectedInterests.includes(opt.val)}
                           onChange={() => toggleInterest(opt.val)}
-                          className="accent-[#2B70AB]"
+                          className="accent-[#2B70AB] rounded shrink-0"
                         />
-                        {opt.label}
+                        <span>{opt.label}</span>
                       </label>
                     ))}
                   </div>

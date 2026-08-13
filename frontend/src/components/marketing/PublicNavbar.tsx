@@ -7,10 +7,10 @@ import { Menu, X, Factory } from "lucide-react";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/product", label: "Product" },
-  { href: "/workflow", label: "Workflow" },
+  { href: "/#industry", label: "Industry" },
+  { href: "/#education", label: "Education" },
   { href: "/features", label: "Features" },
-  { href: "/algorithms", label: "Algorithms" },
-  { href: "/quality-passport", label: "Quality Passport" },
+  { href: "/workflow", label: "Workflow" },
   { href: "/pricing", label: "Pricing" },
   { href: "/docs", label: "Docs" },
   { href: "/contact", label: "Contact" },
@@ -39,7 +39,7 @@ export default function PublicNavbar() {
 
         <div className="hidden md:flex items-center gap-3">
           <Link href="/login" className="text-sm font-semibold text-slate-700 hover:text-[#2B70AB] transition">Sign In</Link>
-          <Link href="/contact?interest=free-pilot" className="text-sm font-bold bg-[#2B70AB] hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition shadow-xs">Apply for Free Pilot</Link>
+          <Link href="/contact?interest=demo" className="text-sm font-bold bg-[#2B70AB] hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition shadow-xs">Book Your Free Demo</Link>
         </div>
 
         <button onClick={() => setOpen(!open)} className="md:hidden p-2 text-slate-700" aria-label="Toggle menu">
@@ -56,7 +56,7 @@ export default function PublicNavbar() {
           ))}
           <div className="pt-2 border-t border-slate-100 flex gap-3">
             <Link href="/login" className="text-sm font-semibold text-slate-700">Sign In</Link>
-            <Link href="/contact?interest=free-pilot" className="text-sm font-bold bg-[#2B70AB] text-white px-3 py-1.5 rounded-lg">Apply for Free Pilot</Link>
+            <Link href="/contact?interest=demo" className="text-sm font-bold bg-[#2B70AB] text-white px-3 py-1.5 rounded-lg">Book Your Free Demo</Link>
           </div>
         </div>
       )}

@@ -1,198 +1,106 @@
 import type { Metadata } from "next";
-import PublicNavbar from "@/components/marketing/PublicNavbar";
-import PublicFooter from "@/components/marketing/PublicFooter";
+import Link from "next/link";
+import PublicNavbar from "@/components/layout/PublicNavbar";
+import PublicFooter from "@/components/layout/PublicFooter";
 import IndiaBadge from "@/components/marketing/IndiaBadge";
-import { Table, X, Check } from "lucide-react";
+import { Table, X, Check, Sparkles, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: 'Modliq Comparison — Excel vs BI vs ERP vs Manufacturing Intelligence',
+  title: 'Modliq Comparison — Python Notebooks vs AutoML vs BI vs Modliq',
   description:
-    'Compare Modliq with Excel, BI dashboards, ERP/MES, consultants, and generic AI tools for manufacturing data analysis and quality reporting.',
+    'Compare Modliq with Python Jupyter Notebooks, generic AutoML tools, BI dashboards, and traditional spreadsheets for manufacturing and classroom data analysis.',
   alternates: {
     canonical: 'https://modliq-io.vercel.app/comparison',
   },
   openGraph: {
-    title: 'Modliq Comparison — Excel vs BI vs ERP vs Manufacturing Intelligence',
+    title: 'Modliq Comparison — Python Notebooks vs AutoML vs BI vs Modliq',
     description:
-      'Compare Modliq with Excel, BI dashboards, ERP/MES, consultants, and generic AI tools for manufacturing data analysis and quality reporting.',
+      'Compare Modliq with Python Jupyter Notebooks, generic AutoML tools, BI dashboards, and traditional spreadsheets for manufacturing and classroom data analysis.',
     url: 'https://modliq-io.vercel.app/comparison',
     images: ['/og/modliq-og.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Modliq Comparison — Excel vs BI vs ERP vs Manufacturing Intelligence',
+    title: 'Modliq Comparison — Python Notebooks vs AutoML vs BI vs Modliq',
     description:
-      'Compare Modliq with Excel, BI dashboards, ERP/MES, consultants, and generic AI tools for manufacturing data analysis and quality reporting.',
+      'Compare Modliq with Python Jupyter Notebooks, generic AutoML tools, BI dashboards, and traditional spreadsheets for manufacturing and classroom data analysis.',
     images: ['/og/modliq-og.png'],
   },
 };
 
-const capabilities = [
-  "CSV/Excel upload",
-  "Dataset health",
-  "Natural language manufacturing goals",
-  "Process optimization",
-  "SPC / Cp / Cpk",
-  "OEE",
-  "Supplier lot traceability",
-  "Lean actions",
-  "Quality Passport",
-  "SOP / CAPA generation",
-  "SME-friendly pricing",
-  "Fast pilot setup",
-];
-
-const rows = [
-  { name: "Excel / Manual QC", icon: <Table size={16} />, values: ["✓", "✗", "✗", "✗", "Manual", "✗", "✗", "✗", "✗", "✗", "✓", "✓"] },
-  { name: "BI Dashboard", icon: <Table size={16} />, values: ["✓", "✗", "✗", "✗", "✗", "✓", "✗", "✗", "✗", "✗", "✗", "✓"] },
-  { name: "ERP / MES", icon: <Table size={16} />, values: ["✗", "✗", "✗", "✗", "✗", "✓", "✗", "✗", "✗", "✗", "✗", "✗"] },
-  { name: "Consultants", icon: <Table size={16} />, values: ["✗", "✗", "✗", "✗", "Manual", "✗", "✗", "✗", "✗", "✗", "✗", "✗"] },
-  { name: "Generic AI Chatbot", icon: <Table size={16} />, values: ["✗", "✗", "✗", "✗", "✗", "✗", "✗", "✗", "✗", "✗", "✓", "✓"] },
-  { name: "Traditional AutoML", icon: <Table size={16} />, values: ["✗", "✗", "✗", "✓", "✗", "✗", "✗", "✗", "✗", "✗", "✗", "✗"] },
-  { name: "Modliq", icon: <Table size={16} />, values: ["✓", "✓", "✓", "✓", "✓", "✓", "✓", "✓", "✓", "✓", "✓", "✓"], highlight: true },
-];
-
 export default function ComparisonPage() {
+  const matrix = [
+    { feature: "No-code EDA", notebooks: "Requires Code", automl: "Basic", bi: "Manual Setup", modliq: "Automated (0 Code)" },
+    { feature: "No-code visualization", notebooks: "Requires Code", automl: "Basic", bi: "Manual Drag-Drop", modliq: "Auto-Recommended" },
+    { feature: "Plain-English data questions", notebooks: "Requires Code", automl: "No", bi: "Limited", modliq: "Ask Your Dataset" },
+    { feature: "Model comparison", notebooks: "Manual Pipeline", automl: "Yes (Generic)", bi: "No", modliq: "Leaderboard & SHAP" },
+    { feature: "Manufacturing quality tools", notebooks: "Requires SciPy Code", automl: "No", bi: "Custom Calculations", modliq: "Built-in (SPC / Cpk)" },
+    { feature: "SPC / Cp/Cpk math", notebooks: "Manual Script", automl: "No", bi: "Complex DAX/SQL", modliq: "Verified Python Engine" },
+    { feature: "OEE / supplier traceability", notebooks: "No", automl: "No", bi: "Partial", modliq: "Built-in" },
+    { feature: "Classroom-friendly workflows", notebooks: "Complex Setup", automl: "No", bi: "Heavy License", modliq: "No-code Guided" },
+    { feature: "Professional report export", notebooks: "PDF Export", automl: "CSV/JSON Only", bi: "Dashboard Share", modliq: "Quality Passport / Markdown" },
+    { feature: "Beginner-friendly UX", notebooks: "Steep Curve", automl: "Medium", bi: "Medium", modliq: "Guided (0 Friction)" },
+  ];
+
   return (
-    <div className="bg-white text-slate-900 font-sans">
-      <PublicNavbar />
+    <div className="bg-white text-slate-900 font-sans min-h-screen flex flex-col justify-between">
+      <div>
+        <PublicNavbar />
 
-      <section className="bg-gradient-to-b from-white to-[#F0F6FA] py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <IndiaBadge />
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1B2A4A] mt-4 mb-4">Comparison</h1>
-          <p className="text-slate-600 text-base max-w-2xl mx-auto">How Modliq compares to other approaches for manufacturing intelligence.</p>
-        </div>
-      </section>
-
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <table className="w-full text-xs font-mono">
-              <thead>
-                <tr className="bg-[#F0F6FA] text-[#1B2A4A] uppercase border-b border-slate-200">
-                  <th className="px-3 py-3 text-left font-bold">Capability</th>
-                  <th className="px-3 py-3 text-center font-bold">Excel</th>
-                  <th className="px-3 py-3 text-center font-bold">BI Dashboard</th>
-                  <th className="px-3 py-3 text-center font-bold">ERP/MES</th>
-                  <th className="px-3 py-3 text-center font-bold">Consultants</th>
-                  <th className="px-3 py-3 text-center font-bold">Generic AI</th>
-                  <th className="px-3 py-3 text-center font-bold text-[#2B70AB]">Modliq</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200">
-                {capabilities.map((cap, i) => (
-                  <tr key={cap} className={rows[rows.length - 1].highlight ? "bg-blue-50/30" : ""}>
-                    <td className="px-3 py-2.5 text-slate-700 font-medium">{cap}</td>
-                    {rows.map((row, ri) => (
-                      <td key={ri} className={`px-3 py-2.5 text-center ${row.highlight ? "text-[#2B70AB] font-bold" : row.values[i] === "✓" ? "text-emerald-600" : row.values[i] === "✗" ? "text-red-400" : "text-slate-500"}`}>
-                        {row.values[i] === "✓" && <Check size={14} className="inline mx-auto" />}
-                        {row.values[i] === "✗" && <X size={14} className="inline mx-auto" />}
-                        {!["✓", "✗"].includes(row.values[i]) && <span className="text-slate-500">{row.values[i]}</span>}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <section className="bg-gradient-to-b from-white via-[#F0F6FA] to-white py-16 border-b border-[#D0E2F0]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center space-y-4">
+            <IndiaBadge />
+            <h1 className="text-3xl sm:text-5xl font-extrabold text-[#1B2A4A] tracking-tight">
+              Why Modliq? Comparison Matrix
+            </h1>
+            <p className="text-slate-600 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed font-medium">
+              See how Modliq compares to traditional Python notebooks, generic AutoML tools, and BI dashboards across manufacturing and educational workflows.
+            </p>
           </div>
+        </section>
 
-          {/* NEW SECTION: Data Analyst vs ML Engineer vs Modliq */}
-          <div className="mt-12 space-y-6">
-            <div className="text-center max-w-2xl mx-auto space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#2B70AB] bg-blue-50 px-3.5 py-1 rounded-full border border-blue-200">
-                Role Comparison
-              </span>
-              <h2 className="text-2xl font-extrabold text-[#1B2A4A]">
-                Data Analyst vs ML Engineer vs Modliq
-              </h2>
-              <p className="text-xs text-slate-600">
-                How Modliq combines backward-looking analytics and forward-looking machine learning into one platform for manufacturing teams.
-              </p>
-            </div>
-
-            <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <table className="w-full text-xs">
+        <section className="py-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8">
+            <div className="overflow-x-auto rounded-2xl border border-[#D0E2F0] bg-white shadow-sm">
+              <table className="w-full text-left text-xs sm:text-sm">
                 <thead>
-                  <tr className="bg-[#F0F6FA] text-[#1B2A4A] uppercase border-b border-slate-200 text-left">
-                    <th className="px-4 py-3 font-bold">Capability</th>
-                    <th className="px-4 py-3 font-bold text-slate-700">Data Analyst</th>
-                    <th className="px-4 py-3 font-bold text-purple-700">ML Engineer</th>
-                    <th className="px-4 py-3 font-bold text-[#2B70AB]">Modliq Platform</th>
+                  <tr className="bg-[#1B2A4A] text-white">
+                    <th className="px-5 py-4 font-bold">Capability / Feature</th>
+                    <th className="px-5 py-4 font-bold text-slate-300">Python Notebooks</th>
+                    <th className="px-5 py-4 font-bold text-slate-300">Generic AutoML</th>
+                    <th className="px-5 py-4 font-bold text-slate-300">BI Dashboards</th>
+                    <th className="px-5 py-4 font-bold text-blue-300 bg-blue-900/40">Modliq Platform</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-slate-700">
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Cleans and profiles data</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
-                    <td className="px-4 py-3 text-slate-500">Sometimes</td>
-                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Dataset Health & EDA Studio)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Explains historical performance</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
-                    <td className="px-4 py-3 text-slate-500">Sometimes</td>
-                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (OEE, SPC & Reports)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Builds dashboards & charts</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
-                    <td className="px-4 py-3 text-slate-500">Sometimes</td>
-                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Auto-Generated Dashboards)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Trains predictive models</td>
-                    <td className="px-4 py-3 text-red-500 font-semibold">No / Limited</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
-                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (No-Code AutoML Engine)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Runs process setpoint optimization</td>
-                    <td className="px-4 py-3 text-red-500 font-semibold">No / Limited</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600">Yes</td>
-                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Constrained Safe Optimization)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Validates quality with SPC & Cpk</td>
-                    <td className="px-4 py-3 text-slate-600 font-semibold">Sometimes</td>
-                    <td className="px-4 py-3 text-red-500 font-semibold">No</td>
-                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Quality Studio Math)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Generates SOP / CAPA action plans</td>
-                    <td className="px-4 py-3 text-slate-500">Manual</td>
-                    <td className="px-4 py-3 text-red-500 font-semibold">No</td>
-                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (AI Copilot Generator)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Creates buyer-ready Quality Passports</td>
-                    <td className="px-4 py-3 text-red-500 font-semibold">No</td>
-                    <td className="px-4 py-3 text-red-500 font-semibold">No</td>
-                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (1-Click Evidence Document)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Requires coding (Python / SQL)</td>
-                    <td className="px-4 py-3 text-amber-600 font-semibold">Often</td>
-                    <td className="px-4 py-3 text-amber-600 font-semibold">Yes</td>
-                    <td className="px-4 py-3 font-bold text-emerald-600">No (100% No-Code Interface)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-slate-900">Designed specifically for manufacturing</td>
-                    <td className="px-4 py-3 text-slate-500">Depends</td>
-                    <td className="px-4 py-3 text-slate-500">Depends</td>
-                    <td className="px-4 py-3 font-bold text-[#2B70AB]">Yes (Built for Factory Teams)</td>
-                  </tr>
+                <tbody className="divide-y divide-slate-100">
+                  {matrix.map((row, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50">
+                      <td className="px-5 py-4 font-bold text-[#1B2A4A]">{row.feature}</td>
+                      <td className="px-5 py-4 text-slate-500">{row.notebooks}</td>
+                      <td className="px-5 py-4 text-slate-500">{row.automl}</td>
+                      <td className="px-5 py-4 text-slate-500">{row.bi}</td>
+                      <td className="px-5 py-4 font-bold text-[#2B70AB] bg-blue-50/50 flex items-center gap-1.5">
+                        <Check size={16} className="text-emerald-600 shrink-0" />
+                        <span>{row.modliq}</span>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
-          </div>
 
-          <div className="mt-8 bg-blue-50 border border-blue-100 rounded-xl p-5">
-            <h3 className="text-sm font-bold text-[#1B2A4A] mb-2">Strategic Positioning</h3>
-            <p className="text-sm text-slate-700 leading-relaxed">Modliq does not replace ERP or MES. It sits on top of existing data and helps teams make better manufacturing decisions. Think of Modliq as an intelligence layer that works alongside your existing systems.</p>
+            <div className="pt-6 text-center">
+              <Link
+                href="/contact?interest=demo"
+                className="px-7 py-3.5 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white rounded-xl text-xs sm:text-sm font-bold inline-flex items-center gap-2 transition shadow-md"
+              >
+                <Sparkles className="w-4 h-4 text-blue-200" />
+                <span>Book Your Free Demo</span>
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <PublicFooter />
     </div>

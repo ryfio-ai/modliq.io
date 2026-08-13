@@ -15,6 +15,31 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // 1.5 Pre-Launch Gate Enforcement
+  const launchGateEnabled = process.env.NEXT_PUBLIC_LAUNCH_GATE_ENABLED !== 'false';
+  const launchTarget = process.env.NEXT_PUBLIC_LAUNCH_DATETIME || '2026-08-20T10:00:00+05:30';
+  const isBeforeLaunch = new Date().getTime() < new Date(launchTarget).getTime();
+
+  const previewParam = req.nextUrl.searchParams.get('preview');
+  const bypassCookie = req.cookies.get('modliq_gate_bypass')?.value === 'true';
+  const isBypassed = previewParam === 'admin-secret' || bypassCookie;
+
+  if (launchGateEnabled && isBeforeLaunch && !isBypassed) {
+    const allowedPreLaunchRoutes = [
+      '/launch',
+      '/contact',
+      '/privacy',
+      '/terms',
+      '/disclaimer',
+    ];
+
+    if (!allowedPreLaunchRoutes.includes(pathname)) {
+      const url = req.nextUrl.clone();
+      url.pathname = '/launch';
+      return NextResponse.redirect(url);
+    }
+  }
+
   // Extract session token from cookie or Authorization header
   const token = req.cookies.get('modliq_token')?.value || getAuthFromHeaders(req.headers);
   let payload = token ? verifyJwt(token) : null;
@@ -72,11 +97,18 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith('/developer/');
 
   if (isPublicRoute) {
-    // If logged in user visits /login or /signup, redirect to their dashboard/admin
-    if ((pathname === '/login' || pathname === '/signup') && session) {
-      const url = req.nextUrl.clone();
-      url.pathname = isAdmin(session.user) ? '/admin' : `/${session.user.id}/modliq-console/dashboard`;
-      return NextResponse.redirect(url);
+    // If visitor visits /login or /signup directly, redirect to /contact?interest=demo until sign-in opens
+    if (pathname === '/login' || pathname === '/signup') {
+      if (session) {
+        const url = req.nextUrl.clone();
+        url.pathname = isAdmin(session.user) ? '/admin' : `/${session.user.id}/modliq-console/dashboard`;
+        return NextResponse.redirect(url);
+      } else if (!isBypassed) {
+        const url = req.nextUrl.clone();
+        url.pathname = '/contact';
+        url.searchParams.set('interest', 'demo');
+        return NextResponse.redirect(url);
+      }
     }
     return NextResponse.next();
   }

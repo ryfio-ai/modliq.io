@@ -59,6 +59,7 @@ export const metadata: Metadata = {
 // Anchor navigation data
 const navGuides = [
   { id: "getting-started", title: "Getting Started", icon: BookOpen, desc: "Project creation & workflow overview" },
+  { id: "education-research", title: "Education & Research", icon: BookOpen, desc: "Classroom EDA, model metrics & research reports" },
   { id: "uploading-data", title: "Uploading Data", icon: Upload, desc: "CSV, Excel, & PDF table ingestion" },
   { id: "connecting-databases", title: "Connecting Databases", icon: Database, desc: "Supabase, Postgres, & MongoDB" },
   { id: "dataset-health", title: "Dataset Health", icon: ShieldCheck, desc: "Profiling & readiness scoring" },
@@ -307,6 +308,80 @@ export default function DocsPage() {
         </div>
       </section>
 
+      {/* 2.4. USING MODLIQ FOR EDUCATION AND RESEARCH */}
+      <section id="education-research" className="scroll-mt-20 py-16 bg-white border-b border-[#D0E2F0]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="max-w-3xl space-y-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-3 py-1 rounded-full border border-purple-200">
+              Academic &amp; Research Documentation
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1B2A4A]">
+              Using Modliq for Education and Research
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
+              Modliq can be used to teach and learn EDA, visualization, dataset health, feature importance, model comparison, and report generation without requiring a full Python setup.
+            </p>
+          </div>
+
+          {/* 6 Step-by-Step Educational Guides */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div className="p-6 bg-[#F0F6FA] rounded-2xl border border-[#D0E2F0] space-y-3">
+              <span className="text-xs font-bold text-purple-700 uppercase tracking-wider">Guide 1</span>
+              <h3 className="text-lg font-bold text-[#1B2A4A]">First EDA Demo Guide</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Learn how to upload sample CSV datasets, run automated exploratory data analysis, generate correlation matrices, and inspect missing value distributions in 2 minutes.
+              </p>
+            </div>
+
+            <div className="p-6 bg-[#F0F6FA] rounded-2xl border border-[#D0E2F0] space-y-3">
+              <span className="text-xs font-bold text-purple-700 uppercase tracking-wider">Guide 2</span>
+              <h3 className="text-lg font-bold text-[#1B2A4A]">Comparing ML Models without Code</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Train Linear Regression, Random Forest, and XGBoost models simultaneously. Evaluate model performance on leaderboard rankings without writing pipeline code.
+              </p>
+            </div>
+
+            <div className="p-6 bg-[#F0F6FA] rounded-2xl border border-[#D0E2F0] space-y-3">
+              <span className="text-xs font-bold text-purple-700 uppercase tracking-wider">Guide 3</span>
+              <h3 className="text-lg font-bold text-[#1B2A4A]">Understanding R², RMSE, and MAE</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Interpret regression metrics (R², Root Mean Squared Error, Mean Absolute Error) and classification metrics (Accuracy, Precision, Recall) in plain language.
+              </p>
+            </div>
+
+            <div className="p-6 bg-[#F0F6FA] rounded-2xl border border-[#D0E2F0] space-y-3">
+              <span className="text-xs font-bold text-purple-700 uppercase tracking-wider">Guide 4</span>
+              <h3 className="text-lg font-bold text-[#1B2A4A]">Interpreting Feature Importance</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Read SHAP feature importance bar charts to explain which input variables drive target predictions in your dataset.
+              </p>
+            </div>
+
+            <div className="p-6 bg-[#F0F6FA] rounded-2xl border border-[#D0E2F0] space-y-3">
+              <span className="text-xs font-bold text-purple-700 uppercase tracking-wider">Guide 5</span>
+              <h3 className="text-lg font-bold text-[#1B2A4A]">Exporting Project Reports for Research</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Export clean, formatted Markdown and PDF research summaries for paper submissions, lab reports, and thesis appendix documentation.
+              </p>
+            </div>
+
+            <div className="p-6 bg-[#F0F6FA] rounded-2xl border border-[#D0E2F0] space-y-3">
+              <span className="text-xs font-bold text-purple-700 uppercase tracking-wider">Guide 6</span>
+              <h3 className="text-lg font-bold text-[#1B2A4A]">Using Modliq in a Classroom</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Step-by-step instructions for educators to set up student cohorts, assign prebuilt classroom lab templates, and demonstrate applied data science without software installation.
+              </p>
+            </div>
+
+          </div>
+
+          <div className="p-4 bg-purple-50 border border-purple-200 rounded-xl text-xs text-purple-900 leading-relaxed">
+            <strong>Educational Guardrail:</strong> Modliq supports learning and decision-making, reduces technical friction, automates repetitive workflows, and keeps humans in control. It does not replace teachers, researchers, engineers, or data scientists. Education and research workflows assist with learning and exploratory analysis, but do not replace foundational learning of statistics, data ethics, and domain knowledge.
+          </div>
+        </div>
+      </section>
+
       {/* 2.5. HOW MODLIQ COMBINES ANALYTICS AND MACHINE LEARNING */}
       <section className="py-16 bg-gradient-to-b from-white to-[#F0F6FA] border-b border-[#D0E2F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -336,6 +411,11 @@ export default function DocsPage() {
                   <td className="p-3 font-semibold text-slate-900">Clean and understand data</td>
                   <td className="p-3">Data Analyst</td>
                   <td className="p-3 font-mono font-bold text-[#2B70AB]">Dataset Health + EDA Studio</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Visualize trends & distributions</td>
+                  <td className="p-3">Data Visualization Eng</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Chart Studio (No-Code Charts)</td>
                 </tr>
                 <tr>
                   <td className="p-3 font-semibold text-slate-900">Find patterns & correlations</td>
@@ -387,6 +467,78 @@ export default function DocsPage() {
           </div>
         </div>
       </section>
+
+      {/* 2.6. CHOOSING THE RIGHT CHART FOR MANUFACTURING DATA */}
+      <section id="chart-studio" className="py-16 bg-white border-b border-[#D0E2F0]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#2B70AB] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+              Visualization Guide
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1B2A4A]">
+              Choosing the right chart for manufacturing data
+            </h2>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              Chart Studio automatically recommends visual chart types tailored to your dataset structure. Use this quick reference matrix to select the best visual representation for your factory operational question.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-[#D0E2F0] p-6 shadow-sm overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-[#F0F6FA] border-b border-[#D0E2F0] text-[#1B2A4A] font-bold uppercase tracking-wider">
+                <tr>
+                  <th className="p-3">Operational Question</th>
+                  <th className="p-3">Recommended Chart</th>
+                  <th className="p-3">Primary Insight</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-slate-700">
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">How has yield changed over time?</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Line Chart</td>
+                  <td className="p-3">Detects shift-by-shift trends, process drift, and temporal stability.</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Which supplier has the lowest yield?</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Bar Chart</td>
+                  <td className="p-3">Compares categorical averages to highlight vendor variance.</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">What causes most downtime?</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Pareto Chart</td>
+                  <td className="p-3">Ranks failure drivers using the 80/20 rule to prioritize Kaizen actions.</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Is temperature related to yield?</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Scatter Plot</td>
+                  <td className="p-3">Examines non-linear relationships, sweet spots, and process boundaries.</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Which variables are correlated?</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Correlation Heatmap</td>
+                  <td className="p-3">Multi-variable Pearson matrix to identify co-linear parameters.</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">Is the process stable?</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">I-MR Control Chart</td>
+                  <td className="p-3">Monitors 3-sigma Upper and Lower Control Limit compliance.</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">How do 5S categories compare?</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">Radar Chart</td>
+                  <td className="p-3">Multi-axis comparison for Sort, Set in order, Shine, Standardize, Sustain.</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-900">What is current OEE?</td>
+                  <td className="p-3 font-mono font-bold text-[#2B70AB]">KPI Card</td>
+                  <td className="p-3">High-impact summary metric for executive decision-making.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <section id="writing-good-goals" className="py-16 bg-[#F0F6FA]/50 border-b border-[#D0E2F0] scroll-mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
@@ -1111,28 +1263,17 @@ export default function DocsPage() {
 
         {/* 9. FINAL CTA SECTION */}
         <section className="bg-gradient-to-r from-[#1B2A4A] to-[#2B70AB] rounded-2xl p-8 sm:p-12 text-white text-center shadow-lg">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-3">Ready to try Modliq?</h2>
-          <p className="text-blue-100 text-sm sm:text-base max-w-xl mx-auto mb-8">
-            Launch the demo, upload a dataset, or apply for the free pilot program for selected manufacturing companies.
+          <h2 className="text-2xl sm:text-4xl font-bold mb-3">Ready to explore no-code machine learning?</h2>
+          <p className="text-blue-100 text-sm sm:text-base max-w-xl mx-auto mb-8 font-medium">
+            Whether you are a manufacturer, teacher, student, professor, or research scholar, Modliq helps you explore data and machine learning without code.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/dashboard"
-              className="px-6 py-3 rounded-lg bg-white text-[#1B2A4A] font-bold text-sm hover:bg-slate-100 transition shadow"
+              href="/contact?interest=demo"
+              className="px-8 py-4 bg-white text-[#1B2A4A] hover:bg-slate-100 rounded-xl text-sm font-extrabold transition shadow-md flex items-center gap-2"
             >
-              Launch Demo
-            </Link>
-            <Link
-              href="/contact?interest=free-pilot"
-              className="px-6 py-3 rounded-lg bg-[#2B70AB] text-white border border-white/30 font-bold text-sm hover:bg-[#235c8e] transition"
-            >
-              Apply for Free Pilot
-            </Link>
-            <Link
-              href="/contact"
-              className="px-6 py-3 rounded-lg bg-transparent text-white border border-white/40 font-semibold text-sm hover:bg-white/10 transition"
-            >
-              Contact Us
+              <Sparkles className="w-4 h-4 text-[#2B70AB]" />
+              <span>Book Your Free Demo</span>
             </Link>
           </div>
         </section>

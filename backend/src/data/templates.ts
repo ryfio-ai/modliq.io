@@ -1,12 +1,15 @@
 export type ModliqTemplate = {
   id: string;
+  category?: 'education' | 'research' | 'manufacturing';
   type:
     | 'goal'
     | 'qc_spec'
     | 'sop_trial'
     | 'control_plan'
     | 'capa'
-    | 'workflow';
+    | 'workflow'
+    | 'assignment'
+    | 'lab';
   industry:
     | 'Specialty Chemicals'
     | 'Food Processing'
@@ -15,7 +18,9 @@ export type ModliqTemplate = {
     | 'Packaging / Plastics'
     | 'Textiles'
     | 'Biomanufacturing / Fermentation'
-    | 'General Manufacturing';
+    | 'General Manufacturing'
+    | 'Education & Academia'
+    | 'Applied Research';
   title: string;
   description: string;
   requiredColumns?: string[];
@@ -340,6 +345,96 @@ export const MODLIQ_TEMPLATES: ModliqTemplate[] = [
       root_cause_analysis: 'Magnesium stearate lubricant blending time extended from 3 min to 8 min due to timer reset.',
       corrective_action: 'Locked blender timer parameters in PLC recipe manager.',
       preventive_action: 'Updated SOP-PR-402 with mandatory dual-sign-off on blending times.',
+    },
+  },
+  // ── EDUCATION & RESEARCH TEMPLATES ──────────────────────────────────
+  {
+    id: 'edu_nocode_eda_assignment',
+    category: 'education',
+    type: 'assignment',
+    industry: 'Education & Academia',
+    title: 'No-code EDA Assignment',
+    description: 'Classroom exercise for profiling dataset distributions, missingness, and correlation matrices.',
+    requiredColumns: ['temperature', 'pressure', 'yield'],
+    suggestedGoal: 'Analyze variable relationships and identify missing values without code.',
+    payload: {
+      task: 'Exploratory Data Analysis',
+      questions: ['What is the median yield?', 'Which feature has highest correlation with temperature?'],
+    },
+  },
+  {
+    id: 'edu_compare_regression_models',
+    category: 'education',
+    type: 'lab',
+    industry: 'Education & Academia',
+    title: 'Compare Regression Models Lab',
+    description: 'Compare Linear Regression, Random Forest, and XGBoost on R², RMSE, and MAE benchmarks.',
+    requiredColumns: ['feature_1', 'feature_2', 'target_continuous'],
+    payload: {
+      task: 'Model Comparison',
+      metrics: ['R2', 'RMSE', 'MAE'],
+    },
+  },
+  {
+    id: 'edu_feature_importance_lab',
+    category: 'education',
+    type: 'lab',
+    industry: 'Education & Academia',
+    title: 'Feature Importance Lab',
+    description: 'Interpret SHAP feature importance rankings and understand key drivers of predictive models.',
+    requiredColumns: ['feature_a', 'feature_b', 'target'],
+    payload: {
+      task: 'SHAP Analysis',
+      visual: 'Bar Chart',
+    },
+  },
+  {
+    id: 'edu_mfg_quality_analytics_lab',
+    category: 'education',
+    type: 'lab',
+    industry: 'Education & Academia',
+    title: 'Manufacturing Quality Analytics Lab',
+    description: 'Applied lab analyzing process yield, scrap rates, and equipment operating parameters.',
+    requiredColumns: ['batch_id', 'scrap_pct', 'speed'],
+    payload: {
+      task: 'Applied Quality Engineering',
+    },
+  },
+  {
+    id: 'edu_spc_cpk_classroom_demo',
+    category: 'education',
+    type: 'lab',
+    industry: 'Education & Academia',
+    title: 'SPC and Cpk Classroom Demo',
+    description: 'Interactive classroom demonstration of X-bar control charts, Cpk capability indices, and specification limits.',
+    requiredColumns: ['dimension_mm', 'subgroup_id'],
+    payload: {
+      task: 'Statistical Process Control',
+      subgroup_size: 5,
+    },
+  },
+  {
+    id: 'edu_data_cleaning_practice',
+    category: 'education',
+    type: 'assignment',
+    industry: 'Education & Academia',
+    title: 'Data Cleaning Practice',
+    description: 'Practice identifying outliers, duplicate rows, missing fields, and datatype anomalies.',
+    requiredColumns: ['raw_value'],
+    payload: {
+      task: 'Data Hygiene Advisory',
+    },
+  },
+  {
+    id: 'res_dataset_exploration',
+    category: 'research',
+    type: 'assignment',
+    industry: 'Applied Research',
+    title: 'Research Dataset Exploration',
+    description: 'Exploratory data analysis template for academic research papers, thesis chapters, and lab reports.',
+    requiredColumns: ['var_x', 'var_y'],
+    payload: {
+      task: 'Academic Exploratory Research',
     },
   },
 ];

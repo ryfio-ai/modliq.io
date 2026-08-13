@@ -35,28 +35,28 @@ export default function PublicFooter() {
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed max-w-sm">
-              Modliq is a manufacturing intelligence product by Qeltrava AI. It connects data ingestion, health scoring, process optimization, Quality Studio, operations, supplier risk, and buyer-ready Quality Passports.
+              Modliq is a no-code machine learning and analytics platform for manufacturing, education, and applied research by Qeltrava AI. Built to analyze datasets, run EDA, compare models, and prove results — without code.
             </p>
 
             <div className="p-3 bg-white border border-[#D0E2F0] rounded-xl text-xs space-y-1 inline-block">
               <span className="font-bold text-[#1B2A4A] flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#2B70AB]" /> Global Manufacturing Intelligence
+                <MapPin className="w-3.5 h-3.5 text-[#2B70AB]" /> Built in Tamil Nadu, India
               </span>
               <p className="text-[11px] text-slate-500">
-                Serving automotive, specialty chemical, food, pharma, plastics, &amp; biomanufacturing clusters.
+                Serving manufacturing plants, universities, engineering colleges, &amp; research scholars globally.
               </p>
             </div>
           </div>
 
           {/* Platform Modules Col */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#1B2A4A]">Platform Modules</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#1B2A4A]">Use Cases &amp; Modules</h4>
             <ul className="space-y-2 text-xs text-slate-600">
+              <li><Link href="/#industry" className="hover:text-[#2B70AB] transition font-semibold text-[#1B2A4A]">Industry Solutions</Link></li>
+              <li><Link href="/#education" className="hover:text-[#2B70AB] transition font-semibold text-[#1B2A4A]">Education &amp; Research</Link></li>
               <li><Link href="/product" className="hover:text-[#2B70AB] transition">Product Overview</Link></li>
               <li><Link href="/workflow" className="hover:text-[#2B70AB] transition">No-Code Workflow</Link></li>
               <li><Link href="/features" className="hover:text-[#2B70AB] transition">Feature Directory</Link></li>
-              <li><Link href="/algorithms" className="hover:text-[#2B70AB] transition">ML &amp; Algorithms</Link></li>
-              <li><Link href="/quality-passport" className="hover:text-[#2B70AB] transition">Quality Passport</Link></li>
               <li><Link href="/pricing" className="hover:text-[#2B70AB] transition">Pricing Tiers</Link></li>
               <li><Link href="/docs" className="hover:text-[#2B70AB] transition">Documentation</Link></li>
               <li><Link href="/contact" className="hover:text-[#2B70AB] transition">Contact Support</Link></li>
@@ -108,7 +108,7 @@ export default function PublicFooter() {
 
           {/* Contact & Support Col */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#1B2A4A]">Contact & Office</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#1B2A4A]">Contact &amp; Office</h4>
             <div className="text-xs text-slate-600 space-y-2">
               <p className="flex items-center gap-1.5">
                 <Mail className="w-3.5 h-3.5 text-[#2B70AB]" /> support@modliq.io
@@ -116,10 +116,10 @@ export default function PublicFooter() {
               <p>Tamil Nadu, India</p>
               <div className="pt-2">
                 <Link
-                  href="/contact?interest=free-pilot"
-                  className="px-3.5 py-2 bg-[#2B70AB] text-white rounded-xl text-xs font-semibold inline-block hover:bg-[#1B2A4A] transition"
+                  href="/contact?interest=demo"
+                  className="px-4 py-2 bg-[#2B70AB] text-white rounded-xl text-xs font-bold inline-block hover:bg-[#1B2A4A] transition shadow-xs"
                 >
-                  Apply for Free Pilot →
+                  Book Your Free Demo →
                 </Link>
               </div>
             </div>
@@ -129,11 +129,11 @@ export default function PublicFooter() {
         {/* Disclaimer & Bottom Rights */}
         <div className="pt-8 border-t border-[#D0E2F0] space-y-4">
           <div className="p-3 bg-white border border-[#D0E2F0] rounded-xl text-[11px] text-slate-500 leading-relaxed">
-            <span className="font-bold text-[#1B2A4A]">Engineering Disclaimer:</span> Modliq provides decision-support recommendations based on user-provided data. It does not guarantee production outcomes, buyer approval, audit certification, or regulatory compliance. All recommendations must be validated through controlled trials and responsible engineering review.
+            <span className="font-bold text-[#1B2A4A]">Platform &amp; Decision Disclaimer:</span> Modliq supports learning and decision-making, reduces technical friction, automates repetitive workflows, and keeps humans in control. It does not replace teachers, researchers, engineers, or data scientists. Manufacturing recommendations must be validated through controlled engineering review before production use. Education and research workflows assist with learning and exploratory analysis, but do not replace foundational learning of statistics and domain knowledge.
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
-            <span>© 2026 Qeltrava AI. Modliq is a product by Qeltrava AI. All rights reserved.</span>
+            <span>© 2026 Qeltrava AI. Modliq is a product by Qeltrava AI. Built in Tamil Nadu, India. All rights reserved.</span>
             <div className="flex items-center gap-4 text-slate-600">
               <Link href="/privacy" className="hover:text-[#2B70AB]">Privacy Policy</Link>
               <Link href="/terms" className="hover:text-[#2B70AB]">Terms of Service</Link>

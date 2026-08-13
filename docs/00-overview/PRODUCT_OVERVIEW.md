@@ -8,12 +8,17 @@
 
 ## 📌 Executive Summary
 
-**Modliq is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India.**
+**Modliq is a no-code machine learning and analytics platform for manufacturing teams, educators, students, and research scholars by Qeltrava AI, built in Tamil Nadu, India.**
 
-> **Core Positioning:**  
-> **Analyze what happened. Optimize what happens next. Prove it with a Quality Passport.**
+> **Primary Positioning (August 20 Launch):**  
+> **Analyze data. Build models. Prove results — without code.**
+>
+> - **Manufacturing Lane:** *Analyze what happened. Optimize what happens next. Prove it with a Quality Passport.*
+> - **Education & Research Lane:** *Learn data analysis and machine learning by doing — without writing code.*
 
-Modliq enables factory teams to analyze past production data, optimize future process setpoints using no-code machine learning, and prove decisions to OEM buyers with audit-ready Quality Passports — without needing a data analyst, data scientist, or ML engineer to get started.
+Modliq enables manufacturing teams to analyze production data, optimize process settings, validate quality (SPC, Cp/Cpk), and generate buyer-ready PPAP/ISIR Quality Passports. For education and research, it provides a no-code environment to teach, learn, and apply EDA, visualization, AutoML, model comparison, and report generation — without writing Python or SQL code.
+
+> **Human Control Guardrail:** Modliq supports learning and decision-making, reduces technical friction, automates repetitive workflows, and keeps humans in control. It does not replace teachers, researchers, engineers, or data scientists.
 
 ---
 

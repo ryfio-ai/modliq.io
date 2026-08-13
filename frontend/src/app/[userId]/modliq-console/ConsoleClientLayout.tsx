@@ -76,6 +76,7 @@ export default function ConsoleClientLayout({
         { name: 'Projects', href: `/${userId}/modliq-console/projects`, icon: FolderKanban },
         { name: 'Data Ingestion', href: `/${userId}/modliq-console/data-upload`, icon: Upload },
         { name: 'EDA Studio', href: `/${userId}/modliq-console/eda`, icon: BarChart2 },
+        { name: 'Chart Studio', href: `/${userId}/modliq-console/charts`, icon: BarChart2 },
         { name: 'Optimization Goal', href: `/${userId}/modliq-console/goal`, icon: Target },
         { name: 'AutoML Engine', href: `/${userId}/modliq-console/optimization-progress`, icon: Activity },
         { name: 'Business Results', href: `/${userId}/modliq-console/results`, icon: BarChart2 },

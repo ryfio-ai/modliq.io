@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import HomeClient from '@/components/home/HomeClient';
 import StructuredData from '@/components/seo/StructuredData';
+import LaunchGate from '@/components/launch/LaunchGate';
 
 export const metadata: Metadata = {
   title: 'Modliq — No-Code Manufacturing Intelligence and ML Platform',
@@ -50,7 +51,9 @@ export default function HomePage() {
   return (
     <>
       <StructuredData />
-      <HomeClient />
+      <LaunchGate>
+        <HomeClient />
+      </LaunchGate>
     </>
   );
 }
