@@ -113,12 +113,12 @@ export default function CountdownTimer({
         {timeUnits.map((unit) => (
           <div
             key={unit.label}
-            className="group relative bg-white border border-[#D0E2F0] rounded-2xl px-4 py-3 sm:py-4 text-center shadow-[0_8px_24px_rgba(27,42,74,0.06)] hover:shadow-md hover:border-[#2B70AB]/60 transition-all duration-300 flex flex-col justify-center items-center"
+            className="group relative bg-white border border-[#D0E2F0] rounded-xl sm:rounded-2xl px-3 py-2.5 sm:px-4 sm:py-4 text-center shadow-[0_8px_24px_rgba(27,42,74,0.06)] hover:shadow-md hover:border-[#2B70AB]/60 transition-all duration-300 flex flex-col justify-center items-center"
           >
-            <span className="text-3xl sm:text-5xl font-black text-[#1B2A4A] tracking-tight font-mono group-hover:scale-105 transition-transform duration-300">
+            <span className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-[#1B2A4A] tracking-tight font-mono group-hover:scale-105 transition-transform duration-300">
               {String(unit.value).padStart(2, '0')}
             </span>
-            <span className="text-[10px] sm:text-xs font-extrabold text-[#2B70AB] uppercase tracking-widest mt-1">
+            <span className="text-[9px] sm:text-[11px] lg:text-xs font-extrabold text-[#2B70AB] uppercase tracking-widest mt-0.5 sm:mt-1">
               {unit.label}
             </span>
           </div>
