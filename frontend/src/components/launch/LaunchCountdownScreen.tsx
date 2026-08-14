@@ -15,13 +15,13 @@ export default function LaunchCountdownScreen({
   onLaunchComplete,
 }: LaunchCountdownScreenProps) {
   return (
-    <div className="min-h-screen lg:h-screen w-full overflow-y-auto lg:overflow-hidden bg-gradient-to-b from-[#F4F8FA] via-white to-[#F0F6FA] text-[#1B2A4A] font-sans antialiased flex flex-col justify-between select-none relative">
+    <div className="h-screen w-full overflow-hidden bg-gradient-to-b from-[#F4F8FA] via-white to-[#F0F6FA] text-[#1B2A4A] font-sans antialiased flex flex-col justify-between select-none relative">
       
       {/* Background Decorative Ambient Radial Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-blue-100/40 via-blue-50/20 to-transparent blur-3xl pointer-events-none -z-10 rounded-full" />
 
       {/* Top Header */}
-      <header className="h-14 sm:h-16 lg:h-20 shrink-0 border-b border-[#D0E2F0]/80 bg-white/90 backdrop-blur-md px-4 sm:px-8">
+      <header className="h-14 sm:h-16 shrink-0 border-b border-[#D0E2F0]/80 bg-white/90 backdrop-blur-md px-4 sm:px-8">
         <div className="max-w-6xl mx-auto h-full flex items-center justify-between">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <img
@@ -40,8 +40,8 @@ export default function LaunchCountdownScreen({
         </div>
       </header>
 
-      {/* Main Responsive Content Container */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 text-center max-w-4xl mx-auto w-full space-y-3 sm:space-y-4 lg:space-y-5 py-6 lg:py-2 z-10">
+      {/* Main Single-Page Content Container */}
+      <main className="flex-1 flex flex-col items-center justify-evenly px-4 sm:px-6 text-center max-w-4xl mx-auto w-full py-2 z-10">
         
         {/* 1. Launch Badge */}
         <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 bg-white border border-[#D0E2F0] rounded-full text-[11px] sm:text-xs font-extrabold text-[#1B2A4A] shadow-xs shrink-0">
