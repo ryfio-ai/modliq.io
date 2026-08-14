@@ -22,7 +22,7 @@ export async function middleware(req: NextRequest) {
 
   const previewParam = req.nextUrl.searchParams.get('preview');
   const bypassCookie = req.cookies.get('modliq_gate_bypass')?.value === 'true';
-  const isBypassed = previewParam === 'admin-secret' || bypassCookie;
+  const isBypassed = previewParam === 'admin-secret' || previewParam === 'true' || bypassCookie;
 
   if (launchGateEnabled && isBeforeLaunch && !isBypassed) {
     const allowedPreLaunchRoutes = [

@@ -22,7 +22,7 @@ export default function LaunchGate({
     const params = new URLSearchParams(window.location.search);
     const previewParam = params.get('preview');
 
-    if (previewParam === 'admin-secret' || localStorage.getItem('modliq_gate_bypass') === 'true') {
+    if (previewParam === 'admin-secret' || previewParam === 'true' || localStorage.getItem('modliq_gate_bypass') === 'true') {
       localStorage.setItem('modliq_gate_bypass', 'true');
       setBypassed(true);
       setIsBeforeLaunch(false);
