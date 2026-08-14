@@ -103,17 +103,20 @@ export default function CountdownTimer({
   ];
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+    <div className="w-full">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4">
         {timeUnits.map((unit) => (
           <div
             key={unit.label}
-            className="group bg-white border-2 border-[#D0E2F0] hover:border-[#2B70AB] rounded-2xl px-3 py-3 sm:px-4 sm:py-5 text-center shadow-card transition-all duration-300 flex flex-col justify-center items-center"
+            className="group bg-white border-2 border-[#D0E2F0] hover:border-[#2B70AB] rounded-2xl p-4 sm:p-6 text-center shadow-card hover:shadow-lg transition-all duration-300 flex flex-col justify-center items-center"
           >
-            <span suppressHydrationWarning className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1B2A4A] tracking-tight font-mono group-hover:scale-105 transition-transform duration-300">
+            <span
+              suppressHydrationWarning
+              className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#1B2A4A] tracking-tight font-mono group-hover:scale-105 transition-transform duration-300"
+            >
               {String(unit.value).padStart(2, '0')}
             </span>
-            <span className="text-[10px] sm:text-xs font-extrabold text-[#2B70AB] uppercase tracking-wider mt-1">
+            <span className="text-[10px] sm:text-xs font-extrabold text-[#2B70AB] uppercase tracking-wider mt-1.5">
               {unit.label}
             </span>
           </div>
