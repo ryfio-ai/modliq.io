@@ -1,8 +1,8 @@
-# Modliq — No-Code Manufacturing Intelligence & Machine Learning Platform
+# Modliqer — No-Code Manufacturing Intelligence & Machine Learning Platform
 
 > **Analyze what happened. Optimize what happens next. Prove it with a Quality Passport.**
 
-**Modliq** is a no-code manufacturing intelligence and machine learning platform that helps factory teams analyze what happened, optimize what happens next, and prove decisions with buyer-ready Quality Passports — without needing a data analyst, data scientist, or ML engineer to get started.
+**Modliqer** is a no-code manufacturing intelligence and machine learning platform that helps factory teams analyze what happened, optimize what happens next, and prove decisions with buyer-ready Quality Passports — without needing a data analyst, data scientist, or ML engineer to get started.
 
 Made in **Tamil Nadu, India** by **Qeltrava AI**.
 

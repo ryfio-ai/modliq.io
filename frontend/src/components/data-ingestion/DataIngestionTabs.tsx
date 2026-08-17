@@ -21,6 +21,7 @@ import {
   Eye,
   RefreshCw,
   BarChart2,
+  Info,
 } from 'lucide-react';
 import { usePipelineStore } from '@/store/pipelineStore';
 import PaginatedPreviewTable from './PaginatedPreviewTable';
@@ -421,32 +422,71 @@ export default function DataIngestionTabs({ userId, projectId }: DataIngestionTa
             </p>
           </div>
 
-          {/* Database Types */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { id: 'postgres', label: 'Supabase / Postgres', enabled: true },
-              { id: 'mongodb', label: 'MongoDB', enabled: true },
-              { id: 'mysql', label: 'MySQL (Coming Soon)', enabled: false },
-              { id: 'sqlserver', label: 'SQL Server (Coming Soon)', enabled: false },
-            ].map((db) => (
-              <button
-                key={db.id}
-                disabled={!db.enabled}
-                onClick={() => setConnectorType(db.id as any)}
-                className={`p-4 rounded-xl border text-left transition-all ${
-                  connectorType === db.id && db.enabled
-                    ? 'border-[#2B70AB] bg-blue-50 ring-2 ring-blue-100 font-semibold text-[#2B70AB]'
-                    : db.enabled
-                    ? 'border-slate-200 hover:border-slate-300 text-slate-700'
-                    : 'border-slate-100 bg-slate-50 text-slate-400 cursor-not-allowed'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm">{db.label}</span>
-                  {!db.enabled && <Lock size={14} className="text-slate-400" />}
+          {/* Live Connectors */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Live Database Connectors</span>
+              <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200">
+                2 Live
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { id: 'postgres', label: 'Postgres / Supabase', badge: 'Live', badgeStyle: 'bg-emerald-100 text-emerald-800' },
+                { id: 'mongodb', label: 'MongoDB Atlas / Local', badge: 'Live', badgeStyle: 'bg-emerald-100 text-emerald-800' },
+              ].map((db) => (
+                <button
+                  key={db.id}
+                  type="button"
+                  onClick={() => setConnectorType(db.id as any)}
+                  className={`p-3.5 rounded-xl border text-left transition-all flex items-center justify-between ${
+                    connectorType === db.id
+                      ? 'border-[#2B70AB] bg-blue-50/80 ring-2 ring-blue-100 font-semibold text-[#2B70AB]'
+                      : 'border-slate-200 hover:border-slate-300 bg-white text-slate-800'
+                  }`}
+                >
+                  <span className="text-xs font-bold">{db.label}</span>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${db.badgeStyle}`}>
+                    {db.badge}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Roadmap & Industrial Connectors */}
+          <div className="space-y-3 pt-4 border-t border-slate-100">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Roadmap & Enterprise Protocol Connectors</span>
+              <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 text-[10px] font-bold border border-amber-200">
+                Enterprise Roadmap
+              </span>
+            </div>
+
+            <div className="p-3 bg-amber-50/60 border border-amber-200/80 rounded-xl text-xs text-amber-900 flex items-start gap-2.5">
+              <Info size={16} className="text-amber-600 shrink-0 mt-0.5" />
+              <p>
+                <strong>Industrial protocol connectors are on the roadmap</strong> and will be enabled for selected enterprise deployments.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {[
+                { label: 'OPC-UA / MQTT', badge: 'Roadmap' },
+                { label: 'Modbus TCP', badge: 'Roadmap' },
+                { label: 'SCADA Historian', badge: 'Roadmap' },
+                { label: 'MES / ERP API', badge: 'Roadmap' },
+                { label: 'MySQL', badge: 'Coming Soon' },
+                { label: 'SQL Server', badge: 'Coming Soon' },
+              ].map((item, idx) => (
+                <div key={idx} className="p-2.5 rounded-xl border border-slate-100 bg-slate-50/70 text-slate-400 flex items-center justify-between opacity-80 cursor-not-allowed">
+                  <span className="text-[11px] font-medium text-slate-600 truncate">{item.label}</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 text-slate-600 font-bold shrink-0">
+                    {item.badge}
+                  </span>
                 </div>
-              </button>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Connection Form */}

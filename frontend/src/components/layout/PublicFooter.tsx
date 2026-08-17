@@ -46,6 +46,24 @@ export default function PublicFooter() {
                 Serving manufacturing plants, universities, engineering colleges, &amp; research scholars globally.
               </p>
             </div>
+
+            {/* Product Hunt Official Featured Badge */}
+            <div className="pt-2">
+              <a
+                href="https://www.producthunt.com/products/modliqer?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-modliqer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block hover:scale-105 transition-transform"
+              >
+                <img
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1224658&theme=neutral&t=1786948606056"
+                  alt="Modliqer - No-code ML & manufacturing analytics to analyze & optimize | Product Hunt"
+                  width="250"
+                  height="54"
+                  className="w-[200px] h-auto object-contain"
+                />
+              </a>
+            </div>
           </div>
 
           {/* Platform Modules Col */}

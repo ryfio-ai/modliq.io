@@ -165,7 +165,7 @@ export default function LoginPage() {
             )}
 
             {/* OAuth Options */}
-            <div className="w-full font-mono text-xs">
+            <div className="w-full font-mono text-xs space-y-2.5">
               <button
                 type="button"
                 onClick={() => handleOAuthLogin('google')}

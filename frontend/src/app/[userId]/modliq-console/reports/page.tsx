@@ -24,11 +24,17 @@ export default function ExecutiveReportsPage() {
         <div className="flex items-center gap-3 font-mono text-xs">
           <button
             onClick={handlePrint}
+            title="Use your browser's 'Save as PDF' option from the print dialog"
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 text-white font-bold rounded-xl shadow-lg"
           >
-            <Printer size={15} /> Print / Export PDF Report
+            <Printer size={15} /> Print / Save as PDF
           </button>
         </div>
+      </div>
+
+      <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 flex items-center gap-2 print:hidden font-mono">
+        <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-bold text-[10px]">PDF Beta</span>
+        <span>PDF export is in Beta. Use your browser’s “Save as PDF” option from the print dialog.</span>
       </div>
 
       <div className="p-8 rounded-2xl border border-slate-800 bg-[#0F172A] shadow-2xl space-y-6 font-mono text-xs text-slate-300">

@@ -166,11 +166,22 @@ export default function QualityPassportView({ userId, projectId }: QualityPasspo
           </button>
           <button
             onClick={handlePrint}
+            title="Use your browser's 'Save as PDF' option from the print dialog"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#2B70AB] text-white font-medium text-xs hover:bg-[#205887] transition-colors shadow-sm"
           >
             <Printer size={14} />
-            Print Certificate
+            Print / Save as PDF
           </button>
+        </div>
+      </div>
+
+      {/* PDF Export Beta Note */}
+      <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3 text-xs text-blue-900 flex items-center justify-between print:hidden">
+        <div className="flex items-center gap-2">
+          <Info size={16} className="text-[#2B70AB] shrink-0" />
+          <span>
+            <strong>PDF export is in Beta.</strong> Use your browser’s <em>“Save as PDF”</em> option from the print dialog, or export as Markdown (.md).
+          </span>
         </div>
       </div>
 

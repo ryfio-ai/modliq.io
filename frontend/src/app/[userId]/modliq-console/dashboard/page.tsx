@@ -40,6 +40,13 @@ function getStatusIcon(status: DatasetHealthReport['status']) {
   return <ShieldX className="w-4 h-4" />;
 }
 
+import NextStepCard from '@/components/ux/NextStepCard';
+import ProductTour from '@/components/ux/ProductTour';
+import ProjectProgressChecklist from '@/components/ux/ProjectProgressChecklist';
+import RecentItems from '@/components/ux/RecentItems';
+import SmartEmptyState from '@/components/ux/SmartEmptyState';
+import HelpTooltip from '@/components/ux/HelpTooltip';
+
 export default function DashboardPage() {
   const params = useParams();
   const userId = params.userId as string;
@@ -88,18 +95,35 @@ export default function DashboardPage() {
 
   if (!filename) {
     return (
-      <div className="p-8 max-w-7xl mx-auto h-full flex flex-col">
-        <header className="mb-8">
-          <h1 className="text-2xl font-bold text-[#1B2A4A]">Dashboard</h1>
-          <p className="text-slate-500 text-sm mt-1">Overview of your manufacturing runs and models.</p>
+      <div className="p-8 max-w-7xl mx-auto h-full flex flex-col space-y-6">
+        <header className="mb-2">
+          <h1 className="text-2xl font-bold text-[#1B2A4A]">Plant Console Dashboard</h1>
+          <p className="text-slate-500 text-sm mt-1">Overview of your manufacturing runs, datasets, and models.</p>
         </header>
-        <div className="flex-1">
-          <EmptyState
-            icon={LayoutDashboard}
-            title="Start Without a Data Science Team"
-            description="Upload a dataset, choose a template or type your manufacturing goal, and Modliq will guide you through health checks, setup review, optimization, validation, and reporting — no code or ML engineering setup required."
-          />
-        </div>
+
+        <NextStepCard
+          currentStage="upload"
+          userId={userId}
+          customMessage="Start by uploading a CSV/Excel file or loading pre-packaged manufacturing yield demo data."
+          customActionText="Go to Ingestion"
+          customActionPath={`/${userId}/modliq-console/data-upload`}
+        />
+
+        <SmartEmptyState
+          icon={LayoutDashboard}
+          title="Start Your Optimization Journey"
+          description="Upload a dataset, choose a template or type your manufacturing goal, and Modliq will guide you through health checks, setup review, optimization, validation, and reporting — no data science team needed."
+          reason="No active dataset loaded in current session."
+          actionText="Upload Dataset or Load Demo Data"
+          actionPath={`/${userId}/modliq-console/data-upload`}
+          secondaryActionText="Explore Templates"
+          secondaryActionPath={`/${userId}/modliq-console/templates`}
+        />
+
+        <RecentItems userId={userId} />
+
+        {/* Guided First Time Product Tour */}
+        <ProductTour userId={userId} />
       </div>
     );
   }
@@ -123,6 +147,18 @@ export default function DashboardPage() {
           </Button>
         </Link>
       </header>
+
+      {/* Guided Progress Checklist */}
+      <ProjectProgressChecklist
+        userId={userId}
+        completedSteps={['upload', 'health', ...(analytics ? ['eda'] : []), ...(intent ? ['goal', 'confirm'] : []), ...(result ? ['optimization', 'results', 'quality', 'passport'] : [])]}
+      />
+
+      {/* Recommended Next Step Card */}
+      <NextStepCard
+        currentStage={result ? 'passport' : intent ? 'confirm' : analytics ? 'eda' : 'upload'}
+        userId={userId}
+      />
 
       {/* Position Banner */}
       <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">

@@ -17,11 +17,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://modliq-io.vercel.ap
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Modliq — No-Code Manufacturing Intelligence and ML Platform',
-    template: '%s | Modliq',
+    default: 'Modliqer — No-Code Manufacturing Intelligence and ML Platform',
+    template: '%s | Modliqer',
   },
   description:
-    'Modliq is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India. It helps factory teams analyze data, optimize process settings, validate quality, track operations, and generate buyer-ready Quality Passports.',
+    'Modliqer is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India. It helps factory teams analyze data, optimize process settings, validate quality, track operations, and generate buyer-ready Quality Passports.',
   keywords: [
     'no-code manufacturing intelligence platform',
     'no-code machine learning platform for manufacturing',
@@ -45,12 +45,13 @@ export const metadata: Metadata = {
     'data analyst and ML engineer platform',
     'Indian manufacturing SaaS',
     'Tamil Nadu manufacturing software',
-    'Qeltrava AI Modliq',
+    'Qeltrava AI Modliqer',
+    'Modliqer',
   ],
   authors: [{ name: 'Qeltrava AI', url: 'https://qeltravaai.vercel.app/en' }],
   creator: 'Qeltrava AI',
   publisher: 'Qeltrava AI',
-  applicationName: 'Modliq',
+  applicationName: 'Modliqer',
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -66,24 +67,24 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     url: siteUrl,
-    siteName: 'Modliq',
-    title: 'Modliq — No-Code Manufacturing Intelligence and ML Platform',
+    siteName: 'Modliqer',
+    title: 'Modliqer — No-Code Manufacturing Intelligence and ML Platform',
     description:
-      'Modliq is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India. It helps factory teams analyze data, optimize process settings, validate quality, track operations, and generate buyer-ready Quality Passports.',
+      'Modliqer is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India. It helps factory teams analyze data, optimize process settings, validate quality, track operations, and generate buyer-ready Quality Passports.',
     images: [
       {
         url: '/og/modliq-og.png',
         width: 1200,
         height: 630,
-        alt: 'Modliq — No-Code Manufacturing Intelligence and ML Platform by Qeltrava AI',
+        alt: 'Modliqer — No-Code Manufacturing Intelligence and ML Platform by Qeltrava AI',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Modliq — No-Code Manufacturing Intelligence and ML Platform',
+    title: 'Modliqer — No-Code Manufacturing Intelligence and ML Platform',
     description:
-      'Modliq is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India. Analyze what happened, optimize what happens next, and prove it with a Quality Passport.',
+      'Modliqer is a no-code manufacturing intelligence and machine learning platform by Qeltrava AI, built in Tamil Nadu, India. Analyze what happened, optimize what happens next, and prove it with a Quality Passport.',
     images: ['/og/modliq-og.png'],
   },
   robots: {
@@ -121,7 +122,7 @@ const jsonLd = {
     {
       '@type': 'SoftwareApplication',
       '@id': `${siteUrl}/#software`,
-      name: 'Modliq',
+      name: 'Modliqer',
       operatingSystem: 'Web-based',
       applicationCategory: 'BusinessApplication',
       offers: {
@@ -142,26 +143,26 @@ const jsonLd = {
       mainEntity: [
         {
           '@type': 'Question',
-          name: 'What is Modliq?',
+          name: 'What is Modliqer?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Modliq is a no-code manufacturing intelligence and machine learning platform that helps factory teams analyze production data, optimize process settings, validate quality, and generate buyer-ready Quality Passports.',
+            text: 'Modliqer is a no-code manufacturing intelligence and machine learning platform that helps factory teams analyze production data, optimize process settings, validate quality, and generate buyer-ready Quality Passports.',
           },
         },
         {
           '@type': 'Question',
-          name: 'Who is Modliq for?',
+          name: 'Who is Modliqer for?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Modliq is for manufacturing companies, factory owners, plant heads, quality managers, process engineers, operations managers, supplier quality teams, and lean improvement teams.',
+            text: 'Modliqer is for manufacturing companies, factory owners, plant heads, quality managers, process engineers, operations managers, supplier quality teams, and lean improvement teams.',
           },
         },
         {
           '@type': 'Question',
-          name: 'Do I need a data scientist to use Modliq?',
+          name: 'Do I need a data scientist to use Modliqer?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'No. Modliq is designed so manufacturing teams can use analytics and machine learning workflows without hiring a data analyst, data scientist, or ML engineer to get started.',
+            text: 'No. Modliqer is designed so manufacturing teams can use analytics and machine learning workflows without hiring a data analyst, data scientist, or ML engineer to get started.',
           },
         },
         {
@@ -169,15 +170,15 @@ const jsonLd = {
           name: 'What is a Quality Passport?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'A Quality Passport is a buyer-ready report generated by Modliq that summarizes dataset readiness, process capability, optimization evidence, operations performance, supplier traceability, and improvement actions.',
+            text: 'A Quality Passport is a buyer-ready report generated by Modliqer that summarizes dataset readiness, process capability, optimization evidence, operations performance, supplier traceability, and improvement actions.',
           },
         },
         {
           '@type': 'Question',
-          name: 'Is Modliq an AutoML platform?',
+          name: 'Is Modliqer an AutoML platform?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Modliq includes no-code AutoML workflows, but it is not a generic AutoML tool. It is designed specifically for manufacturing workflows such as yield optimization, SPC, Cp/Cpk, OEE, supplier risk, and Quality Passport reporting.',
+            text: 'Modliqer includes no-code AutoML workflows, but it is not a generic AutoML tool. It is designed specifically for manufacturing workflows such as yield optimization, SPC, Cp/Cpk, OEE, supplier risk, and Quality Passport reporting.',
           },
         },
       ],

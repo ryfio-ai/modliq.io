@@ -26,7 +26,7 @@ export default function LaunchCountdownScreen({
           <div className="flex items-center gap-2.5 sm:gap-3">
             <img
               src="/logo modliq.png"
-              alt="Modliq Machine Learning Platform"
+              alt="Modliqer Machine Learning Platform"
               className="h-8 sm:h-10 w-auto object-contain"
             />
             <span className="text-[10px] sm:text-[11px] font-extrabold text-[#2B70AB] bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
@@ -84,7 +84,7 @@ export default function LaunchCountdownScreen({
           {/* 5. Product Description & Core Tagline */}
           <div className="space-y-1">
             <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
-              Modliq is a no-code machine learning and analytics platform for factories, classrooms, and applied research.
+              Modliqer is a no-code machine learning and analytics platform for factories, classrooms, and applied research.
             </p>
             <p className="text-xs sm:text-sm text-[#2B70AB] font-bold">
               Analyze data. Build models. Prove results — without code.
@@ -112,6 +112,24 @@ export default function LaunchCountdownScreen({
 
             <div className="pt-2 border-t border-[#D0E2F0] text-xs text-slate-500 font-medium">
               Thursday, Aug 20, 2026 @ 10:00 AM IST
+            </div>
+
+            {/* Official Product Hunt Launch Badge */}
+            <div className="pt-2 flex justify-center">
+              <a
+                href="https://www.producthunt.com/products/modliqer?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-modliqer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-105 transition-transform"
+              >
+                <img
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1224658&theme=neutral&t=1786948606056"
+                  alt="Modliqer - No-code ML & manufacturing analytics to analyze & optimize | Product Hunt"
+                  width="250"
+                  height="54"
+                  className="w-[220px] sm:w-[250px] h-auto object-contain mx-auto"
+                />
+              </a>
             </div>
 
           </div>

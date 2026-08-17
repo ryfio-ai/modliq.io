@@ -73,7 +73,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             {isLogin ? 'Sign in to Modliq' : 'Create your Enterprise Account'}
           </h2>
           <p className="text-xs text-slate-500 font-mono">
-            {isLogin ? 'Enter your credentials or use Single Sign-On.' : 'Get instant access to AutoML & SPC quality control.'}
+            {isLogin ? 'Enter your credentials or choose an OAuth provider below.' : 'Get instant access to AutoML & SPC quality control.'}
           </p>
         </div>
 

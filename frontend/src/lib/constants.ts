@@ -21,7 +21,7 @@ export const DEMO_RESULT = {
     yield_delta_pct: 5.6,
     payback_period_days: 7
   },
-  summary: "Modliq found that Yield Rate can likely be improved by stabilizing Temperature near 87.5°C and Pressure near 450 kPa. The expected Yield Rate is 96.8%, above the 95.0% target. Temperature is the strongest process driver. Run the recommended range for the next 7 batches before updating the official SOP.",
+  summary: "Modliqer found that Yield Rate can likely be improved by stabilizing Temperature near 87.5°C and Pressure near 450 kPa. The expected Yield Rate is 96.8%, above the 95.0% target. Temperature is the strongest process driver. Run the recommended range for the next 7 batches before updating the official SOP.",
   drivers: [
     {
       name: "Temperature",

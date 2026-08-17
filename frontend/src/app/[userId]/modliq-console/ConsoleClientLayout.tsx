@@ -33,6 +33,9 @@ import ProjectSwitcher from '@/components/layout/ProjectSwitcher';
 import CommandPalette from '@/components/ui/CommandPalette';
 import UserProfileModal from '@/components/profile/UserProfileModal';
 
+import FeedbackButton from '@/components/ux/FeedbackButton';
+import SimpleAdvancedToggle from '@/components/ux/SimpleAdvancedToggle';
+
 export default function ConsoleClientLayout({
   children,
   params,
@@ -117,85 +120,65 @@ export default function ConsoleClientLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex font-sans antialiased">
-      {/* Cmd+K Global Palette Component */}
+    <div className="min-h-screen bg-[#F8FAFC] flex text-slate-800 font-sans antialiased">
       <CommandPalette />
 
-      {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-slate-200 text-slate-900 flex flex-col justify-between p-3.5 fixed h-full z-20 shadow-sm overflow-y-auto">
-        <div className="space-y-5">
-          {/* Logo & Brand Header */}
-          <div className="flex items-center justify-between px-2 pt-1 pb-2 border-b border-slate-100">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <img
-                src="/icon.png"
-                alt="Modliq Icon"
-                className="w-8 h-8 rounded-lg object-contain shadow-sm group-hover:scale-105 transition-transform"
-              />
-              <div>
-                <span className="font-bold text-base tracking-tight text-slate-900 block leading-none">Modliq</span>
-                <span className="text-[10px] text-blue-600 font-mono tracking-wider uppercase block mt-1 font-semibold">Enterprise v2.4</span>
-              </div>
-            </Link>
-          </div>
-
-          {/* Project Switcher */}
-          <div className="px-1">
-            <ProjectSwitcher />
-          </div>
-
-          {/* Navigation Sections */}
-          <nav className="space-y-4">
-            {navSections.map((section) => (
-              <div key={section.title} className="space-y-1">
-                <h3 className="px-2 text-[10px] font-mono font-bold tracking-wider text-slate-400 uppercase">
-                  {section.title}
-                </h3>
-                {section.items.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                        isActive
-                          ? 'bg-blue-50 text-blue-700 border border-blue-200 font-bold shadow-xs'
-                          : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                      }`}
-                    >
-                      <Icon size={15} className={isActive ? 'text-blue-600' : 'text-slate-500'} />
-                      <span>{item.name}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            ))}
-          </nav>
+      {/* Fixed Left Sidebar */}
+      <aside className="w-64 border-r border-slate-200 bg-white flex flex-col fixed inset-y-0 z-20 shadow-xs">
+        {/* Brand Header */}
+        <div className="h-16 border-b border-slate-100 flex items-center justify-between px-5">
+          <Link href={`/${userId}/modliq-console/dashboard`} className="flex items-center gap-2.5">
+            <img src="/icon.png" alt="Modliq Logo" className="w-8 h-8 rounded-lg object-contain" />
+            <span className="font-extrabold text-base tracking-tight text-[#1B2A4A] font-sans">Modliq</span>
+          </Link>
+          <span className="px-2 py-0.5 rounded bg-blue-50 text-[#2B70AB] text-[10px] font-mono font-bold border border-blue-200">
+            Console
+          </span>
         </div>
 
-        {/* Status Indicators & User Profile */}
-        <div className="border-t border-slate-100 pt-3 mt-4 space-y-3">
-          {/* Real-time System Telemetry Badge */}
-          <div className="bg-slate-50 rounded-lg p-2 border border-slate-200 text-[11px] font-mono space-y-1">
-            <div className="flex items-center justify-between text-slate-700">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                Engine Online
-              </span>
-              <span className="text-blue-600 font-bold">16/16 Models</span>
-            </div>
-            <div className="flex items-center justify-between text-slate-500 text-[10px]">
-              <span>Air-Gap License</span>
-              <span className="text-emerald-600 font-semibold">VALID (365d)</span>
-            </div>
-          </div>
+        {/* Project Switcher */}
+        <div className="p-3 border-b border-slate-100 bg-slate-50/50">
+          <ProjectSwitcher />
+        </div>
 
-          {/* User Avatar & Profile Navigation */}
-          <div className="flex items-center justify-between px-1 pt-1 bg-slate-50 hover:bg-blue-50/60 p-2 rounded-xl border border-slate-200/80 transition-all group">
-            <Link href={`/${userId}/modliq-console/profile`} className="flex items-center gap-2.5 flex-1 min-w-0">
-              <div className="w-8 h-8 rounded-full bg-[#2B70AB] text-white flex items-center justify-center font-bold text-xs shadow-xs group-hover:scale-105 transition-transform">
-                {user?.name?.[0]?.toUpperCase() || 'U'}
+        {/* Navigation Sections */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-6">
+          {navSections.map((sec, idx) => (
+            <div key={idx} className="space-y-1">
+              <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">
+                {sec.title}
+              </p>
+              {sec.items.map((item) => {
+                const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      isActive
+                        ? 'bg-[#2B70AB] text-white shadow-xs font-bold'
+                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                    }`}
+                  >
+                    <Icon size={16} className={isActive ? 'text-white' : 'text-slate-400'} />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+
+        {/* Footer User Scoping */}
+        <div className="p-3 border-t border-slate-100 bg-slate-50/50">
+          <div className="flex items-center justify-between p-2 rounded-xl border border-slate-200 bg-white">
+            <Link
+              href={`/${userId}/modliq-console/profile`}
+              className="flex items-center gap-2.5 min-w-0 group"
+            >
+              <div className="w-7 h-7 rounded-full bg-[#1B2A4A] text-white text-xs font-bold flex items-center justify-center shrink-0">
+                {user?.name?.[0]?.toUpperCase() || 'E'}
               </div>
               <div className="text-left leading-tight truncate">
                 <p className="text-xs font-bold text-slate-800 truncate group-hover:text-[#2B70AB] transition-colors">{user?.name || 'Engineer'}</p>
@@ -203,16 +186,14 @@ export default function ConsoleClientLayout({
                   <span className="text-[9px] px-1.5 py-0.2 rounded bg-blue-100 text-blue-700 font-mono font-bold uppercase">
                     {(user as any)?.role || 'USER'}
                   </span>
-                  <span className="text-[10px] text-slate-400 font-mono hover:underline">View Profile</span>
                 </div>
               </div>
             </Link>
             <button
               onClick={handleSignOut}
-              title="Sign Out"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-white transition-colors border border-transparent hover:border-slate-200"
+              className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
             >
-              <LogOut size={15} />
+              <LogOut size={16} />
             </button>
           </div>
         </div>
@@ -231,7 +212,7 @@ export default function ConsoleClientLayout({
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Quick Cmd+K search hint */}
+            <SimpleAdvancedToggle />
             <button
               onClick={() => {
                 const event = new KeyboardEvent('keydown', { key: 'k', metaKey: true });
@@ -254,9 +235,10 @@ export default function ConsoleClientLayout({
         </main>
       </div>
 
-      {/* AI Copilot Drawer & User Profile Onboarding Popup */}
+      {/* AI Copilot Drawer, Feedback Button & User Profile Onboarding Popup */}
       <AiCopilotDrawer />
       <UserProfileModal />
+      <FeedbackButton />
     </div>
   );
 }
