@@ -1,39 +1,35 @@
-# Modliq Production Deployment Architecture
+# Deployment & Infrastructure Overview
 
-> **Last verified:** 2026-08-04  
-> **Source of truth:** Current codebase inspection  
-> **Status:** Implemented / Launch-Ready  
+> **Last verified: 17/08/2026**
+> **Brand: MODLIQER**
+> **Tagline: Analyze data. Build models. Prove results — without code.**
 
----
-
-## 🚢 Production Infrastructure Topology
-
-Modliq utilizes a cloud-native microservice deployment stack across Vercel, Render, MongoDB Atlas, and Redis.
-
-```mermaid
-flowchart TD
-  Client[Web Browser Client] --> Vercel[Vercel (Next.js Frontend)]
-  Vercel -->|HTTPS API Requests| RenderBE[Render (Express API Gateway)]
-  RenderBE --> Atlas[(MongoDB Atlas Cloud Cluster)]
-  RenderBE --> Upstash[(Redis / BullMQ Queue)]
-  RenderBE -->|HTTP X-Modliq-Service-Key| RenderML[Render (FastAPI ML Engine)]
-```
+MODLIQER is deployed as a decoupled 3-tier microservice architecture across Vercel, Render/Cloud Run, and MongoDB Atlas.
 
 ---
 
-## 🏢 Platform Hosting Providers
+## Service Topologies & Deployment Targets
 
-- **Frontend (`frontend/`)**: Deployed on **Vercel** (`vercel.json` configured).
-- **Backend Gateway (`backend/`)**: Deployed on **Render** as a Node.js Web Service (`render.yaml` configured).
-- **ML Engine (`ml-engine/`)**: Deployed on **Render** as a Docker Python Web Service (`ml-engine/Dockerfile` & `render.yaml` configured).
-- **Database**: **MongoDB Atlas** M10+ Cluster.
-- **Task Queue**: Managed **Redis** (Upstash or Redis Cloud).
+| Service | Hosting Platform | Tech Stack | Health Endpoint |
+|---|---|---|---|
+| Frontend Web Console | Vercel | Next.js 15 App Router | `GET /` |
+| Express API Gateway | Render / Render Web Service | Node.js / Express / Prisma | `GET /api/v1/health` |
+| Python ML Engine | Render / Google Cloud Run | FastAPI / Scikit-Learn | `GET /health` |
+| Vector Database | Qdrant Cloud / Self-Hosted | Qdrant Vector Engine | `GET /collections` |
+| Primary Database | MongoDB Atlas | MongoDB | Prisma Connection |
+| Asynchronous Queue | Redis Labs / Upstash | Redis / BullMQ | Worker Heartbeat |
 
 ---
 
-## 🔗 Related Documentation
+## Environment Variables Reference
+- `ML_ENGINE_URL`: Internal URL pointing to FastAPI compute instance.
+- `ML_INTERNAL_API_KEY`: Service key for compute authorization.
+- `QDRANT_URL`: Qdrant vector database URL.
+- `GROQ_API_KEY`, `GEMINI_API_KEY`, `NVIDIA_API_KEY`, `COHERE_API_KEY`: Server-side LLM provider keys.
 
-- [FRONTEND_DEPLOYMENT.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/08-deployment/FRONTEND_DEPLOYMENT.md) — Vercel setup
-- [BACKEND_DEPLOYMENT.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/08-deployment/BACKEND_DEPLOYMENT.md) — Render API setup
-- [ML_ENGINE_DEPLOYMENT.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/08-deployment/ML_ENGINE_DEPLOYMENT.md) — Python ML setup
-- [ENVIRONMENT_VARIABLES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/08-deployment/ENVIRONMENT_VARIABLES.md) — Environment reference
+---
+
+## Related Documentation
+- `docs/08-deployment/MLOPS_AND_EDGE_ROADMAP.md`
+- `docs/01-architecture/EDGE_REALTIME_ROADMAP.md`
+- `docs/08-deployment/ENVIRONMENT_VARIABLES.md`

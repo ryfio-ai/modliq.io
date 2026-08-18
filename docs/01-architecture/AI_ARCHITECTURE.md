@@ -1,39 +1,74 @@
-# Modliq Multi-Provider AI Architecture
+# MODLIQER AI Architecture
 
-> **Last verified:** 2026-08-04  
-> **Source of truth:** Current codebase inspection  
-> **Status:** Implemented / Launch-Ready  
+> **Last verified: 17/08/2026**
+> **Brand: MODLIQER**
+> **Tagline: Analyze data. Build models. Prove results — without code.**
+
+MODLIQER's architecture is explicitly formalized as a **Dual-Stack AI/ML Platform** combining a Traditional Machine Learning Stack with a Generative AI & Agentic Infrastructure Layer.
 
 ---
 
-## 🤖 Multi-Provider AI Gateway Topology
-
-Modliq's AI layer is engineered with zero lock-in to any single vendor. It features a resilient multi-provider AI Gateway implemented in `backend/src/ai/aiGateway.ts`.
+## Dual-Stack Architecture Diagram
 
 ```mermaid
-flowchart TD
-  Client[Express Backend Router] --> Gateway[Multi-Provider AI Gateway]
-  Gateway -->|1. Primary| Groq[Groq Llama 3.3 70B]
-  Gateway -->|2. Fallback 1| Gemini[Google Gemini 2.0 Flash]
-  Gateway -->|3. Fallback 2| NVIDIA[NVIDIA Nim Llama 3.1]
-  Gateway -->|4. Fallback 3| Cohere[Cohere Command R+]
-  Gateway -->|5. Fallback 4| Cloudflare[Cloudflare Workers AI]
-  Gateway -->|6. Fallback 5| OpenRouter[OpenRouter Multi-LLM]
+flowchart TB
+  User[User / Admin / Researcher] --> FE[Next.js Frontend]
+
+  FE --> BE[Express API Gateway]
+
+  BE --> DB[(MongoDB Atlas via Prisma)]
+  BE --> Redis[(Redis / BullMQ)]
+  BE --> Storage[(Cloudflare R2 / Object Storage)]
+  BE --> ML[FastAPI ML Engine]
+  BE --> AI[Multi-Provider AI Gateway]
+  BE --> Qdrant[(Qdrant Vector DB)]
+
+  ML --> TraditionalML[Traditional ML Stack]
+  ML --> Viz[Visualization & EDA Stack]
+  ML --> QC[SPC / Cp-Cpk / AQL]
+  ML --> Optim[Optimization Engine]
+
+  AI --> Providers[Groq / Gemini / NVIDIA / Cohere / Cloudflare / OpenRouter]
+  Qdrant --> RAG[DocuMind RAG]
+  BE --> Agents[LangGraph Agent Orchestrator]
 ```
 
 ---
 
-## ⚙️ Key Architectural Principles
-
-1. **No Direct Frontend AI Calls**: The browser client **never** calls AI providers directly. All prompts pass through `backend/src/routes/ai.routes.ts`.
-2. **Automatic Provider Fallback**: If the primary AI provider returns an HTTP 429, timeout, or rate-limit error, the gateway seamlessly fails over to the next configured provider in sequence.
-3. **Emergency AI Kill Switch**: Controlled via the `AI_FEATURES_ENABLED=true/false` environment variable. When set to `false`, all AI endpoints return a safe, pre-compiled static response without attempting external network calls.
-4. **Prompt Safety & Guardrails**: System prompts strictly instruct LLMs to avoid hallucinations, keep responses grounded in provided numerical datasets, and output JSON schemas when requested.
+## 1. Traditional ML Stack (Predictive & Manufacturing Intelligence)
+- **Data Infrastructure**: MongoDB Atlas, PostgreSQL & Supabase connectors via Prisma, Pandas/NumPy ETL.
+- **Model Frameworks**: Scikit-Learn (RandomForest, GradientBoosting, ExtraTrees, LinearRegression), XGBoost (Beta), LightGBM (Beta), PyTorch MLP (Planned).
+- **Hyperparameter Optimization**: Optuna Bayesian tuning pipeline (Beta) with random grid fallback.
+- **Explainability**: SHAP driver analysis and feature importance ranking.
+- **Serving & MLOps**: FastAPI compute engine, BullMQ background job queues, Joblib & ONNX model registry, SPC Quality Passports.
 
 ---
 
-## 🔗 Related Documentation
+## 2. Generative AI & Agentic Stack (Unstructured & Autonomous Workflows)
+- **Multi-Provider AI Gateway**: Backend-mediated routing across Groq, Gemini, NVIDIA, Cohere, Cloudflare, and OpenRouter.
+- **Vector DB & RAG**: Qdrant vector database, DocuMind PDF document extraction with exact page citations.
+- **Agent Orchestration**: State-machine execution (Agent Task Pilot), tool permission registries, and human approval gates.
+- **Multimodal & Automation**: Web Speech STT/TTS Voice AI Coach, Playwright Browser AutoQA, SpendLens OCR Vision.
 
-- [AI_GATEWAY.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/06-ai/AI_GATEWAY.md) — Comprehensive AI gateway specifications
-- [PROVIDERS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/06-ai/PROVIDERS.md) — LLM provider configurations & fallbacks
-- [PROMPT_GUARDRAILS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/06-ai/PROMPT_GUARDRAILS.md) — Safety & guardrail protocols
+---
+
+## Stack Component Status Summary
+
+| Layer | Component | Framework / Tool | Status | Used For |
+|---|---|---|---|---|
+| Traditional ML | Tabular AutoML | Scikit-Learn | Implemented | Regression & Classification Leaderboards |
+| Traditional ML | Gradient Boosting | XGBoost / LightGBM | Beta | Model Benchmark Comparisons |
+| Traditional ML | Tuning | Optuna | Beta | Bayesian Hyperparameter Tuning |
+| Traditional ML | Explainability | SHAP | Implemented | Driver Analysis & Feature Importance |
+| Generative AI | LLM Gateway | Groq/Gemini/NVIDIA/Cohere/OpenRouter | Implemented | Copilots, Narratives, Report Synthesis |
+| Generative AI | Vector DB | Qdrant | Beta | DocuMind PDF Search |
+| Generative AI | Agent State Machines | Internal Orchestrator / LangGraph | Implemented | Agent Task Pilot & Tool Execution |
+| Security | Credential Vault | MODLIQER Vault | Beta | Server-side Credential Isolation |
+
+---
+
+## Related Documentation
+- `docs/01-architecture/LAYERED_AI_ML_STACK.md`
+- `docs/04-ml-engine/TRADITIONAL_ML_STACK.md`
+- `docs/06-ai/GENERATIVE_AI_STACK.md`
+- `docs/06-ai/MODULAR_AI_STACK.md`

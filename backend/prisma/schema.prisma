@@ -799,3 +799,202 @@ model EdaReport {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MODLIQER AI LABS (BETA) MODELS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model AiLabRun {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId   String?  @unique
+  userId     String
+  projectId  String?
+  labType    String   // DOCUMIND_RAG | AGENT_TASK | VOICE_COACH | AUTOQA | SPENDLENS
+  status     String   // CREATED | RUNNING | COMPLETED | FAILED | WAITING_APPROVAL
+  inputJson  String?
+  outputJson String?
+  error      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model RagDocument {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId         String?  @unique
+  userId           String
+  projectId        String?
+  filename         String
+  pageCount        Int?
+  status           String   @default("PROCESSING") // PROCESSING | READY | FAILED
+  qdrantCollection String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model RagChunk {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  documentId  String
+  pageNumber  Int
+  chunkIndex  Int
+  textPreview String?
+  vectorId    String?
+  createdAt   DateTime @default(now())
+}
+
+model VoiceSession {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId       String?  @unique
+  userId         String
+  mode           String   // INTERVIEW | VIVA | QUALITY_AUDIT | MANUFACTURING_REVIEW | STUDENT_ML
+  status         String   // ACTIVE | COMPLETED | INTERRUPTED | ERROR
+  transcriptJson String?
+  feedbackJson   String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model AutoQaRun {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId        String?  @unique
+  userId          String
+  prompt          String
+  targetUrl       String
+  status          String   // QUEUED | RUNNING | PASSED | FAILED_BUG_FILED | BLOCKED
+  stepsJson       String?
+  resultJson      String?
+  screenshotsJson String?
+  tracePath       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model SpendReceipt {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId      String?  @unique
+  userId        String
+  filename      String
+  merchant      String?
+  date          DateTime?
+  totalAmount   Float?
+  currency      String?  @default("INR")
+  category      String?
+  extractedJson String?
+  validated     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model SpendTransaction {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId  String?  @unique
+  userId    String
+  receiptId String?
+  merchant  String?
+  amount    Float
+  currency  String?  @default("INR")
+  category  String?
+  date      DateTime?
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+model LabelingProject {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId    String?  @unique
+  userId      String
+  projectId   String?
+  name        String
+  taskType    String   // CLASSIFICATION | REGRESSION | QA_PAIR | DOCUMENT_TAGGING
+  labelsJson  String?
+  status      String   // DRAFT | ACTIVE | COMPLETED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model LabeledExample {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  labelingProjectId String
+  inputJson         String
+  labelJson         String?
+  reviewerId        String?
+  status            String   // UNLABELED | LABELED | REVIEWED | REJECTED
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model FineTuneDataset {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId     String?  @unique
+  userId       String
+  projectId    String?
+  sourceId     String?
+  format       String   // OPENAI_CHAT_JSONL | INSTRUCTION_JSONL | CLASSIFICATION_JSONL
+  status       String   // CREATED | EXPORTED | FAILED
+  fileUrl      String?
+  metadataJson String?
+  createdAt    DateTime @default(now())
+}
+
+model CredentialReference {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId         String?  @unique
+  userId           String
+  projectId        String?
+  name             String
+  type             String   // CONNECTOR | API | STORAGE | TOOL
+  encryptedRef     String
+  allowedToolsJson String?
+  status           String   // ACTIVE | REVOKED
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model VectorCollection {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId       String?  @unique
+  userId         String
+  projectId      String?
+  name           String
+  provider       String   // QDRANT
+  collectionName String
+  metadataJson   String?
+  createdAt      DateTime @default(now())
+}
+
+model EvaluationRun {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicId   String?  @unique
+  userId     String
+  projectId  String?
+  evalType   String   // RAG | LLM | MODEL | AGENT
+  status     String   // PENDING | COMPLETED | FAILED
+  score      Float?
+  resultJson String?
+  createdAt  DateTime @default(now())
+}
+
+model EvaluationCase {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  evalRunId    String
+  inputJson    String
+  expectedJson String?
+  actualJson   String?
+  score        Float?
+  notes        String?
+  createdAt    DateTime @default(now())
+}
+
+model InferenceLog {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String?
+  projectId     String?
+  inferenceType String   // LLM | ML | RAG | AGENT | VOICE | AUTOQA
+  provider      String?
+  model         String?
+  latencyMs     Int?
+  success       Boolean
+  errorCode     String?
+  metadataJson  String?
+  createdAt     DateTime @default(now())
+}
+

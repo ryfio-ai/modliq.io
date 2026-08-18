@@ -1,6 +1,6 @@
-# Modliq Local Developer Setup Guide
+# MODLIQER Local Developer Setup Guide
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -23,7 +23,7 @@ Ensure you have installed:
 ```bash
 # Clone repo
 git clone https://github.com/qeltrava-ai/modliq.git
-cd Modliq
+cd MODLIQER
 
 # Copy example environment files
 cp .env.example .env

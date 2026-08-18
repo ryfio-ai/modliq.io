@@ -1,6 +1,6 @@
-# Modliq Product Overview
+# MODLIQER Product Overview
 
-> **Last verified:** 2026-08-09  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current Codebase & Platform Specification  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 📌 Executive Summary
 
-**Modliq is a no-code machine learning and analytics platform for manufacturing teams, educators, students, and research scholars by Qeltrava AI, built in Tamil Nadu, India.**
+**MODLIQER is a no-code machine learning and analytics platform for manufacturing teams, educators, students, and research scholars by Qeltrava AI, built in Tamil Nadu, India.**
 
 > **Primary Positioning (August 20 Launch):**  
 > **Analyze data. Build models. Prove results — without code.**
@@ -16,15 +16,15 @@
 > - **Manufacturing Lane:** *Analyze what happened. Optimize what happens next. Prove it with a Quality Passport.*
 > - **Education & Research Lane:** *Learn data analysis and machine learning by doing — without writing code.*
 
-Modliq enables manufacturing teams to analyze production data, optimize process settings, validate quality (SPC, Cp/Cpk), and generate buyer-ready PPAP/ISIR Quality Passports. For education and research, it provides a no-code environment to teach, learn, and apply EDA, visualization, AutoML, model comparison, and report generation — without writing Python or SQL code.
+MODLIQER enables manufacturing teams to analyze production data, optimize process settings, validate quality (SPC, Cp/Cpk), and generate buyer-ready PPAP/ISIR Quality Passports. For education and research, it provides a no-code environment to teach, learn, and apply EDA, visualization, AutoML, model comparison, and report generation — without writing Python or SQL code.
 
-> **Human Control Guardrail:** Modliq supports learning and decision-making, reduces technical friction, automates repetitive workflows, and keeps humans in control. It does not replace teachers, researchers, engineers, or data scientists.
+> **Human Control Guardrail:** MODLIQER supports learning and decision-making, reduces technical friction, automates repetitive workflows, and keeps humans in control. It does not replace teachers, researchers, engineers, or data scientists.
 
 ---
 
 ## 🎯 Unified Role Workflows
 
-Modliq brings together the repetitive workflows traditionally handled by separate data and engineering roles into a single guided platform:
+MODLIQER brings together the repetitive workflows traditionally handled by separate data and engineering roles into a single guided platform:
 
 - 📊 **Data Analyst Workflows** — EDA, dataset health diagnostic checks, KPI auto-mapping, trend analysis, OEE summaries, supplier risk, and insight narratives.
 - 🤖 **ML Engineer Workflows** — No-code natural language goal parsing, feature validation, AutoML benchmarking leaderboard, constrained optimization, setpoint recommendation, drift monitoring, and retraining advisory.
@@ -59,7 +59,19 @@ flowchart LR
 
 ## 🇮🇳 Tamil Nadu & Qeltrava AI Positioning
 
-Modliq is conceived, architected, and built in **Tamil Nadu, India**—one of Asia's premier manufacturing and industrial engineering hubs. As part of **Qeltrava AI**, Modliq combines deep regional domain expertise in specialty chemicals, automotive components, textile manufacturing, precision plastics, food & pharma, and electronics assembly with cutting-edge artificial intelligence.
+MODLIQER is conceived, architected, and built in **Tamil Nadu, India**—one of Asia's premier manufacturing and industrial engineering hubs. As part of **Qeltrava AI**, MODLIQER combines deep regional domain expertise in specialty chemicals, automotive components, textile manufacturing, precision plastics, food & pharma, and electronics assembly with cutting-edge artificial intelligence.
+
+---
+
+## 🧪 MODLIQER AI Labs (Beta) Experimental Showcase
+
+In addition to core manufacturing intelligence and AutoML, MODLIQER includes the **MODLIQER AI Labs (Beta)** suite (controlled by feature flag `AI_LABS_ENABLED=true`):
+
+- **DocuMind RAG:** PDF document intelligence with Qdrant vector retrieval and real page citations.
+- **Agent Task Pilot:** Bounded agentic workflow powered by LangGraph state machine with human-in-the-loop approval gates.
+- **Voice AI Coach:** Real-time voice practice session engine with STT/TTS and text fallback.
+- **Browser AutoQA:** Plain-English Playwright web automation testing with strict domain allowlisting (`localhost`, `modliq-io.vercel.app`).
+- **SpendLens SaaS:** OCR receipt intelligence, automated verification gate, and spending analytics.
 
 ---
 
@@ -68,3 +80,4 @@ Modliq is conceived, architected, and built in **Tamil Nadu, India**—one of As
 - [PLATFORM_FEATURES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PLATFORM_FEATURES.md) — Comprehensive 45-module feature catalog
 - [LAUNCH_STATUS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/LAUNCH_STATUS.md) — Public launch readiness score
 - [SYSTEM_ARCHITECTURE.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/01-architecture/SYSTEM_ARCHITECTURE.md) — System topology & architecture
+- [AI_LABS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/06-ai/AI_LABS.md) — AI Labs architecture & specifications

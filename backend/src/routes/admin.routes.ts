@@ -903,9 +903,8 @@ router.patch('/leads/:leadId', async (req: Request, res: Response) => {
       updatedLead = { ...memLead };
     }
 
-    // Try DB update if valid MongoDB ObjectId (24 hex chars)
-    const isObjectId = /^[0-9a-fA-F]{24}$/.test(leadId);
-    if (isObjectId) {
+    // Try DB update
+    if (leadId) {
       try {
         const dbUpdated = await prisma.contactLead.update({
           where: { id: leadId },

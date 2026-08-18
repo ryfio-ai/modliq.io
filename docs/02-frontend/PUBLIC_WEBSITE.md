@@ -1,6 +1,6 @@
-# Modliq Public Website & Marketing Architecture
+# MODLIQER Public Website & Marketing Architecture
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 🌐 Public Site Structure
 
-Modliq's public marketing website is located in `frontend/src/app/`. It serves as the primary acquisition channel for manufacturing leads and pilot applications.
+MODLIQER's public marketing website is located in `frontend/src/app/`. It serves as the primary acquisition channel for manufacturing leads and pilot applications.
 
 ```mermaid
 flowchart TD

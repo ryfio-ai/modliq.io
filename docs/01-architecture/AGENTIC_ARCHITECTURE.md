@@ -1,10 +1,13 @@
-# Modliq Agentic Manufacturing Architecture
+# MODLIQER Agentic Manufacturing Architecture
+
+> **Last verified:** 17/08/2026
+
 
 ## Executive Summary
-Modliq is an **agentic manufacturing intelligence system** that automates the repetitive workflows of data analysts, data scientists, and ML engineers for factory teams.
+MODLIQER is an **agentic manufacturing intelligence system** that automates the repetitive workflows of data analysts, data scientists, and ML engineers for factory teams.
 
 ```
-Tell Modliq what you need. It analyzes, optimizes, validates, and documents the answer.
+Tell MODLIQER what you need. It analyzes, optimizes, validates, and documents the answer.
 ```
 
 ---
@@ -15,7 +18,7 @@ Tell Modliq what you need. It analyzes, optimizes, validates, and documents the 
 [ User Request / Prompt ]
          │
          ▼
-[ Modliq Agent Orchestrator ]
+[ MODLIQER Agent Orchestrator ]
          │
          ├──> [ 1. Intent Classifier ] (Data Analyst | ML Engineer | Quality | Operations | Supply Chain | Quality Passport)
          ├──> [ 2. Context Builder ] (Dataset, Health Score, Project, User Preference Memory)
@@ -53,5 +56,5 @@ Tell Modliq what you need. It analyzes, optimizes, validates, and documents the 
 ---
 
 ## Product Positioning
-- **Modliq Agent** is released in **Beta** alongside core deterministic workflows.
-- Public Positioning: *"Modliq Agent assists, orchestrates, prepares, recommends, and executes workflows after human approval."*
+- **MODLIQER Agent** is released in **Beta** alongside core deterministic workflows.
+- Public Positioning: *"MODLIQER Agent assists, orchestrates, prepares, recommends, and executes workflows after human approval."*

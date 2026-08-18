@@ -1,6 +1,6 @@
-# Modliq End-to-End (E2E) Test Suite Documentation
+# MODLIQER End-to-End (E2E) Test Suite Documentation
 
-> **Last verified:** 2026-08-10  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase (`frontend/playwright.config.ts` & `demo/test_e2e_platform.py`)  
 > **Status:** Implemented / Deployed to Main  
 
@@ -8,7 +8,7 @@
 
 ## 🎭 Playwright E2E Test Suite (`frontend/tests/e2e/`)
 
-Modliq features a multi-browser, role-aware Playwright test suite supporting Chromium, Firefox, WebKit (Safari), Mobile Chrome (Pixel 5), and Mobile Safari (iPhone 13).
+MODLIQER features a multi-browser, role-aware Playwright test suite supporting Chromium, Firefox, WebKit (Safari), Mobile Chrome (Pixel 5), and Mobile Safari (iPhone 13).
 
 ```
 frontend/
@@ -49,7 +49,7 @@ npx playwright test --project=chromium
 
 ## ⚡ Automated 7-Step Integration Test Suite (`demo/test_e2e_platform.py`)
 
-In addition to browser-level Playwright tests, Modliq maintains an automated Python integration probe test suite:
+In addition to browser-level Playwright tests, MODLIQER maintains an automated Python integration probe test suite:
 
 ```mermaid
 flowchart LR

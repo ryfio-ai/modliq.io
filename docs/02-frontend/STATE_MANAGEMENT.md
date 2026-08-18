@@ -1,6 +1,6 @@
-# Modliq Frontend State Management
+# MODLIQER Frontend State Management
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 🔄 State Management Strategy
 
-Modliq utilizes a lightweight, highly resilient state management architecture combining React Context, local state hooks, `localStorage` fallbacks, and server state fetching via the centralized API client (`frontend/src/lib/api.ts`).
+MODLIQER utilizes a lightweight, highly resilient state management architecture combining React Context, local state hooks, `localStorage` fallbacks, and server state fetching via the centralized API client (`frontend/src/lib/api.ts`).
 
 ```mermaid
 flowchart TD

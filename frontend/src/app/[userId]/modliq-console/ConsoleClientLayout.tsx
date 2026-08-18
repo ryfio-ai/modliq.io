@@ -24,6 +24,11 @@ import {
   Award,
   Search,
   Bot,
+  FlaskConical,
+  Mic,
+  CheckSquare,
+  Receipt,
+  Sparkles,
 } from 'lucide-react';
 import React, { use, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -86,6 +91,17 @@ export default function ConsoleClientLayout({
       ],
     },
     {
+      title: 'AI LABS (BETA)',
+      items: [
+        { name: 'AI Labs Hub', href: `/${userId}/modliq-console/ai-labs`, icon: FlaskConical },
+        { name: 'DocuMind RAG', href: `/${userId}/modliq-console/ai-labs/documind-rag`, icon: FileText },
+        { name: 'Agent Task Pilot', href: `/${userId}/modliq-console/ai-labs/agent-task-pilot`, icon: Sparkles },
+        { name: 'Voice AI Coach', href: `/${userId}/modliq-console/ai-labs/voice-coach`, icon: Mic },
+        { name: 'Browser AutoQA', href: `/${userId}/modliq-console/ai-labs/browser-autoqa`, icon: CheckSquare },
+        { name: 'SpendLens SaaS', href: `/${userId}/modliq-console/ai-labs/spendlens`, icon: Receipt },
+      ],
+    },
+    {
       title: 'MODEL & QUALITY',
       items: [
         { name: 'Model Registry', href: `/${userId}/modliq-console/registry`, icon: ShieldCheck },
@@ -107,7 +123,7 @@ export default function ConsoleClientLayout({
         { name: 'Visual Pipeline Builder', href: `/${userId}/modliq-console/pipelines`, icon: Workflow },
         { name: 'OPC-UA / MQTT IoT', href: `/${userId}/modliq-console/iot`, icon: Radio },
         { name: 'Digital Twin Simulator', href: `/${userId}/modliq-console/digital-twin`, icon: Box },
-      ],
+        ],
     },
     {
       title: 'AIR-GAP & MESH',

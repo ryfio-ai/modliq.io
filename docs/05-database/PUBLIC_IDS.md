@@ -1,10 +1,13 @@
-# Modliq Human-Readable Public ID System
+# MODLIQER Human-Readable Public ID System
+
+> **Last verified:** 17/08/2026
+
 
 ## Overview & Purpose
-Modliq uses a dual-identifier architecture:
+MODLIQER uses a dual-identifier architecture:
 1. **Internal Primary Key (`_id` / `id`)**: MongoDB ObjectId string preserved for high-performance database queries and internal relational links.
 2. **Public Identifier (`publicId`)**: Human-readable, branded, date-sortable identifier formatted as:
-   `MODLIQ-<ENTITY>-YYYYMMDD-SEQ`
+   `MODLIQER-<ENTITY>-YYYYMMDD-SEQ`
 
 Public IDs are designed for display in user interfaces, Quality Passport certificates, support tickets, admin console searches, and audit reports.
 
@@ -17,13 +20,13 @@ Public IDs are designed for display in user interfaces, Quality Passport certifi
 
 | Entity Type | Format | Example |
 | :--- | :--- | :--- |
-| **User** | `MODLIQ-USER-YYYYMMDD-####` | `MODLIQ-USER-20260808-1000` |
-| **Project** | `MODLIQ-PROJECT-YYYYMMDD-####` | `MODLIQ-PROJECT-20260808-1000` |
-| **Organization** | `MODLIQ-ORG-YYYYMMDD-####` | `MODLIQ-ORG-20260808-1000` |
-| **Dataset** | `MODLIQ-DATASET-YYYYMMDD-####` | `MODLIQ-DATASET-20260808-1000` |
-| **Optimization Job** | `MODLIQ-JOB-YYYYMMDD-####` | `MODLIQ-JOB-20260808-1000` |
-| **Quality Passport** | `MODLIQ-PASSPORT-YYYYMMDD-####` | `MODLIQ-PASSPORT-20260808-1000` |
-| **Support Ticket** | `MODLIQ-TICKET-YYYYMMDD-####` | `MODLIQ-TICKET-20260808-1000` |
+| **User** | `MODLIQER-USER-YYYYMMDD-####` | `MODLIQER-USER-20260808-1000` |
+| **Project** | `MODLIQER-PROJECT-YYYYMMDD-####` | `MODLIQER-PROJECT-20260808-1000` |
+| **Organization** | `MODLIQER-ORG-YYYYMMDD-####` | `MODLIQER-ORG-20260808-1000` |
+| **Dataset** | `MODLIQER-DATASET-YYYYMMDD-####` | `MODLIQER-DATASET-20260808-1000` |
+| **Optimization Job** | `MODLIQER-JOB-YYYYMMDD-####` | `MODLIQER-JOB-20260808-1000` |
+| **Quality Passport** | `MODLIQER-PASSPORT-YYYYMMDD-####` | `MODLIQER-PASSPORT-20260808-1000` |
+| **Support Ticket** | `MODLIQER-TICKET-YYYYMMDD-####` | `MODLIQER-TICKET-20260808-1000` |
 
 ---
 
@@ -38,7 +41,7 @@ Public IDs are designed for display in user interfaces, Quality Passport certifi
 ## Admin Lookup API
 Admin engineers can query any entity by Public ID or internal ID:
 
-`GET /api/v1/admin/lookup?publicId=MODLIQ-USER-20260808-1000`
+`GET /api/v1/admin/lookup?publicId=MODLIQER-USER-20260808-1000`
 
 ### Example Response:
 ```json
@@ -47,7 +50,7 @@ Admin engineers can query any entity by Public ID or internal ID:
   "data": {
     "type": "USER",
     "id": "673abc1234567890abcdef12",
-    "publicId": "MODLIQ-USER-20260808-1000",
+    "publicId": "MODLIQER-USER-20260808-1000",
     "summary": {
       "name": "Sathish Pandiyan",
       "email": "sathish@company.com",

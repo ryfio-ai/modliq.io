@@ -1,6 +1,6 @@
-# Modliq Statistical Process Control (SPC) Engine
+# MODLIQER Statistical Process Control (SPC) Engine
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 

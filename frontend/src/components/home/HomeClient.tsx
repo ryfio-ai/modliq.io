@@ -12,6 +12,8 @@ import QualityPassportPreview from '@/components/marketing/QualityPassportPrevie
 import AlgorithmTransparencyGrid from '@/components/marketing/AlgorithmTransparencyGrid';
 import AutoMLComparisonTable from '@/components/marketing/AutoMLComparisonTable';
 import RoiCalculatorWidget from '@/components/marketing/RoiCalculatorWidget';
+import QuoteDemoModal from '@/components/marketing/QuoteDemoModal';
+import PlatformFeaturesGrid from '@/components/marketing/PlatformFeaturesGrid';
 import {
   Sparkles,
   ArrowRight,
@@ -34,6 +36,13 @@ import {
 
 export default function HomeClient() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
+  const [modalInterest, setModalInterest] = useState('Quote & Live Demo');
+
+  const openDemoModal = (interest?: string) => {
+    if (interest) setModalInterest(interest);
+    setIsDemoModalOpen(true);
+  };
 
   const toggleFaq = (index: number) => {
     setActiveFaq(activeFaq === index ? null : index);
@@ -110,19 +119,19 @@ export default function HomeClient() {
 
             {/* Primary & Secondary Hero CTAs */}
             <div className="pt-4 flex flex-wrap items-center justify-center gap-4 w-full">
-              <Link
-                href="/contact?interest=demo"
-                className="px-7 py-3.5 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-500/10 hover:shadow-lg"
+              <button
+                onClick={() => openDemoModal('Quote & Live Demo')}
+                className="px-7 py-3.5 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-500/10 hover:shadow-lg cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-blue-200" />
                 <span>Book Your Free Demo</span>
-              </Link>
+              </button>
 
               <a
-                href="#industry"
+                href="#features"
                 className="px-6 py-3.5 bg-white hover:bg-slate-50 text-[#1B2A4A] border border-[#D0E2F0] rounded-xl text-sm font-semibold flex items-center justify-center gap-1.5 transition-all shadow-xs"
               >
-                <span>Explore Platform</span>
+                <span>Explore All Features</span>
                 <ArrowRight className="w-4 h-4 text-[#2B70AB]" />
               </a>
             </div>
@@ -135,7 +144,10 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* 3. Two-Lane Audience Split Section (Manufacturing First!) */}
+      {/* 3. Platform Features Grid (11 Core Modules) */}
+      <PlatformFeaturesGrid onOpenDemoModal={openDemoModal} />
+
+      {/* 3.5 Two-Lane Audience Split Section (Manufacturing First!) */}
       <section className="w-full py-16 sm:py-24 bg-gradient-to-b from-white to-[#F0F6FA] border-b border-[#D0E2F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -188,12 +200,12 @@ export default function HomeClient() {
               </div>
 
               <div className="pt-4 border-t border-slate-100">
-                <Link
-                  href="/contact?interest=manufacturing-demo"
-                  className="w-full py-3 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition"
+                <button
+                  onClick={() => openDemoModal('Manufacturing Plant Demo')}
+                  className="w-full py-3 bg-[#2B70AB] hover:bg-[#1B2A4A] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer"
                 >
                   Book Manufacturing Demo <ArrowRight className="w-4 h-4" />
-                </Link>
+                </button>
               </div>
             </div>
 
@@ -230,12 +242,12 @@ export default function HomeClient() {
               </div>
 
               <div className="pt-4 border-t border-slate-100">
-                <Link
-                  href="/contact?interest=education-demo"
-                  className="w-full py-3 bg-purple-700 hover:bg-purple-900 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition"
+                <button
+                  onClick={() => openDemoModal('Education & Research License')}
+                  className="w-full py-3 bg-purple-700 hover:bg-purple-900 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer"
                 >
                   Book Education Demo <ArrowRight className="w-4 h-4" />
-                </Link>
+                </button>
               </div>
             </div>
 
@@ -425,6 +437,13 @@ export default function HomeClient() {
 
       {/* 9. Footer */}
       <PublicFooter />
+
+      {/* Quote & Demo Modal */}
+      <QuoteDemoModal
+        isOpen={isDemoModalOpen}
+        onClose={() => setIsDemoModalOpen(false)}
+        defaultInterest={modalInterest}
+      />
     </div>
   );
 }

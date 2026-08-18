@@ -1,6 +1,6 @@
-# Modliq Free First 10 Manufacturing Pilot Program
+# MODLIQER Free First 10 Manufacturing Pilot Program
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 🎯 Program Vision & Eligibility
 
-Modliq is offering a **Free First 10 Manufacturing Pilot Program** for eligible manufacturing plants in India (with priority focus on Tamil Nadu industrial corridors) and globally.
+MODLIQER is offering a **Free First 10 Manufacturing Pilot Program** for eligible manufacturing plants in India (with priority focus on Tamil Nadu industrial corridors) and globally.
 
 ```mermaid
 flowchart LR

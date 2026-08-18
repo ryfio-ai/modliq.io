@@ -1,45 +1,39 @@
-# Modliq ML Engine Overview
+# ML Engine Overview
 
-> **Last verified:** 2026-08-04  
-> **Source of truth:** Current codebase inspection  
-> **Status:** Implemented / Launch-Ready  
+> **Last verified: 17/08/2026**
+> **Brand: MODLIQER**
+> **Tagline: Analyze data. Build models. Prove results — without code.**
 
----
-
-## 🐍 Python FastAPI Microservice Architecture
-
-The Modliq ML Engine is an autonomous Python 3.11 microservice situated in `ml-engine/`. It provides machine learning training, hyperparameter optimization, natural language goal parsing, SHAP driver extraction, and statistical quality control.
-
-```mermaid
-flowchart TD
-  FastAPI[main.py (FastAPI App)] --> Auth[Service Key Middleware]
-  Auth --> Routers[routers/ (automl.py, qc.py, goal.py, monitor.py)]
-  Routers --> Services[services/ (preprocessor, trainer, tuner, optimizer)]
-  Services --> Artifacts[model_artifacts/ (.joblib storage)]
-```
+The ML Engine provides Python-native analytics, classical ML, statistical process control, and document extraction microservices for MODLIQER.
 
 ---
 
-## 🛠️ Python Technology Stack
+## Python ML Stack Component Breakdown
 
-- **Framework**: FastAPI + Uvicorn.
-- **Data Manipulation**: Pandas, NumPy.
-- **Machine Learning Zoo**: Scikit-Learn, XGBoost, LightGBM, Extra Trees.
-- **Hyperparameter Optimization**: Optuna Bayesian Tuning.
-- **Explainability**: SHAP (SHapley Additive exPlanations).
-- **Document Parsing**: PyPDF2 / python-docx table extractors.
-- **Validation**: Pydantic schema validation (`ml-engine/schemas.py`).
+### Data Infrastructure & ETL
+- `pandas` (Implemented): Tabular data parsing and transformation.
+- `numpy` (Implemented): Array processing and numerical operations.
+- `scipy` (Implemented): Statistical hypothesis tests and Kolmogorov-Smirnov drift detection.
+
+### Model Training & Tuning
+- `scikit-learn` (Implemented): Core regression and classification algorithm zoo.
+- `xgboost` (Beta): Optional gradient boosting model candidate.
+- `lightgbm` (Beta): Optional light gradient boosting candidate.
+- `optuna` (Beta): Bayesian hyperparameter optimization.
+
+### Explainability & Serving
+- `shap` (Implemented / Beta): Driver explainability values.
+- `joblib` (Implemented): Model artifact binary serialization.
+- `onnx` (Beta / Planned): Cross-platform model export format.
 
 ---
 
-## 🔑 Service Key Security
-
-All non-health endpoints require the header `X-Modliq-Service-Key`. Enforced via dependency injection in `ml-engine/dependencies.py`.
+## Service Security & Authentication
+- Authenticated with internal service key header: `X-Modliq-Service-Key`.
+- Compute-only execution — state persists in MongoDB via Express API Gateway.
 
 ---
 
-## 🔗 Related Documentation
-
-- [ENDPOINTS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/04-ml-engine/ENDPOINTS.md) — Endpoint reference table
-- [PIPELINES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/04-ml-engine/PIPELINES.md) — AutoML pipelines
-- [OPTIMIZER.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/04-ml-engine/OPTIMIZER.md) — Parameter optimization engine
+## Related Documentation
+- `docs/04-ml-engine/TRADITIONAL_ML_STACK.md`
+- `docs/01-architecture/ML_ENGINE_ARCHITECTURE.md`

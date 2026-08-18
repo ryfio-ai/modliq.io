@@ -67,7 +67,10 @@ app.use((req, res, next) => {
 const sanitization_1 = require("./security/sanitization");
 app.use(sanitization_1.noSqlInjectionProtection);
 app.use(express_1.default.json({ limit: '10mb' }));
+app.use(express_1.default.urlencoded({ extended: true, limit: '10mb' }));
 app.set('trust proxy', true);
+const idempotency_1 = require("./middleware/idempotency");
+app.use(idempotency_1.idempotencyMiddleware);
 function mlEngineHeaders() {
     const headers = {};
     if (ML_INTERNAL_API_KEY) {
@@ -96,6 +99,15 @@ function rateLimit(req, res, next) {
     next();
 }
 const goalCrosscheck_routes_1 = __importDefault(require("./routes/goalCrosscheck.routes"));
+const aiLabs_routes_1 = require("./routes/aiLabs.routes");
+const aiStack_routes_1 = __importDefault(require("./routes/aiStack.routes"));
+const dataLabeling_routes_1 = __importDefault(require("./routes/dataLabeling.routes"));
+const fineTuning_routes_1 = __importDefault(require("./routes/fineTuning.routes"));
+const credentialVault_routes_1 = __importDefault(require("./routes/credentialVault.routes"));
+const vectorSearch_routes_1 = __importDefault(require("./routes/vectorSearch.routes"));
+const evaluationStudio_routes_1 = __importDefault(require("./routes/evaluationStudio.routes"));
+const inferenceMonitor_routes_1 = __importDefault(require("./routes/inferenceMonitor.routes"));
+const agentRunManager_routes_1 = __importDefault(require("./routes/agentRunManager.routes"));
 // ==================================================
 // AUTH, AUTOML & ENTERPRISE ROUTES
 // ==================================================
@@ -107,6 +119,16 @@ app.use('/api/predict', auth_middleware_1.authMiddleware, predict_routes_1.predi
 app.use('/api/v1/enterprise', enterprise_routes_1.enterpriseRouter);
 app.use('/api/v1/projects/:projectId/goal', goalCrosscheck_routes_1.default);
 app.use('/api/v1/projects/:projectId/templates', goalCrosscheck_routes_1.default);
+app.use('/api/v1/ai-labs', aiLabs_routes_1.aiLabsRouter);
+// AI & ML Tech Stack & Modular Infrastructure Routes
+app.use('/api/v1', aiStack_routes_1.default);
+app.use('/api/v1', dataLabeling_routes_1.default);
+app.use('/api/v1', fineTuning_routes_1.default);
+app.use('/api/v1', credentialVault_routes_1.default);
+app.use('/api/v1', vectorSearch_routes_1.default);
+app.use('/api/v1', evaluationStudio_routes_1.default);
+app.use('/api/v1', inferenceMonitor_routes_1.default);
+app.use('/api/v1', agentRunManager_routes_1.default);
 // ==================================================
 // STORAGE + HELPERS
 // ==================================================

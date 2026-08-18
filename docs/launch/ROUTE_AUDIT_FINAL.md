@@ -1,4 +1,7 @@
-# Modliq Route Audit — Final Pre-Launch Inventory
+# MODLIQER Route Audit — Final Pre-Launch Inventory
+
+> **Last verified:** 17/08/2026
+
 
 ## Summary
 Audit of all frontend UI routes, backend Express API routes, and ML Engine FastAPI endpoints.
@@ -34,7 +37,7 @@ Audit of all frontend UI routes, backend Express API routes, and ML Engine FastA
 | Route | Type | Auth Required | Expected Behavior | Result | Status |
 |---|---|---|---|---|---|
 | `.../dashboard` | User | Yes | Executive KPIs, active project cards | 200 OK | PASS |
-| `.../agent` | User | Yes | Modliq Agent (Beta) multi-mode workspace | 200 OK | PASS (BETA) |
+| `.../agent` | User | Yes | MODLIQER Agent (Beta) multi-mode workspace | 200 OK | PASS (BETA) |
 | `.../projects` | User | Yes | Project registry & project creation | 200 OK | PASS |
 | `.../projects/[id]/data-upload` | User | Yes | File ingestion, drag-and-drop, database connectors | 200 OK | PASS |
 | `.../projects/[id]/eda` | User | Yes | EDA Studio 6-tab statistical report | 200 OK | PASS |
@@ -46,7 +49,7 @@ Audit of all frontend UI routes, backend Express API routes, and ML Engine FastA
 | `.../projects/[id]/supply-chain` | User | Yes | Supplier scorecard & lot traceability | 200 OK | PASS |
 | `.../projects/[id]/lean` | User | Yes | Waste tracker, Kaizen board & 5S audit | 200 OK | PASS |
 | `.../projects/[id]/quality-passport` | User | Yes | Buyer-ready Quality Passport certificate | 200 OK | PASS |
-| `.../projects/[id]/agent` | User | Yes | Project-scoped Modliq Agent (Beta) workspace | 200 OK | PASS (BETA) |
+| `.../projects/[id]/agent` | User | Yes | Project-scoped MODLIQER Agent (Beta) workspace | 200 OK | PASS (BETA) |
 | `.../profile` | User | Yes | User public ID, profile info & preferences | 200 OK | PASS |
 | `.../settings` | User | Yes | Project & organization settings | 200 OK | PASS |
 

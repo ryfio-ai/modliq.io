@@ -1,6 +1,6 @@
-# Modliq Pre-Launch Security Audit Checklist
+# MODLIQER Pre-Launch Security Audit Checklist
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -17,7 +17,7 @@
 - [x] Multi-tenant scoping (`organizationId`, `userId`, `projectId`) enforced on Prisma queries.
 - [x] CSV formula injection sanitization active on file upload pipeline.
 - [x] SSRF private IP blacklisting enforced on database connector test endpoints.
-- [x] `X-Modliq-Service-Key` header authentication enforced between backend and ML engine.
+- [x] `X-MODLIQER-Service-Key` header authentication enforced between backend and ML engine.
 - [x] Emergency AI Kill Switch (`AI_FEATURES_ENABLED=false`) tested and operational.
 - [x] Quality Passport public share tokens verified via cryptographic hash lookup (`ShareLink.tokenHash`).
 

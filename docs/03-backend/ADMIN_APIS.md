@@ -1,4 +1,7 @@
-# Modliq Admin API Endpoints & Contracts
+# MODLIQER Admin API Endpoints & Contracts
+
+> **Last verified:** 17/08/2026
+
 
 > **Last updated:** 2026-08-05  
 > **Source of truth:** `backend/src/routes/admin.routes.ts`, `backend/src/routes/websiteAdmin.routes.ts`, `backend/src/routes/publicWebsite.routes.ts`  
@@ -32,7 +35,7 @@ All admin API endpoints require JWT authentication (`Authorization: Bearer <toke
 | `GET` | `/api/v1/admin/support/tickets` | Support ticket queue | `?page=1&limit=25&status=OPEN` | `{ success: true, data: [ { id, userId, subject, category, priority, status } ], pagination }` |
 | `PATCH` | `/api/v1/admin/support/tickets/:id` | Update ticket & response | `{ status: "RESOLVED", adminResponse }` | `{ success: true, data: { ticket } }` |
 | `GET` | `/api/v1/admin/website` | Full CMS website settings | N/A | `{ success: true, data: { navbar, footer, seo, chatbot, announcement, contact, homeSections } }` |
-| `PATCH` | `/api/v1/admin/website/settings/:key` | Update website setting key | `{ logoText: "Modliq" }` | `{ success: true, data: { setting } }` |
+| `PATCH` | `/api/v1/admin/website/settings/:key` | Update website setting key | `{ logoText: "MODLIQER" }` | `{ success: true, data: { setting } }` |
 | `GET` | `/api/v1/admin/website/home-sections` | Homepage sections config | N/A | `{ success: true, data: [ { sectionKey, title, subtitle, visible, order } ] }` |
 | `PATCH` | `/api/v1/admin/website/home-sections/:key` | Update section visibility/copy | `{ visible: false, title: "New Title" }` | `{ success: true, data: { section } }` |
 | `POST` | `/api/v1/admin/website/home-sections/reorder` | Reorder homepage sections | `{ sectionKeys: ["hero", "freePilot"] }` | `{ success: true, message: "Sections reordered" }` |
@@ -49,7 +52,7 @@ No authentication required for public website configuration:
 | Method | Endpoint Path | Purpose | Request Payload | Response Schema |
 | :--- | :--- | :--- | :--- | :--- |
 | `GET` | `/api/v1/public/website-config` | Public marketing site configuration | N/A | `{ success: true, data: { navbar, footer, seo, chatbot, announcement, contact, homeSections } }` |
-| `POST` | `/api/v1/public/chatbot` | Public FAQ marketing chatbot | `{ message: "What is Modliq?" }` | `{ success: true, answer: "...", source: "faq" }` |
+| `POST` | `/api/v1/public/chatbot` | Public FAQ marketing chatbot | `{ message: "What is MODLIQER?" }` | `{ success: true, answer: "...", source: "faq" }` |
 
 ---
 

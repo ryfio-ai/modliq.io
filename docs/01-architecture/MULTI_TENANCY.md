@@ -1,6 +1,6 @@
-# Modliq Multi-Tenancy & Data Isolation Blueprint
+# MODLIQER Multi-Tenancy & Data Isolation Blueprint
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 🔒 Tenant Segregation Model
 
-Modliq enforces multi-tenancy at the database and application levels using strict scoped identifiers on every entity:
+MODLIQER enforces multi-tenancy at the database and application levels using strict scoped identifiers on every entity:
 
 ```mermaid
 flowchart TD

@@ -1,6 +1,6 @@
-# Modliq Python ML Engine Render Container Deployment
+# MODLIQER Python ML Engine Render Container Deployment
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection (`ml-engine/Dockerfile`, `render.yaml`)  
 > **Status:** Implemented / Launch-Ready  
 

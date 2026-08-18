@@ -1,4 +1,7 @@
-# Modliq August 20 Launch — Route Inventory & Audit
+# MODLIQER August 20 Launch — Route Inventory & Audit
+
+> **Last verified:** 17/08/2026
+
 
 **Audit Date**: August 8, 2026  
 **Target Launch Date**: August 20, 2026  
@@ -20,7 +23,7 @@
 | `/docs` | Public | No | Renders complete documentation viewer & category navigation | **PASS** | Interactive search & filter |
 | `/contact` | Public | No | Renders free pilot application form & contact info | **PASS** | Direct lead storage integration |
 | `/about` | Public | No | Renders company story, mission, & team overview | **PASS** | Polished layout |
-| `/comparison` | Public | No | Renders AutoML vs Modliq comparison matrix | **PASS** | Standalone comparison page |
+| `/comparison` | Public | No | Renders AutoML vs MODLIQER comparison matrix | **PASS** | Standalone comparison page |
 | `/roi` | Public | No | Interactive scrap reduction & yield ROI calculator widget | **PASS** | Interactive widget |
 | `/privacy` | Public | No | Legal privacy policy | **PASS** | Complete legal copy |
 | `/terms` | Public | No | Legal terms of service | **PASS** | Complete legal copy |

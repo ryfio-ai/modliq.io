@@ -1,12 +1,13 @@
 export declare function saveDataset(datasetId: string, data: any): Promise<any>;
 export declare function getDataset(datasetId: string): Promise<{
     id: string;
+    publicId: string | null;
     name: string | null;
     isDemo: boolean;
     updatedAt: Date;
-    createdAt: Date;
     userId: string;
     status: string;
+    createdAt: Date;
     projectId: string | null;
     filename: string;
     originalName: string;
@@ -38,15 +39,18 @@ export declare function getDataset(datasetId: string): Promise<{
     healthJson: string | null;
     detectedJson: string | null;
     storageKey: string | null;
+    edaReportId: string | null;
+    edaJson: string | null;
 } | null>;
 export declare function getAllDatasets(): Promise<{
     id: string;
+    publicId: string | null;
     name: string | null;
     isDemo: boolean;
     updatedAt: Date;
-    createdAt: Date;
     userId: string;
     status: string;
+    createdAt: Date;
     projectId: string | null;
     filename: string;
     originalName: string;
@@ -78,19 +82,21 @@ export declare function getAllDatasets(): Promise<{
     healthJson: string | null;
     detectedJson: string | null;
     storageKey: string | null;
+    edaReportId: string | null;
+    edaJson: string | null;
 }[]>;
 export declare function getDatasetVersions(datasetId: string): Promise<{
     id: string;
     data: string | null;
-    createdAt: Date;
     datasetId: string;
+    createdAt: Date;
     versionId: string;
 }[]>;
 export declare function getDatasetVersion(datasetId: string, versionId: string): Promise<{
     id: string;
     data: string | null;
-    createdAt: Date;
     datasetId: string;
+    createdAt: Date;
     versionId: string;
 } | null>;
 //# sourceMappingURL=datasetStore.d.ts.map

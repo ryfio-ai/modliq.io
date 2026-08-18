@@ -1,6 +1,6 @@
-# Modliq Frontend Architecture Overview
+# MODLIQER Frontend Architecture Overview
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 🎨 Next.js 15 App Router Architecture
 
-The Modliq frontend is built using **Next.js 15 App Router** in TypeScript, located in `frontend/`. It combines static public landing pages, interactive client-side application state, and dynamic user/admin consoles.
+The MODLIQER frontend is built using **Next.js 15 App Router** in TypeScript, located in `frontend/`. It combines static public landing pages, interactive client-side application state, and dynamic user/admin consoles.
 
 ```mermaid
 flowchart TD

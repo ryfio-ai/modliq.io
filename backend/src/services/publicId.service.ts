@@ -10,22 +10,30 @@ export type PublicIdEntity =
   | 'TICKET'
   | 'TRIAL'
   | 'AGENT'
-  | 'APPROVAL';
+  | 'APPROVAL'
+  | 'LABELING'
+  | 'FINETUNE'
+  | 'CREDENTIAL'
+  | 'VECTOR'
+  | 'EVAL'
+  | 'LEAD'
+  | 'TEMPLATE'
+  | 'MODEL'
+  | 'EXPERIMENT'
+  | 'OPERATIONS'
+  | 'SUPPLIER'
+  | 'MATERIALLOT'
+  | 'LEANWASTE'
+  | 'KAIZEN'
+  | 'FIVESAUDIT'
+  | 'AIINSIGHT'
+  | 'NOTIFICATION'
+  | 'SHARELINK'
+  | 'SECURITY'
+  | 'IDEMPOTENCY'
+  | string;
 
-const PREFIX_MAP: Record<PublicIdEntity, string> = {
-  USER: 'MODLIQ-USER',
-  PROJECT: 'MODLIQ-PROJECT',
-  ORG: 'MODLIQ-ORG',
-  DATASET: 'MODLIQ-DATASET',
-  JOB: 'MODLIQ-JOB',
-  PASSPORT: 'MODLIQ-PASSPORT',
-  TICKET: 'MODLIQ-TICKET',
-  TRIAL: 'MODLIQ-TRIAL',
-  AGENT: 'MODLIQ-AGENT',
-  APPROVAL: 'MODLIQ-APPROVAL',
-};
-
-export const PUBLIC_ID_REGEX = /^MODLIQ-(USER|PROJECT|ORG|DATASET|JOB|PASSPORT|TICKET|TRIAL|AGENT|APPROVAL)-\d{8}-\d{4,}$/;
+export const PUBLIC_ID_REGEX = /^MODLIQ(ER)?-[A-Z0-9_-]+-\d{8}(-\d{6})?-\d{4,}$/;
 
 export function isValidPublicId(publicId: string): boolean {
   if (!publicId || typeof publicId !== 'string') return false;
@@ -35,38 +43,50 @@ export function isValidPublicId(publicId: string): boolean {
 // In-memory fallback sequences if DB is offline or scaling
 const memorySequences = new Map<string, number>();
 
-function formatDateKey(dateObj?: Date): string {
+function formatDateTimeKeys(dateObj?: Date): { dateKey: string; timeKey: string } {
   const d = dateObj || new Date();
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
-  return `${year}${month}${day}`;
+  const dateKey = `${year}${month}${day}`;
+
+  const hours = String(d.getHours()).padStart(2, '0');
+  const mins = String(d.getMinutes()).padStart(2, '0');
+  const secs = String(d.getSeconds()).padStart(2, '0');
+  const timeKey = `${hours}${mins}${secs}`;
+
+  return { dateKey, timeKey };
 }
 
+/**
+ * Universal Platform Public ID Generator
+ * Format: MODLIQER-{ENTITY_NAME}-{YYYYMMDD}-{HHMMSS}-{XXXXX}
+ * XXXXX increments in order from 00001 to 99999 per entity & date.
+ */
 export async function generatePublicId(entity: PublicIdEntity, date?: Date): Promise<string> {
-  const dateKey = formatDateKey(date);
-  const prefix = PREFIX_MAP[entity] || `MODLIQ-${entity}`;
-  let seq = 1000;
+  const { dateKey, timeKey } = formatDateTimeKeys(date);
+  const normalizedEntity = String(entity).toUpperCase().replace(/[^A-Z0-9]/g, '');
+  let seq = 1;
 
   try {
     const existing = await prisma.publicIdSequence.findUnique({
       where: {
         entityType_dateKey: {
-          entityType: entity,
+          entityType: normalizedEntity,
           dateKey,
         },
       },
     });
 
     if (!existing) {
-      const created = await prisma.publicIdSequence.create({
+      await prisma.publicIdSequence.create({
         data: {
-          entityType: entity,
+          entityType: normalizedEntity,
           dateKey,
-          nextSeq: 1001,
+          nextSeq: 2,
         },
       });
-      seq = 1000;
+      seq = 1;
     } else {
       seq = existing.nextSeq;
       await prisma.publicIdSequence.update({
@@ -76,13 +96,18 @@ export async function generatePublicId(entity: PublicIdEntity, date?: Date): Pro
     }
   } catch (err) {
     // Fallback to in-memory sequence increment if DB is unreachable or transaction conflicts
-    const key = `${entity}_${dateKey}`;
-    const currentSeq = memorySequences.get(key) || 1000;
+    const key = `${normalizedEntity}_${dateKey}`;
+    const currentSeq = memorySequences.get(key) || 1;
     seq = currentSeq;
     memorySequences.set(key, currentSeq + 1);
   }
 
-  return `${prefix}-${dateKey}-${seq}`;
+  const seqStr = String(seq).padStart(5, '0');
+  return `MODLIQER-${normalizedEntity}-${dateKey}-${timeKey}-${seqStr}`;
+}
+
+export async function generateLeadPublicId(dateObj?: Date): Promise<string> {
+  return generatePublicId('LEAD', dateObj);
 }
 
 export async function ensureUserPublicId(userId: string, createdAt?: Date): Promise<string> {

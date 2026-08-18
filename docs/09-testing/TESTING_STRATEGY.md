@@ -1,6 +1,6 @@
-# Modliq Testing Strategy & Philosophy
+# MODLIQER Testing Strategy & Philosophy
 
-> **Last verified:** 2026-08-10  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase (`frontend/playwright.config.ts` & `demo/test_e2e_platform.py`)  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 🧪 Multi-Tier Test Suite Architecture
 
-Modliq enforces a multi-tier testing strategy across compile-time, unit, API contract, Playwright browser E2E, and Python integration probe levels.
+MODLIQER enforces a multi-tier testing strategy across compile-time, unit, API contract, Playwright browser E2E, and Python integration probe levels.
 
 ```mermaid
 flowchart TD

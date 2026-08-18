@@ -1,6 +1,6 @@
-# Modliq Architecture & Codebase Tour
+# MODLIQER Architecture & Codebase Tour
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -9,7 +9,7 @@
 ## 🗺️ Complete Workspace Code Map
 
 ```
-Modliq/
+MODLIQER/
 ├── docs/                         # Exhaustive launch documentation pack
 ├── frontend/                     # Next.js 15 App Router Frontend
 │   └── src/

@@ -1,5 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
+import { syncLeadToGoogleSheet } from '../services/googleSheets.service';
+import { generateLeadPublicId } from '../services/publicId.service';
 import {
   DEFAULT_NAVBAR_CONFIG,
   DEFAULT_FOOTER_CONFIG,
@@ -146,22 +148,30 @@ router.post('/contact', async (req: Request, res: Response) => {
       status: 'NEW',
     };
 
-    let leadId = `lead_${Date.now()}`;
+    let leadId = await generateLeadPublicId();
     const memRecord = { id: leadId, ...leadData, createdAt: new Date().toISOString() };
     memoryContactLeads.unshift(memRecord);
 
     try {
       const created = await prisma.contactLead.create({
-        data: leadData,
+        data: {
+          id: leadId,
+          ...leadData,
+        },
       });
       leadId = created.id;
     } catch (dbErr) {
       console.warn('[publicWebsite] DB lead save failed, using memory fallback:', (dbErr as any)?.message || dbErr);
     }
 
+    // Trigger Google Sheets sync asynchronously
+    syncLeadToGoogleSheet({ id: leadId, ...leadData, createdAt: memRecord.createdAt }).catch((gsErr) => {
+      console.warn('[publicWebsite] Async Google Sheets sync exception:', gsErr);
+    });
+
     return res.status(201).json({
       success: true,
-      message: 'Thank you! Your contact message has been received.',
+      message: 'Thank you! Your quote & demo booking request has been received.',
       id: leadId,
     });
   } catch (error: any) {

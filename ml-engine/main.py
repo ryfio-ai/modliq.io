@@ -20,6 +20,8 @@ from routers.monitor import router as monitor_router
 from routers.eda import router as eda_router
 from routers.analytics import analytics_router, automl_router, features_router, models_router, goal_router
 from routers.visualization import router as visualization_router
+from routers.rag import rag_router
+from routers.stack_status import router as stack_status_router
 from services.storage import ModelStorage
 
 # ── Structured Logging ──────────────────────────────────────────────
@@ -157,6 +159,17 @@ app.include_router(
     prefix="",
     tags=["Visualization Engine"],
     dependencies=[Depends(verify_service_key)],
+)
+app.include_router(
+    rag_router,
+    prefix="",
+    tags=["DocuMind RAG"],
+    dependencies=[Depends(verify_service_key)],
+)
+app.include_router(
+    stack_status_router,
+    prefix="",
+    tags=["System Stack Status"],
 )
 
 # ── Global Exception Handler ────────────────────────────────────────

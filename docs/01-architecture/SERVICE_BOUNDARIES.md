@@ -1,6 +1,6 @@
-# Modliq Service Boundaries & System Contracts
+# MODLIQER Service Boundaries & System Contracts
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -37,7 +37,7 @@ flowchart TD
 
   Frontend -->|REST APIs| Backend
   Backend -->|Prisma Client| Database
-  Backend -->|X-Modliq-Service-Key HTTP| MLEngine
+  Backend -->|X-MODLIQER-Service-Key HTTP| MLEngine
 ```
 
 ---
@@ -58,7 +58,7 @@ flowchart TD
 
 ### 4. Application Database (MongoDB Atlas)
 - **Strictly Responsible For**: Storing all persistent entities (User, Organization, Project, Dataset, OptimizationJob, QualityPassport, AuditLog).
-- **External Connectors**: External databases (Postgres, Supabase, MySQL) are external sources for data ingestion; they are never used as Modliq's primary app database.
+- **External Connectors**: External databases (Postgres, Supabase, MySQL) are external sources for data ingestion; they are never used as MODLIQER's primary app database.
 
 ---
 

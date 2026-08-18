@@ -1,6 +1,6 @@
-# Modliq Platform Features & 45 Capabilities Directory
+# MODLIQER Platform Features & Capabilities Directory
 
-> **Last verified:** 2026-08-09  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Active Codebase Inspection & Specification  
 > **Status:** Live & Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 📌 Executive Product Positioning
 
-**Modliq** is a no-code manufacturing intelligence and machine learning platform that helps factory teams **analyze what happened**, **optimize what happens next**, and **prove decisions with buyer-ready Quality Passports** — without needing a data analyst, data scientist, or ML engineer to get started.
+**MODLIQER** (Models, Operations, Data, Learning, Intelligence, Quality, Engineering & Research) is a no-code manufacturing intelligence, machine learning, and AI Labs platform that helps factory teams **analyze what happened**, **optimize what happens next**, and **prove decisions with buyer-ready Quality Passports** — without needing a data analyst, data scientist, or ML engineer to get started.
 
 Made in **Tamil Nadu, India** by **Qeltrava AI**.
 
@@ -94,13 +94,13 @@ Made in **Tamil Nadu, India** by **Qeltrava AI**.
 
 ### 20. Quality Passport
 - **Status:** Live
-- Buyer-ready audit evidence document compiling audit readiness score, certificate ID (e.g. `MODLIQ-PASSPORT-20260808-1000`), dataset health, EDA summary, optimization results, SPC capability, OEE, supplier risk, MLOps evidence, data lineage, and recommended SOP actions.
+- Buyer-ready audit evidence document compiling audit readiness score, certificate ID (e.g. `MODLIQER-PASSPORT-20260808-1000`), dataset health, EDA summary, optimization results, SPC capability, OEE, supplier risk, MLOps evidence, data lineage, and recommended SOP actions.
 
 ### 21. Buyer Share Links
 - **Status:** Live
 - Generates sanitized, token-hashed, read-only public verification URLs for Quality Passports with automatic data privacy filtering (raw rows, credentials, internal notes, and admin data remain strictly private).
 
-### 22. Modliq Agent
+### 22. MODLIQER Agent
 - **Status:** Beta
 - Agentic manufacturing assistant capable of project inspection, tool execution, CAPA/SOP drafting, and evidence preparation. Enforces approval checkpoints for critical mutations.
 
@@ -126,7 +126,7 @@ Made in **Tamil Nadu, India** by **Qeltrava AI**.
 
 ### 28. Project Management & Human-Readable IDs
 - **Status:** Live
-- Project creation, renaming, status badges, and human-readable IDs (`MODLIQ-PROJECT-20260808-1000`, `MODLIQ-PASSPORT-20260808-1000`, `MODLIQ-USER-20260808-1000`).
+- Project creation, renaming, status badges, and human-readable IDs (`MODLIQER-PROJECT-20260808-1000`, `MODLIQER-PASSPORT-20260808-1000`, `MODLIQER-USER-20260808-1000`).
 
 ### 29. Data Cleaning Advisor
 - **Status:** Live
@@ -186,7 +186,7 @@ Made in **Tamil Nadu, India** by **Qeltrava AI**.
 
 ### 43. Support Ticket System
 - **Status:** Live
-- Integrated ticket tracking (`MODLIQ-TICKET-20260808-1000`) for enterprise user support.
+- Integrated ticket tracking (`MODLIQER-TICKET-20260808-1000`) for enterprise user support.
 
 ### 44. Audit Lineage & MLOps Evidence
 - **Status:** Live
@@ -198,8 +198,30 @@ Made in **Tamil Nadu, India** by **Qeltrava AI**.
 
 ---
 
+## 🧪 MODLIQER AI Labs (Beta) & Modular AI Stack Suite
+
+MODLIQER AI Labs provides experimental AI workflows separated from core manufacturing analytics and AutoML under feature flag `AI_LABS_ENABLED=true`:
+
+1. **DocuMind RAG:** PDF document intelligence with vector search (Qdrant) and real page citations.
+2. **Agent Task Pilot:** Bounded autonomous agent built on LangGraph state machine with human-in-the-loop approval gates.
+3. **Voice AI Coach:** Real-time interruptible voice practice sessions powered by Web Speech API / STT / TTS with text fallback.
+4. **Browser AutoQA:** Plain-English web automation and testing with Playwright execution and strict domain allowlisting (`localhost`, `modliq-io.vercel.app`).
+5. **SpendLens SaaS:** Full AI receipt OCR extraction, field verification, spend conversation, and user verification gate.
+6. **Data Labeling Workspace (Beta):** Multi-modal tabular, defect, QA pair, and document tagging labeling workspace.
+7. **Fine-Tuning Preparation (Beta):** Converts labeled examples into OpenAI Chat, Instruction, or Classification JSONL format.
+8. **Multi-Provider Model Router (Live):** Unified routing across Groq, Gemini, NVIDIA, Cohere, and OpenRouter with latency monitoring and strategy fallback.
+9. **Credential Vault & Isolation (Beta):** Server-side credential references ensuring raw API keys are never passed to agents or client browsers.
+10. **Evaluation Studio (Beta):** RAG citation accuracy, LLM quality, AutoML model metric, and agent task scorecards.
+11. **Inference & Performance Monitor (Live):** Real-time telemetry tracking latency, failure rates, and token usage.
+
+---
+
 ## 🔗 Related Architecture & Documentation
 
-- [PRODUCT_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PRODUCT_OVERVIEW.md) — Product vision & problem statement
-- [SYSTEM_ARCHITECTURE.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/01-architecture/SYSTEM_ARCHITECTURE.md) — System blueprint & topology
-- [LAUNCH_STATUS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/LAUNCH_STATUS.md) — Launch audit signoff
+- `docs/00-overview/PRODUCT_OVERVIEW.md` — Product vision & problem statement
+- `docs/01-architecture/SYSTEM_ARCHITECTURE.md` — System blueprint & topology
+- `docs/01-architecture/LAYERED_AI_ML_STACK.md` — 7-Layer AI/ML Tech Stack Matrix
+- `docs/06-ai/MODULAR_AI_STACK.md` — YC-style Modular AI Infrastructure Layer
+- `docs/06-ai/AI_LABS.md` — AI Labs architecture & specifications
+- `docs/00-overview/LAUNCH_STATUS.md` — Launch audit signoff
+

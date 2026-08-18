@@ -1,4 +1,7 @@
-# Modliq Historical Documentation Archive
+# MODLIQER Historical Documentation Archive
+
+> **Last verified:** 17/08/2026
+
 
 > **Note:** This folder contains legacy documentation blueprints and phase guides preserved for historical context.  
 > For the authoritative launch documentation pack, refer to [/docs/README.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/README.md).

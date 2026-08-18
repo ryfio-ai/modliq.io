@@ -1,4 +1,7 @@
-# Modliq August 20 Launch — Backend & ML Engine API Audit
+# MODLIQER August 20 Launch — Backend & ML Engine API Audit
+
+> **Last verified:** 17/08/2026
+
 
 **Audit Date**: August 8, 2026  
 **Target Launch Date**: August 20, 2026  

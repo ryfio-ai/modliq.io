@@ -1,6 +1,6 @@
-# Modliq Backend Gateway Architecture Overview
+# MODLIQER Backend Gateway Architecture Overview
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## ⚙️ Node.js Express API Gateway
 
-The Modliq backend is a modular Express application written in TypeScript, located in `backend/`. It acts as the single API gateway and orchestration server for the platform.
+The MODLIQER backend is a modular Express application written in TypeScript, located in `backend/`. It acts as the single API gateway and orchestration server for the platform.
 
 ```mermaid
 flowchart TD

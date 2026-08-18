@@ -1,6 +1,6 @@
-# Modliq Frontend Vercel Deployment
+# MODLIQER Frontend Vercel Deployment
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection (`vercel.json`)  
 > **Status:** Implemented / Launch-Ready  
 

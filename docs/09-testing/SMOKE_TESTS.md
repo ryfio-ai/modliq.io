@@ -1,6 +1,6 @@
-# Modliq Production Smoke Testing Guide
+# MODLIQER Production Smoke Testing Guide
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection (`ml-engine/smoke_test.py`)  
 > **Status:** Implemented / Launch-Ready  
 

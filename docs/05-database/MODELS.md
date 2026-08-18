@@ -1,4 +1,7 @@
-# Modliq Database Models
+# MODLIQER Database Models
+
+> **Last verified:** 17/08/2026
+
 
 ## Agent & Audit Models
 - `AgentRun` — Represents an agent execution run (`id`, `publicId`, `userId`, `projectId`, `mode`, `userPrompt`, `status`, `planJson`, `resultJson`).

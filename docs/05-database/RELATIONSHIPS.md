@@ -1,6 +1,6 @@
-# Modliq Database Entity Relationships & Cascades
+# MODLIQER Database Entity Relationships & Cascades
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 

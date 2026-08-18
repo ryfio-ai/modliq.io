@@ -1,6 +1,6 @@
-# Modliq Database Architecture Overview
+# MODLIQER Database Architecture Overview
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 🗄️ Primary Application Database
 
-**MongoDB Atlas** accessed exclusively via **Prisma ORM** is the single primary database for the Modliq platform.
+**MongoDB Atlas** accessed exclusively via **Prisma ORM** is the single primary database for the MODLIQER platform.
 
 ```mermaid
 flowchart TD
@@ -32,8 +32,19 @@ flowchart TD
 
 > [!NOTE]
 > **Important Architectural distinction:**
-> - **MongoDB Atlas**: Primary Modliq application database storing Users, Datasets, Projects, Jobs, Quality Passports, Audit Logs.
-> - **External Databases (Supabase, PostgreSQL, MySQL, SQL Server)**: Optional external data sources connected via `DataConnector` for data ingestion into Modliq. They are **never** used as Modliq's primary database.
+> - **MongoDB Atlas**: Primary MODLIQER application database storing Users, Datasets, Projects, Jobs, Quality Passports, Audit Logs.
+> - **External Databases (Supabase, PostgreSQL, MySQL, SQL Server)**: Optional external data sources connected via `DataConnector` for data ingestion into MODLIQER. They are **never** used as MODLIQER's primary database.
+
+---
+
+## 🧪 MODLIQER AI Labs (Beta) Schema Models & Vector Store
+
+The **MODLIQER AI Labs (Beta)** suite stores structured metadata in MongoDB Atlas via Prisma and vector embeddings in Qdrant:
+- **DocuMind Document & Chunk Models:** Stores PDF document metadata, page counts, and Qdrant vector embedding references with page citations.
+- **Agent Task Pilot Runs & Approvals:** Tracks LangGraph execution states, step trajectories, and pending human approval gate records.
+- **Voice Coach Session Records:** Persists audio practice session metadata, STT transcripts, and evaluation metrics.
+- **Browser AutoQA Runs:** Stores Playwright execution logs, pass/fail assertions, and video recording URLs (strictly bounded to `localhost`, `modliq-io.vercel.app`).
+- **SpendLens Receipts:** Stores OCR receipt extractions, line items, user verification gate status, and spend breakdown analytics.
 
 ---
 

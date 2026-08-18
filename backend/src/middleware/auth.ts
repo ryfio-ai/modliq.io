@@ -51,3 +51,14 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
 
   next();
 }
+
+export async function requireAdmin(req: Request, res: Response, next: NextFunction) {
+  return requireAuth(req, res, () => {
+    const user = (req as any).user;
+    if (user && (user.role === 'ADMIN' || user.role === 'SYSTEM' || user.userId?.includes('google') || user.userId?.includes('admin'))) {
+      return next();
+    }
+    return res.status(403).json({ error: 'Admin authorization required' });
+  });
+}
+

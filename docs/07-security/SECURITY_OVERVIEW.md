@@ -1,6 +1,6 @@
-# Modliq Security Architecture Overview
+# MODLIQER Security Architecture Overview
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 🛡️ Zero-Trust Security Design Principles
 
-Modliq is built on zero-trust principles to protect proprietary manufacturing datasets, industrial process parameters, and tenant records.
+MODLIQER is built on zero-trust principles to protect proprietary manufacturing datasets, industrial process parameters, and tenant records.
 
 ```mermaid
 flowchart TD
@@ -29,7 +29,7 @@ flowchart TD
 3. **Tenant Data Segregation**: Strict `organizationId`, `userId`, and `projectId` query boundaries enforced at the Prisma ORM layer.
 4. **File & Formula Safety**: 50MB upload limits, MIME validation, and CSV formula injection stripping (`=`, `+`, `-`, `@`).
 5. **SSRF Prevention**: Private IP range blacklisting for external database connector test endpoints.
-6. **Internal Microservice Protection**: `X-Modliq-Service-Key` header authentication between Express backend and FastAPI ML Engine.
+6. **Internal Microservice Protection**: `X-MODLIQER-Service-Key` header authentication between Express backend and FastAPI ML Engine.
 
 ---
 

@@ -1,6 +1,6 @@
-# Modliq Design System & UI Theme Specifications
+# MODLIQER Design System & UI Theme Specifications
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -8,7 +8,7 @@
 
 ## 🎨 Aesthetic Vision: Notion × Figma × Vercel
 
-Modliq features a clean, high-contrast light theme with rich industrial blue accents. It is designed to look crisp, professional, and accessible on both factory floor tablets and high-resolution desktop monitors.
+MODLIQER features a clean, high-contrast light theme with rich industrial blue accents. It is designed to look crisp, professional, and accessible on both factory floor tablets and high-resolution desktop monitors.
 
 ---
 

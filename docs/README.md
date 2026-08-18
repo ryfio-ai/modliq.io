@@ -1,18 +1,18 @@
-# Modliq Platform Launch Documentation Pack Index
+# MODLIQER Platform Launch Documentation Pack Index
 
-> **Last verified:** 2026-08-09  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current Codebase Inspection & Platform Specification  
-> **Status:** Implemented / Launch-Ready  
+> **Status:** Live & Launch-Ready  
 
 ---
 
-## 📌 What Modliq Is
+## 📌 What MODLIQER Is
 
 > **Analyze what happened. Optimize what happens next. Prove it with a Quality Passport.**
 
-**Modliq** is a no-code manufacturing intelligence and machine learning platform that helps factory teams analyze what happened, optimize what happens next, and prove decisions with buyer-ready Quality Passports — without needing a data analyst, data scientist, or ML engineer to get started.
+**MODLIQER** (Models, Operations, Data, Learning, Intelligence, Quality, Engineering & Research) is a no-code manufacturing intelligence, machine learning, and AI Labs platform by **Qeltrava AI** (built in Tamil Nadu, India) that helps factory teams analyze what happened, optimize what happens next, and prove decisions with buyer-ready Quality Passports — without needing a data analyst, data scientist, or ML engineer to get started.
 
-Developed in **Tamil Nadu, India** as a flagship manufacturing intelligence product by **Qeltrava AI**, Modliq combines six specialized manufacturing roles (Data Analyst, ML Engineer, Quality Engineer, Operations Analyst, Supply Chain Analyst, and Lean / Kaizen Coordinator) into a single guided platform.
+MODLIQER combines six core manufacturing roles (Data Analyst, ML Engineer, Quality Engineer, Operations Analyst, Supply Chain Analyst, and Lean / Kaizen Coordinator) alongside an experimental **MODLIQER AI Labs (Beta)** suite (DocuMind RAG, Agent Task Pilot, Voice AI Coach, Browser AutoQA, and SpendLens) into a single unified platform.
 
 ---
 
@@ -24,12 +24,12 @@ The documentation is organized into 12 dedicated functional domains:
 /docs
 ├── 00-overview/             # Product vision, 45-module feature catalog, launch status, domain glossary
 ├── 01-architecture/         # System topology, service boundaries, data flows, multi-tenancy, AI & ML design
-├── 02-frontend/             # Next.js App Router, routes, user console, admin console, UI components, state management
-├── 03-backend/              # Express API gateway, route handlers, RBAC authorization, jobs, Quality Passport
-├── 04-ml-engine/            # FastAPI ML microservice, AutoML pipelines, goal parser, optimizer, QC stats
-├── 05-database/             # MongoDB Atlas + Prisma ORM schema, models, relationships, human-readable Public IDs
-├── 06-ai/                   # Multi-provider AI Gateway, provider fallbacks, prompt guardrails, kill switch
-├── 07-security/             # Zero-trust security model, auth, tenant isolation, file/SSRF protection, incident response
+├── 02-frontend/             # Next.js App Router, routes, user console, admin console, AI Labs UI, state management
+├── 03-backend/              # Express API gateway, route handlers, RBAC authorization, jobs, AI Labs APIs
+├── 04-ml-engine/            # FastAPI ML microservice, AutoML pipelines, goal parser, RAG service, QC stats
+├── 05-database/             # MongoDB Atlas + Prisma ORM schema, models, relationships, Public IDs, AI Labs models
+├── 06-ai/                   # Multi-provider AI Gateway, AI Labs (DocuMind, Agent Task Pilot, Voice Coach, AutoQA, SpendLens)
+├── 07-security/             # Zero-trust security model, auth, tenant isolation, AI Labs safety guardrails, incident response
 ├── 08-deployment/           # Production deployment topology (Vercel + Render + MongoDB Atlas + Redis), env vars
 ├── 09-testing/              # Build verification, type checks, pytest suite, E2E integration tests, QA checklist
 ├── 10-launch/               # Go-live readiness, audit signoff, 10-client pilot terms, SEO/AEO/GEO strategy
@@ -43,7 +43,7 @@ The documentation is organized into 12 dedicated functional domains:
 
 ### 📈 For Product & Business Stakeholders
 1. Start with [PRODUCT_OVERVIEW.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PRODUCT_OVERVIEW.md) to understand core positioning and role combinations.
-2. Read [PLATFORM_FEATURES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PLATFORM_FEATURES.md) for the full 45-module capabilities matrix.
+2. Read [PLATFORM_FEATURES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/PLATFORM_FEATURES.md) for the full 45-module capabilities matrix + AI Labs directory.
 3. Inspect launch readiness: [LAUNCH_SIGNOFF.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/10-launch/LAUNCH_SIGNOFF.md) & [LAUNCH_STATUS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/00-overview/LAUNCH_STATUS.md).
 
 ### 🎨 For Frontend Developers

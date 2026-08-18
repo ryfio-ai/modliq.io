@@ -111,6 +111,15 @@ function rateLimit(req: express.Request, res: express.Response, next: express.Ne
 }
 
 import goalCrosscheckRoutes from './routes/goalCrosscheck.routes';
+import { aiLabsRouter } from './routes/aiLabs.routes';
+import aiStackRoutes from './routes/aiStack.routes';
+import dataLabelingRoutes from './routes/dataLabeling.routes';
+import fineTuningRoutes from './routes/fineTuning.routes';
+import credentialVaultRoutes from './routes/credentialVault.routes';
+import vectorSearchRoutes from './routes/vectorSearch.routes';
+import evaluationStudioRoutes from './routes/evaluationStudio.routes';
+import inferenceMonitorRoutes from './routes/inferenceMonitor.routes';
+import agentRunManagerRoutes from './routes/agentRunManager.routes';
 
 // ==================================================
 // AUTH, AUTOML & ENTERPRISE ROUTES
@@ -123,6 +132,18 @@ app.use('/api/predict', authMiddleware, predictRouter);
 app.use('/api/v1/enterprise', enterpriseRouter);
 app.use('/api/v1/projects/:projectId/goal', goalCrosscheckRoutes);
 app.use('/api/v1/projects/:projectId/templates', goalCrosscheckRoutes);
+app.use('/api/v1/ai-labs', aiLabsRouter);
+
+// AI & ML Tech Stack & Modular Infrastructure Routes
+app.use('/api/v1', aiStackRoutes);
+app.use('/api/v1', dataLabelingRoutes);
+app.use('/api/v1', fineTuningRoutes);
+app.use('/api/v1', credentialVaultRoutes);
+app.use('/api/v1', vectorSearchRoutes);
+app.use('/api/v1', evaluationStudioRoutes);
+app.use('/api/v1', inferenceMonitorRoutes);
+app.use('/api/v1', agentRunManagerRoutes);
+
 
 
 

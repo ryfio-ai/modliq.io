@@ -1,6 +1,6 @@
-# Modliq Prisma Schema Architecture
+# MODLIQER Prisma Schema Architecture
 
-> **Last verified:** 2026-08-04  
+> **Last verified:** 17/08/2026
 > **Source of truth:** Current codebase inspection  
 > **Status:** Implemented / Launch-Ready  
 
@@ -27,6 +27,23 @@ The single authoritative Prisma schema file for the entire project is located at
    - `DatasetVersion`: `@@unique([datasetId, versionId])`, `@@index([datasetId])`
    - `ModelVersion`: `@@unique([modelId, version])`, `@@index([modelId])`
    - `ChatMessage`: `@@index([sessionId])`
+
+---
+
+## 🧪 MODLIQER AI Labs (Beta) Schema Models
+
+The Prisma schema defines the data models for the 5 experimental AI Labs tools:
+
+- **DocuMind Document & Chunk Models (`DocuMindDocument`, `DocuMindChunk`):**
+  - PDF document intelligence, Qdrant embedding IDs, page citations, and extraction metadata.
+- **Agent Task Pilot Runs & Approvals (`AgentRun`, `AgentApprovalGate`):**
+  - LangGraph state machine step logs, execution status, and human approval gates.
+- **Voice AI Coach (`VoiceSession`, `VoiceFeedbackRecord`):**
+  - Voice practice session recordings, STT transcripts, and AI coaching scorecards.
+- **Browser AutoQA (`AutoQARun`, `AutoQALog`):**
+  - Playwright test executions, assertions, and video artifacts (allowlist: `localhost`, `modliq-io.vercel.app`).
+- **SpendLens SaaS (`SpendLensReceipt`, `SpendLensLineItem`):**
+  - OCR receipt image extraction, field verification gate, and spend analytics data.
 
 ---
 

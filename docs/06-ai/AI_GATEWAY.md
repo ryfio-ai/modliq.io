@@ -1,46 +1,28 @@
-# Modliq AI Gateway Specifications
+# Multi-Provider AI Gateway
 
-> **Last verified:** 2026-08-04  
-> **Source of truth:** Current codebase inspection (`backend/src/ai/aiGateway.ts`)  
-> **Status:** Implemented / Launch-Ready  
+> **Last verified: 17/08/2026**
+> **Brand: MODLIQER**
+> **Tagline: Analyze data. Build models. Prove results — without code.**
 
----
-
-## 🤖 Multi-Provider AI Gateway Architecture
-
-Located in `backend/src/ai/aiGateway.ts`, the AI Gateway orchestrates all LLM calls across 6 supported providers.
-
-```mermaid
-flowchart TD
-  Req[AI Chat / Goal / SOP Request] --> CheckKill{AI_FEATURES_ENABLED?}
-  CheckKill -- False --> Static[Return Static Operational Guidance]
-  CheckKill -- True --> TryGroq[1. Try Groq (Llama 3.3 70B)]
-  TryGroq -- Success --> Res[Return LLM Response]
-  TryGroq -- Error / Rate Limit --> TryGemini[2. Try Google Gemini 2.0 Flash]
-  TryGemini -- Success --> Res
-  TryGemini -- Error --> TryNVIDIA[3. Try NVIDIA Nim]
-  TryNVIDIA -- Success --> Res
-  TryNVIDIA -- Error --> TryCohere[4. Try Cohere]
-  TryCohere -- Success --> Res
-  TryCohere -- Error --> TryCF[5. Try Cloudflare Workers AI]
-  TryCF -- Success --> Res
-  TryCF -- Error --> TryOR[6. Try OpenRouter]
-  TryOR -- Success --> Res
-  TryOR -- Error --> Static
-```
+The Multi-Provider AI Gateway orchestrates Generative AI requests across Groq, Gemini, NVIDIA, Cohere, Cloudflare, and OpenRouter.
 
 ---
 
-## 🔑 Key Operational Policies
-
-1. **Strict Server-Side Proxying**: Frontend clients never call AI providers directly.
-2. **Stateless Gateway**: Provider calls do not store user prompts externally.
-3. **Emergency Circuit Breaker**: Managed by `AI_FEATURES_ENABLED=true/false`.
+## Key Capabilities
+1. **Fallback Routing**: Automatically switches provider if the primary endpoint experiences latency spikes or errors.
+2. **RAG Grounding**: Interfaces with DocuMind and Qdrant to supply document context and page citations before model inference.
+3. **Prompt Guardrails**: Enforces input sanitization, PII masking, and prompt injection defense.
+4. **Credential Isolation**: Raw API keys reside strictly on the server and are never sent to browser clients or agent tool calls.
 
 ---
 
-## 🔗 Related Documentation
+## Status & Monitoring APIs
+- Health Diagnostic: `GET /api/v1/ai/provider-health`
+- Model Router Status: `GET /api/v1/ai-stack/model-router/status`
+- RAG Status: `GET /api/v1/admin/ai/rag-status`
 
-- [PROVIDERS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/06-ai/PROVIDERS.md) — Provider configurations
-- [PROMPT_GUARDRAILS.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/06-ai/PROMPT_GUARDRAILS.md) — Guardrails
-- [AI_FAILURE_MODES.md](file:///c:/Users/sathish/Desktop/Modliq/Modliq/docs/06-ai/AI_FAILURE_MODES.md) — Fallback & failure behavior
+---
+
+## Related Documentation
+- `docs/06-ai/GENERATIVE_AI_STACK.md`
+- `docs/06-ai/MODEL_ROUTER.md`

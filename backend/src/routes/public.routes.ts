@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import prisma from '../lib/prisma';
+import { prisma } from '../lib/prisma';
+import { generateLeadPublicId } from '../services/publicId.service';
 
 const router = Router();
 
@@ -39,11 +40,14 @@ router.post('/contact', async (req, res) => {
       message: message ? String(message).trim() : null,
     };
 
-    let leadId = `lead_${Date.now()}`;
+    let leadId = await generateLeadPublicId();
 
     try {
       const lead = await prisma.contactLead.create({
-        data: leadData,
+        data: {
+          id: leadId,
+          ...leadData,
+        },
       });
       leadId = lead.id;
     } catch (dbErr) {

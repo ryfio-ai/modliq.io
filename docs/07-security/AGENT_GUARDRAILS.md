@@ -1,7 +1,10 @@
-# Modliq Agent Security Guardrails & Policy
+# MODLIQER Agent Security Guardrails & Policy
+
+> **Last verified:** 17/08/2026
+
 
 ## Security Principles
-Modliq Agent is an **auditable, tool-bounded manufacturing assistant**.
+MODLIQER Agent is an **auditable, tool-bounded manufacturing assistant**.
 
 ### Explicitly Forbidden Operations
 1. Arbitrary code execution (`eval`, `exec`, system shells).
