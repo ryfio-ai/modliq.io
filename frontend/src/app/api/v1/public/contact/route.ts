@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import { saveLeadToGlobalStore } from '../../admin/adminProxy';
+import prisma from '../../../../../lib/prisma';
 
-function generateFormattedLeadId() {
-  const d = new Date();
+async function generateSequentialLeadId(dateObj?: Date): Promise<string> {
+  const d = dateObj || new Date();
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
@@ -13,8 +14,45 @@ function generateFormattedLeadId() {
   const secs = String(d.getSeconds()).padStart(2, '0');
   const timeKey = `${hours}${mins}${secs}`;
 
-  const randomSeq = String(Math.floor(1 + Math.random() * 99999)).padStart(5, '0');
-  return `MODLIQER-LEAD-${dateKey}-${timeKey}-${randomSeq}`;
+  let seq = 1;
+
+  try {
+    const existing = await (prisma as any).publicIdSequence.findUnique({
+      where: {
+        entityType_dateKey: {
+          entityType: 'LEAD',
+          dateKey,
+        },
+      },
+    });
+
+    if (!existing) {
+      await (prisma as any).publicIdSequence.create({
+        data: {
+          entityType: 'LEAD',
+          dateKey,
+          nextSeq: 2,
+        },
+      });
+      seq = 1;
+    } else {
+      seq = existing.nextSeq;
+      await (prisma as any).publicIdSequence.update({
+        where: { id: existing.id },
+        data: { nextSeq: seq + 1 },
+      });
+    }
+  } catch (err) {
+    try {
+      const dbCount = await (prisma as any).contactLead.count();
+      seq = dbCount + 1;
+    } catch {
+      seq = 1;
+    }
+  }
+
+  const seqStr = String(seq).padStart(5, '0');
+  return `MODLIQER-LEAD-${dateKey}-${timeKey}-${seqStr}`;
 }
 
 async function syncDirectToGoogleSheets(leadRecord: any) {
@@ -84,7 +122,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: 'Email is required.' }, { status: 400 });
     }
 
-    const leadId = generateFormattedLeadId();
+    const leadId = await generateSequentialLeadId();
     const newLeadRecord = {
       id: leadId,
       name: String(name).trim(),
