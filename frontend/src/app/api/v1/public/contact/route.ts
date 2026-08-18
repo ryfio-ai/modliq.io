@@ -1,6 +1,52 @@
 import { NextResponse } from 'next/server';
 import { saveLeadToGlobalStore } from '../../admin/adminProxy';
 
+function generateFormattedLeadId() {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const dateKey = `${year}${month}${day}`;
+
+  const hours = String(d.getHours()).padStart(2, '0');
+  const mins = String(d.getMinutes()).padStart(2, '0');
+  const secs = String(d.getSeconds()).padStart(2, '0');
+  const timeKey = `${hours}${mins}${secs}`;
+
+  const randomSeq = String(Math.floor(1 + Math.random() * 99999)).padStart(5, '0');
+  return `MODLIQER-LEAD-${dateKey}-${timeKey}-${randomSeq}`;
+}
+
+async function syncDirectToGoogleSheets(leadRecord: any) {
+  const webappUrl =
+    process.env.GOOGLE_SHEETS_WEBAPP_URL ||
+    process.env.GOOGLE_SCRIPT_WEBAPP_URL ||
+    'https://script.google.com/macros/s/AKfycbzCr2KJAgrbuWM0AN1iPTcxv8cYewBeqEFnKskS8dtQFXcDTOQqZpbzzL0B6IvAXUORRA/exec';
+
+  try {
+    await fetch(webappUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: leadRecord.id,
+        name: leadRecord.name,
+        company: leadRecord.company || 'N/A',
+        email: leadRecord.email,
+        phone: leadRecord.phone || 'N/A',
+        city: leadRecord.city || 'N/A',
+        industry: leadRecord.industry || 'General',
+        role: leadRecord.role || 'N/A',
+        interest: leadRecord.interest || 'Demo Booking / Quote',
+        message: leadRecord.message || 'N/A',
+        status: leadRecord.status || 'NEW',
+        createdAt: leadRecord.createdAt,
+      }),
+    });
+  } catch (err) {
+    console.warn('[Vercel Contact API] Google Sheets direct sync exception:', err);
+  }
+}
+
 export async function POST(req: Request) {
   try {
     let body: any = {};
@@ -8,7 +54,10 @@ export async function POST(req: Request) {
 
     if (contentType.includes('application/json')) {
       body = await req.json();
-    } else if (contentType.includes('application/x-www-form-urlencoded') || contentType.includes('multipart/form-data')) {
+    } else if (
+      contentType.includes('application/x-www-form-urlencoded') ||
+      contentType.includes('multipart/form-data')
+    ) {
       const formData = await req.formData();
       const obj: Record<string, any> = {};
       formData.forEach((value, key) => {
@@ -35,8 +84,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: 'Email is required.' }, { status: 400 });
     }
 
+    const leadId = generateFormattedLeadId();
     const newLeadRecord = {
-      id: `lead_${Date.now()}`,
+      id: leadId,
       name: String(name).trim(),
       company: company ? String(company).trim() : null,
       email: String(email).trim(),
@@ -44,15 +94,19 @@ export async function POST(req: Request) {
       city: city ? String(city).trim() : null,
       industry: industry ? String(industry).trim() : null,
       role: role ? String(role).trim() : null,
-      interest: Array.isArray(interest) ? interest.join(', ') : (interest ? String(interest) : null),
+      interest: Array.isArray(interest) ? interest.join(', ') : interest ? String(interest) : null,
       message: message ? String(message).trim() : null,
       status: 'NEW',
       createdAt: new Date().toISOString(),
     };
 
-    // Always persist in local memory store so it immediately appears in Admin Dashboard
+    // 1. Always persist in local Vercel memory store for Admin Dashboard
     saveLeadToGlobalStore(newLeadRecord);
 
+    // 2. Directly sync to Google Sheets from Vercel Serverless Function
+    syncDirectToGoogleSheets(newLeadRecord).catch(() => {});
+
+    // 3. Forward to Render Backend API Gateway
     const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://modliq-backend.onrender.com';
 
     try {
@@ -60,6 +114,7 @@ export async function POST(req: Request) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          id: leadId,
           name: String(name).trim(),
           company: company ? String(company).trim() : null,
           email: String(email).trim(),
@@ -74,13 +129,16 @@ export async function POST(req: Request) {
 
       if (backendRes.ok) {
         const data = await backendRes.json();
-        return NextResponse.json({ success: true, message: 'Thank you! Your contact message has been received.', id: data.id || newLeadRecord.id });
+        return NextResponse.json({
+          success: true,
+          message: 'Thank you! Your contact message has been received.',
+          id: data.id || newLeadRecord.id,
+        });
       }
-    } catch {
-      // Ignore backend fetch error and fall back to success response with stored memory lead
+    } catch (backendErr) {
+      console.warn('[Vercel Contact API] Backend forward notice:', backendErr);
     }
 
-    // High availability fallback response for public marketing site
     return NextResponse.json(
       {
         success: true,
